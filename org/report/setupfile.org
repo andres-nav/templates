@@ -1,0 +1,66 @@
+#+LaTeX_CLASS: article
+#+OPTIONS: toc:nil title:nil
+#+LaTeX_CLASS_OPTIONS: [a4paper, 12pt]
+
+#+LATEX_HEADER: \usepackage[utf8]{inputenc}      % accents
+#+LATEX_HEADER: \usepackage[T1]{fontenc}         % PS fonts
+#+LATEX_HEADER: \usepackage{newtxtext,newtxmath} % do not use CM fonts
+#+LATEX_HEADER: \usepackage{amsmath}             % multi-line and other mathematical statements
+#+LATEX_HEADER: \usepackage{setspace}            % setting the spacing between lines
+#+LATEX_HEADER: \usepackage{graphicx}            % go far beyond what the graphics package
+#+LATEX_HEADER: \usepackage[normalem]{ulem}      % various types of underlining
+#+LATEX_HEADER: \usepackage{caption}             % rotating captions, sideways captions, etc.
+#+LATEX_HEADER: \usepackage{float}               % tables and figures in the multi-column environment 
+#+LATEX_HEADER: \usepackage{subcaption}          % for subfigures and the like
+#+LATEX_HEADER: \usepackage{longtable}           % tables that continue to the next page
+#+LATEX_HEADER: \usepackage{multirow}            % tabular cells spanning multiple rows
+#+LATEX_HEADER: \usepackage[table]{xcolor}       % driver-independent color extensions
+#+LATEX_HEADER: \usepackage{lipsum}              % loren dummy text
+#+LATEX_HEADER: \setlength{\marginparwidth}{2cm} % todonotes' requirements
+#+LATEX_HEADER: \usepackage{todonotes}           % todo's
+#+LATEX_HEADER: \usepackage{chicago}             % a bibliography style
+#+LATEX_HEADER: \usepackage{bookmark}            % Include the bookmark package
+#+LATEX_HEADER: \usepackage{verbatim}            % For quotes
+
+# %% document dimensions
+#+LATEX_HEADER: \usepackage[a4paper,left=25mm,right=25mm,top=25mm,bottom=25mm,headheight=6mm,footskip=12mm]{geometry}
+#+LATEX_HEADER: \setlength{\parindent}{0em}
+#+LATEX_HEADER: \setlength{\parskip}{4ex}
+#+LATEX_HEADER: \AddToHook{cmd/section/before}{\clearpage}
+
+# %% headers & footers
+#+LATEX_HEADER: \usepackage{fancyhdr}
+#+LATEX_HEADER: \fancyhf{}                            % clear off all default fancyhdr headers and footers
+#+LATEX_HEADER: \rhead{\small{\emph{\projtitle \hfill \projauthor}}}
+#+LATEX_HEADER: \rfoot{\small{ \thepage\ }}
+#+LATEX_HEADER: \pagestyle{fancy}                     % apply the fancy header style
+#+LATEX_HEADER: \renewcommand{\headrulewidth}{0.4pt}
+#+LATEX_HEADER: \renewcommand{\footrulewidth}{0.4pt}
+
+# %% colors
+#+LATEX_HEADER: \usepackage{color}
+#+LATEX_HEADER: \definecolor{engineering}{rgb}{0.549,0.176,0.098}
+#+LATEX_HEADER: \definecolor{cloudwhite}{cmyk}{0,0,0,0.025}
+
+# %% source-code listings
+#+LATEX_HEADER: \usepackage{listings}
+#+LATEX_HEADER: \lstset{language=C, basicstyle=\footnotesize\ttfamily, keywordstyle=\bfseries, numbers=left, numberstyle=\scriptsize\texttt, stepnumber=1, numbersep=8pt, frame=tb, float=htb, aboveskip=8mm, belowskip=4mm, backgroundcolor=\color{cloudwhite}, showspaces=false, showstringspaces=false, showtabs=false, tabsize=2, captionpos=b, breaklines=true, breakatwhitespace=false, escapeinside={\%*}{*)}, morekeywords={*,var,template,new}}
+
+# %% hyperreferences (HREF, URL)
+#+LATEX_HEADER: \hypersetup{plainpages=false, pdfpagelayout=SinglePage, bookmarksopen=false, bookmarksnumbered=true, breaklinks=true, linktocpage, colorlinks=true, linkcolor=engineering, urlcolor=engineering, filecolor=engineering, citecolor=engineering, allcolors=engineering}
+
+# %% path to the figures directory
+#+LATEX_HEADER: \graphicspath{{figures/}}
+
+# %% macros, to be updated as needed
+#+LATEX_HEADER: \newcommand{\projauthor}{Andrés Navarro Pedregal}
+
+# %% my other macros, if needed
+#+LATEX_HEADER: \newcommand{\windspt}{\textsf{WindsPT\/}}
+#+LATEX_HEADER: \newcommand{\windscannerpt}{\emph{Windscanner.PT\/}}
+#+LATEX_HEADER: \newcommand{\class}[1]{{\normalfont\slshape #1\/}}
+#+LATEX_HEADER: \newcommand{\svg}{\class{SVG}}
+
+# %% my environments for infos
+#+LATEX_HEADER: \newenvironment{info}[1]{\vspace*{6mm}\color{blue}[ \textbf{INFO:} \begin{em} #1} {\vspace*{3mm}\end{em} ]}
+#+LATEX_HEADER: \newenvironment{infoopt}[1]{\vspace*{6mm}\color{blue}[ \textbf{INFO (elemento opcional):} \begin{em} #1} {\vspace*{3mm}\end{em} ]}
