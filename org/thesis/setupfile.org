@@ -1,0 +1,16 @@
+#+latex_class: tfg_uc3m
+
+# %% document dimensions
+# #+latex_header: \setlength{\parindent}{0em}
+# #+latex_header: \setlength{\parskip}{2ex}
+
+# %% remove page numbers from the table of contents
+# #+latex_header: \renewcommand{\cftsecleader}{\cftdotfill{\cftnodots}}
+
+# %% headers & footers
+# #+latex_header: \pagestyle{fancy}                     % apply the fancy header style
+# #+latex_header: \fancyhf{}                            % clear off all default fancyhdr headers and footers
+# #+latex_header: \rhead{\small{\emph{\projtitle \hfill \projauthor}}}
+# #+latex_header: \rfoot{\small{\thepage}}
+# #+latex_header: \renewcommand{\headrulewidth}{0.4pt}
+
