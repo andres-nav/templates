@@ -1,8 +1,7 @@
 \newcommand{\version}{v1.0}
-\newcommand{\name}{tfg_uc3m}
+\newcommand{\name}{thesis_uc3m}
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tfg_uc3m}[v1.0.0]
 \ProvidesClass{\name}[\version\space Template for Final Degree Project at UC3M]
 
 % Needed to deal with tables

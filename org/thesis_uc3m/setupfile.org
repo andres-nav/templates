@@ -1,4 +1,4 @@
-#+latex_class: tfg_uc3m
+#+latex_class: thesis_uc3m
 
 # %% document dimensions
 # #+latex_header: \setlength{\parindent}{0em}
