@@ -19,23 +19,26 @@
 #+LATEX_HEADER: \setlength{\marginparwidth}{2cm} % todonotes' requirements
 #+LATEX_HEADER: \usepackage{todonotes}           % todo's
 #+LATEX_HEADER: \usepackage{chicago}             % a bibliography style
-#+LATEX_HEADER: \usepackage{bookmark}            % Include the bookmark package
-#+LATEX_HEADER: \usepackage{verbatim}            % For quotes
+#+LATEX_HEADER: \usepackage{bookmark}            % include the bookmark package
+#+LATEX_HEADER: \usepackage{verbatim}            % quotes
+#+LATEX_HEADER: \usepackage{tocloft}             % table of contents
+#+LATEX_HEADER: \usepackage{fancyhdr}            % headers and footers
 
 # %% document dimensions
 #+LATEX_HEADER: \usepackage[a4paper,left=25mm,right=25mm,top=25mm,bottom=25mm,headheight=6mm,footskip=12mm]{geometry}
 #+LATEX_HEADER: \setlength{\parindent}{0em}
-#+LATEX_HEADER: \setlength{\parskip}{4ex}
-#+LATEX_HEADER: \AddToHook{cmd/section/before}{\clearpage}
+#+LATEX_HEADER: \setlength{\parskip}{2ex}
+# #+LATEX_HEADER: \AddToHook{cmd/section/before}{\clearpage}
+
+# %% remove page numbers from the Table of Contents
+#+LATEX_HEADER: \renewcommand{\cftsecleader}{\cftdotfill{\cftnodots}}
 
 # %% headers & footers
-#+LATEX_HEADER: \usepackage{fancyhdr}
-#+LATEX_HEADER: \fancyhf{}                            % clear off all default fancyhdr headers and footers
-#+LATEX_HEADER: \rhead{\small{\emph{\projtitle \hfill \projauthor}}}
-#+LATEX_HEADER: \rfoot{\small{ \thepage\ }}
 #+LATEX_HEADER: \pagestyle{fancy}                     % apply the fancy header style
+#+LATEX_HEADER: \fancyhf{}                            % clear off all default fancyhdr headers and footers
+#+LATEX_HEADER: \rhead{\small{\emph{\hfill \projauthor}}}
+#+LATEX_HEADER: \rfoot{\small{\thepage}}
 #+LATEX_HEADER: \renewcommand{\headrulewidth}{0.4pt}
-#+LATEX_HEADER: \renewcommand{\footrulewidth}{0.4pt}
 
 # %% colors
 #+LATEX_HEADER: \usepackage{color}
@@ -46,8 +49,9 @@
 #+LATEX_HEADER: \usepackage{listings}
 #+LATEX_HEADER: \lstset{language=C, basicstyle=\footnotesize\ttfamily, keywordstyle=\bfseries, numbers=left, numberstyle=\scriptsize\texttt, stepnumber=1, numbersep=8pt, frame=tb, float=htb, aboveskip=8mm, belowskip=4mm, backgroundcolor=\color{cloudwhite}, showspaces=false, showstringspaces=false, showtabs=false, tabsize=2, captionpos=b, breaklines=true, breakatwhitespace=false, escapeinside={\%*}{*)}, morekeywords={*,var,template,new}}
 
+
 # %% hyperreferences (HREF, URL)
-#+LATEX_HEADER: \hypersetup{plainpages=false, pdfpagelayout=SinglePage, bookmarksopen=false, bookmarksnumbered=true, breaklinks=true, linktocpage, colorlinks=true, linkcolor=engineering, urlcolor=engineering, filecolor=engineering, citecolor=engineering, allcolors=engineering}
+#+LATEX_HEADER: \hypersetup{plainpages=false, pdfpagelayout=SinglePage, bookmarksopen=false, bookmarksnumbered=true, breaklinks=true, linktocpage, colorlinks=true, linkcolor=blue, urlcolor=blue, filecolor=red, citecolor=engineering, allcolors=engineering}
 
 # %% path to the figures directory
 #+LATEX_HEADER: \graphicspath{{figures/}}
