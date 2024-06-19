@@ -1,0 +1,6 @@
+#+latex_class: beamer
+#+latex_class_options: [aspectratio=169, handout]
+
+#+latex_header: \definecolor{bluecern}{HTML}{0053A1}
+
+#+latex_header: \usetheme[english, color, coloraccent=bluecern]{cern}
