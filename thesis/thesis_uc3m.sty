@@ -1,0 +1,288 @@
+\newcommand{\version}{v1.0}
+\newcommand{\name}{thesis_uc3m}
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesClass{\name}[\version\space Template for Final Degree Project at UC3M]
+
+\RequirePackage{keyval} % Needed for configuration
+
+\RequirePackage{tabularx} % Needed to deal with tables
+\RequirePackage{multirow} % Needed to combine cells
+\RequirePackage{array}
+% Needed to handle list environment
+\RequirePackage{enumitem}
+% Needed to handle text alignment
+\RequirePackage{ragged2e}
+% Needed to configure page layout
+\RequirePackage{geometry}
+% Needed to make header & footer efficiently
+\RequirePackage{fancyhdr}
+% Needed to manage colors
+\RequirePackage{xcolor}
+% Needed to use \ifxetex-\else-\fi statement
+\RequirePackage{ifxetex}
+% Needed to use \if-\then-\else statement
+\RequirePackage{xifthen}
+% Needed to strip chars from telephone number
+\RequirePackage{xstring}
+% Needed to use a toolbox of programming tools
+\RequirePackage{etoolbox}
+% Needed to change line spacing in specific environment
+\RequirePackage{setspace}
+% Needed for advanced quotes
+\RequirePackage[strict=true]{csquotes}
+% Needed to manage times new roman fonts
+\RequirePackage{newtxtext}
+\RequirePackage{newtxmath}
+% Needed for getting the current date
+\RequirePackage{datetime2}
+% Needed to deal a paragraphs
+\RequirePackage{parskip}
+% Needed to deal with images
+\RequirePackage{graphicx}
+% Needed to deal hyperlink
+\RequirePackage[hidelinks,unicode,pdfpagelabels=false]{hyperref}
+% Needed to manage code
+\RequirePackage{listings}
+% Needed for random text
+\RequirePackage{lipsum}
+
+% **************************************************
+% Options
+% **************************************************
+
+\newcommand{\degree}{}
+\newcommand{\graduationyear}{}
+\newcommand{\supervisor}{}
+\newcommand{\placeandyear}{}
+
+% **************************************************
+% Layout
+% **************************************************
+
+% Configure page margins with geometry
+\geometry{a4paper,vmargin=2.5cm,hmargin=3cm}
+
+% **************************************************
+% Language
+% **************************************************
+\RequirePackage[english]{babel} % Needed for english
+\usepackage[babel, english=american]{csquotes}
+\AtBeginEnvironment{quote}{\small}
+
+% **************************************************
+% Text Format
+% **************************************************
+
+\RequirePackage{titlesec} % Needed for editing the titles
+\RequirePackage{titletoc} % Needed for editing the titles
+
+\setstretch{1.15} % value for line spacing
+\clubpenalty=10000 % prevent single lines at the beginning of a paragraph
+\widowpenalty=10000 % prevent single lines at the end of a paragraph
+\setlength{\parskip}{3ex} % make the space between paragraphs
+
+% Fonts
+
+% Define the style for chapter titles
+\titleformat{\chapter}[block]
+  {\normalfont\fontsize{14}{17}\bfseries\centering} % 14 pt font, bold, centered
+  {\thechapter.}{1em}{\MakeUppercase}
+
+\titlespacing*{\chapter}{0pt}{*0}{*1}
+
+% Define the style for section titles
+\titleformat{\section}[hang]
+  {\normalfont\fontsize{12}{15}\bfseries} % 12 pt font, bold, flush left
+  {\thesection}{1em}{}
+
+\titlespacing*{\section}{0pt}{*1}{*1}
+
+% Define the style for subsection titles
+\titleformat{\subsection}[hang]
+  {\normalfont\fontsize{12}{15}\bfseries} % 12 pt font, bold, flush left
+  {\thesubsection}{1em}{}
+
+\titlespacing*{\subsection}{0pt}{*1}{*1}
+
+% Define the style for annex titles
+\titleformat{\chapter}[block]
+  {\normalfont\fontsize{14}{17}\bfseries\centering} % 14 pt font, bold, centered
+  {\thechapter.}{1em}{\MakeUppercase}
+
+\titlespacing*{\chapter}{0pt}{*0}{*1}
+
+% \titleformat{\chapter}[block]
+% {\large\bfseries\filcenter}
+% {\thechapter.}
+% {5pt}
+% {\MakeUppercase}
+% {}
+% \titlespacing{\chapter}{0pt}{0pt}{*3}
+% \titlecontents{chapter}
+% [0pt]
+% {}
+% {\contentsmargin{0pt}\thecontentslabel.\enspace\uppercase}
+% {\contentsmargin{0pt}\uppercase}
+% {\titlerule*[.7pc]{.}\contentspage}
+
+% \titleformat{\section}
+% {\bfseries}
+% {\thesection.}
+% {5pt}
+% {}
+% \titlecontents{section}
+% [5pt]
+% {}
+% {\contentsmargin{0pt}\thecontentslabel.\enspace}
+% {\contentsmargin{0pt}}
+% {\titlerule*[.7pc]{.}\contentspage}
+
+% \titleformat{\subsection}
+% {\normalsize\bfseries}
+% {\thesubsection.}
+% {5pt}
+% {}
+% \titlecontents{subsection}
+% [10pt]
+% {}
+% {\contentsmargin{0pt}
+% 	\thecontentslabel.\enspace}
+% {\contentsmargin{0pt}}
+% {\titlerule*[.7pc]{.}\contentspage}
+
+
+% \titleformat{\subsubsection} % command
+% [block] % shape
+% {} % format
+% {\subsubsectiontitlefont\thesubsubsection} % label
+% {1.5ex} % sep
+% {\subsubsectiontitlefont} % before
+% [] % after
+
+% **************************************************
+% Links
+% **************************************************
+\hypersetup{colorlinks=true,
+	linkcolor=black, % link to inside the document in black
+	urlcolor=blue} % link to outside the document in blue
+
+% **************************************************
+% Footer
+% **************************************************
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\rfoot{\thepage} % number of page on the right
+\fancypagestyle{plain}{\pagestyle{fancy}}
+
+% **************************************************
+% Captions
+% **************************************************
+\RequirePackage{caption} % Needed to customize captions
+\RequirePackage{subcaption} % Needed to add two images side by side
+
+\DeclareCaptionFormat{upper}{#1#2\uppercase{#3}\par}
+\captionsetup[table]{
+	name=Table,
+	justification=centering,
+	labelsep=period,
+	width=.75\linewidth,
+	labelfont=small,
+	font=small,
+}
+
+\captionsetup[figure]{
+	name=Figure,
+	justification=centering,
+	labelsep=period,
+	width=.75\linewidth,
+	labelfont=small,
+	font=small,
+}
+
+% **************************************************
+% Footnotes
+% **************************************************
+\RequirePackage{chngcntr}
+
+\counterwithout{footnote}{chapter}
+
+% **************************************************
+% Colors
+% **************************************************
+\definecolor{blue_uc3m}{RGB}{0,0,102}
+
+% **************************************************
+% Title Page
+% **************************************************
+
+\renewcommand{\maketitle}{
+	\begin{titlepage}
+		\begin{sffamily}
+			\begin{center}
+				% \begin{figure}[H]
+				% \makebox[\textwidth][c]{\includegraphics[width=16cm]{uc3m_banner.pdf}}
+				% \end{figure}
+				\includegraphics[width=\textwidth]{uc3m_banner.pdf}
+				\begingroup
+				\color{blue_uc3m}
+				\vfill
+				\begin{Large}
+					University Degree in \degree \\
+					\graduationyear \\
+					\vspace{2cm}
+					\textsl{Bachelor thesis}
+					\bigskip
+
+				\end{Large}
+				{\Huge \@title }\\
+				\vspace*{0.5cm}
+				\rule{10.5cm}{0.1mm}\\
+				\vspace*{0.9cm}
+				{\LARGE \@author }\\
+				\vspace*{1cm}
+				\begin{large}
+					Tutor \\
+					\supervisor \\
+					\vspace*{1cm}
+					\placeandyear \\
+				\end{large}
+				\endgroup
+			\end{center}
+			\vfill
+
+			\includegraphics[width=4.2cm]{creativecommons_by-nc-nd.eu.pdf}\\
+			This work is subjected to Creative Commons license - \textbf{Attribution - Non commercial - No derivatives}
+
+		\end{sffamily}
+	\end{titlepage}
+}
+
+% **************************************************
+% Table of Contents
+% **************************************************
+
+\RequirePackage{tocloft}
+
+% **************************************************
+% Bibliography
+% **************************************************
+
+\RequirePackage[sorting=none]{biblatex} % sort references by appearance
+
+% **************************************************
+% Commands
+% **************************************************
+
+% Define a command for a blank page
+\newcommand{\blankpage}{%
+    \newpage
+    \thispagestyle{empty}
+    \mbox{}
+    \newpage
+}
+
+% New page before each part
+\let\oldpart\part
+\renewcommand{\part}[1]{\blankpage\oldpart{#1}}
