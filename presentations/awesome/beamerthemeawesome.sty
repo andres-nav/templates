@@ -219,27 +219,28 @@
 
 \setbeamerfont{subtitle}{
 	size=\large,
-	shape=\normalfont
+	shape=\normalfont%
 }
 
 \setbeamerfont{author}{
 	size=\normalsize,
-	shape=\normalfont
+	shape=\normalfont%
 }
 
 \setbeamerfont{details}{
 	size=\footnotesize,
-	shape=\normalfont
+	shape=\normalfont%
 }
 
+\newcommand{\customtiny}{\fontsize{4pt}{5pt}\selectfont}
 \setbeamerfont{footline}{
-	size=\tiny,
-	shape=\normalfont
+	size=\customtiny,
+	shape=\normalfont%
 }
 
 \setbeamerfont{footnote}{
 	size=\tiny,
-	shape=\normalfont
+	shape=\normalfont%
 }
 
 \setbeamerfont{frametitle}{
@@ -249,7 +250,7 @@
 
 \setbeamerfont{framesubtitle}{
 	size=\normalsize,
-	shape=\normalfont
+	shape=\normalfont%
 }
 
 \setbeamerfont{block title}{
@@ -468,12 +469,12 @@
 \def\setfooter#1#2#3{\savebox\footerright{\color{white}\hspace{0.3cm}#3\hspace{0.3cm}}
 	\updatemaxfooterwd{\wd\footerright}\leavevmode\hbox{%
 		\usebeamerfont{footline}%
-		\begin{beamercolorbox}[wd=\dimexpr\textwidth-\maxfooterwd\relax,ht=2.5ex,dp=1ex]{footline}%
-			\hspace{0.3cm}#1\hfill#2\hfill\null%
+		\begin{beamercolorbox}[wd=\dimexpr\textwidth ,ht=2.5ex,dp=1ex]{footlineright}%
+			\makebox[0.2\textwidth][l]{\hspace{2ex}#1}%
+			\makebox[0.6\textwidth][c]{#2}%
+			\makebox[0.2\textwidth][r]{#3\hspace{2ex}}%
 		\end{beamercolorbox}%
-		\begin{beamercolorbox}[wd=\maxfooterwd,ht=2.5ex,dp=1ex]{footlineright}%
-			\centerline{\usebox\footerright}%
-		\end{beamercolorbox}%
+
 	}}
 
 \def\awesome@smalldot{\tikz[baseline=-.6ex]\node[circle,inner sep=0.16,draw=.,fill=.]{};}
@@ -510,7 +511,7 @@
 					}%
 			\fi%
 		\fi%
-	}{\ifawesome@english@ Page\else Seite\fi~\insertframenumber~/~\inserttotalframenumber}%
+	}{\insertframenumber~/~\inserttotalframenumber}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
