@@ -580,3 +580,30 @@
 				\end{wide}%
 			\end{frame}}
 }
+
+% ---- Create text alerts ----
+\usepackage{xparse}
+
+% Standard alert
+\NewDocumentCommand{\al}{o g}{%
+\IfNoValueTF{#1}{\textcolor{accent}{#2}}%
+{\textcolor<#1>{accent}{#2}}}
+
+% Green, positive alert
+\NewDocumentCommand{\alg}{o g}{%
+\IfNoValueTF{#1}{\textcolor{green}{#2}}%
+{\textcolor<#1>{green}{#2}}}
+
+% Red, negative alert
+\NewDocumentCommand{\alr}{o g}{%
+\IfNoValueTF{#1}{\textcolor{red}{#2}}%
+{\textcolor<#1>{red}{#2}}}
+
+% Blue, zero alert
+\NewDocumentCommand{\alb}{o g}{%
+\IfNoValueTF{#1}{\textcolor{blue}{#2}}%
+{\textcolor<#1>{blue}{#2}}}
+
+% Center figures
+\let\oldincludegraphics\includegraphics%
+\renewcommand{\includegraphics}[2][]{\centering\oldincludegraphics[#1]{#2}}
