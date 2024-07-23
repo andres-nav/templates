@@ -280,10 +280,22 @@
 \setbeamersize{text margin left=\awesome@textmargin}
 \setbeamersize{text margin right=\awesome@textmargin}
 
+% Customize captions
+\RequirePackage{caption}
+% Format captions
+\captionsetup{labelformat=empty,size=normalsize}
 \setbeamertemplate{caption}{\insertcaption}
 \setbeamertemplate{blocks}[rounded][shadow=false]
-\setbeamertemplate{itemize item}[circle]
-\setbeamertemplate{itemize subitem}[circle]
+
+% Format itemized lists
+\setbeamertemplate{itemize item}{\textbullet} % First-level item
+\setbeamertemplate{itemize subitem}{\textendash} % Second-level item
+\setbeamertemplate{itemize subsubitem}{\diamond} % Third-level item
+
+% Format numbered lists
+\setbeamertemplate{enumerate item}[default] % First-level item
+\setbeamertemplate{enumerate subitem}{\alph{enumii}.} % Second-level item
+\setbeamertemplate{enumerate subsubitem}{\roman{enumiii}.} % Third-level
 
 \addtobeamertemplate{frametitle continuation}{\color{gray}(}{)}
 \setbeamertemplate{navigation symbols}{}
@@ -574,10 +586,21 @@
 
 \AtEndDocument{
 	{\setbeamercolor{background canvas}{bg=accent}
-			\begin{frame}[b,noframenumbering]\thispagestyle{navigation@titlepage}%
-				\begin{wide}\color{white}%
-					\Large\textbf{\insertauthor}\vskip0.5em\scriptsize\insertlocation,~\insertdate\hfill\insertemail%
-				\end{wide}%
+			\begin{frame}[plain, noframenumbering]\thispagestyle{navigation@titlepage}%
+				\color{white}%
+				\begin{minipage}[c][\textheight][c]{\textwidth}
+					\vfill
+					\begin{center}
+						\Huge \textbf{Thank you!}
+					\end{center}
+					\vfill
+					\begin{flushleft}
+						\Large\textbf{\insertauthor}
+						\vskip0.5em
+						\scriptsize\insertlocation, ~\insertdate
+						\normalsize\insertemail%
+					\end{flushleft}
+				\end{minipage}
 			\end{frame}}
 }
 
@@ -586,23 +609,23 @@
 
 % Standard alert
 \NewDocumentCommand{\al}{o g}{%
-\IfNoValueTF{#1}{\textcolor{accent}{#2}}%
-{\textcolor<#1>{accent}{#2}}}
+	\IfNoValueTF{#1}{\textcolor{accent}{#2}}%
+	{\textcolor<#1>{accent}{#2}}}
 
 % Green, positive alert
 \NewDocumentCommand{\alg}{o g}{%
-\IfNoValueTF{#1}{\textcolor{green}{#2}}%
-{\textcolor<#1>{green}{#2}}}
+	\IfNoValueTF{#1}{\textcolor{green}{#2}}%
+	{\textcolor<#1>{green}{#2}}}
 
 % Red, negative alert
 \NewDocumentCommand{\alr}{o g}{%
-\IfNoValueTF{#1}{\textcolor{red}{#2}}%
-{\textcolor<#1>{red}{#2}}}
+	\IfNoValueTF{#1}{\textcolor{red}{#2}}%
+	{\textcolor<#1>{red}{#2}}}
 
 % Blue, zero alert
 \NewDocumentCommand{\alb}{o g}{%
-\IfNoValueTF{#1}{\textcolor{blue}{#2}}%
-{\textcolor<#1>{blue}{#2}}}
+	\IfNoValueTF{#1}{\textcolor{blue}{#2}}%
+	{\textcolor<#1>{blue}{#2}}}
 
 % Center figures
 \let\oldincludegraphics\includegraphics%
