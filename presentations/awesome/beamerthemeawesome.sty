@@ -272,10 +272,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\newlength\awesome@sidebarwidth\setlength{\awesome@sidebarwidth}{0\paperwidth}
-\newlength\awesome@textmargin\setlength{\awesome@textmargin}{0.03\paperwidth}
+\newlength\awesome@sidebarwidth\setlength{\awesome@sidebarwidth}{0.08\paperwidth}
+\newlength\awesome@nowidth\setlength{\awesome@nowidth}{0\paperwidth}
+\newlength\awesome@textmargin\setlength{\awesome@textmargin}{0.04\paperwidth}
 \setbeamersize{description width=0.5cm}
-\setbeamersize{sidebar width left=\awesome@sidebarwidth}
+% \setbeamersize{sidebar width left=\awesome@sidebarwidth}
+\setbeamersize{sidebar width left=\z@}
 \setbeamersize{sidebar width right=\z@}
 \setbeamersize{text margin left=\awesome@textmargin}
 \setbeamersize{text margin right=\awesome@textmargin}
@@ -323,12 +325,21 @@
 }
 
 \setbeamertemplate{frametitle}{%
-	\vspace{1em}\ifawesome@nonumbersinframetitle\ifbool{wideframe}{\hspace{-\awesome@sidebarwidth}}{}\else\hspace{-\awesome@sidebarwidth}\begin{beamercolorbox}[wd=\awesome@sidebarwidth]{frametitle}%
-		\ifx\insertsection\empty\else%
+	\vspace{1em}
+	\begin{beamercolorbox}{frametitle}%
+		% \ifawesome@nonumbersinframetitle
+		% 	\ifbool{wideframe}{
+		% 		\hspace{-\awesome@sidebarwidth}
+		% 	}{}
+		% \else
+		% \hspace{-\awesome@sidebarwidth}
+		\ifx\insertsection
+			\empty
+		\else%
 			\color{accent}\thesection%
 			\ifx\insertsubsection\empty%
 				\ifnum\framespersection>1%
-					.\color{black!25!white}\scalebox{.7}{\theframesinsection}%
+					.\color{black!25!white}\scalebox{0.7}{\theframesinsection}%
 				\fi%
 			\else%
 				.\thesubsection%
@@ -337,14 +348,17 @@
 				\fi%
 			\fi%
 		\fi
-	\end{beamercolorbox}\fi%
-	\begin{beamercolorbox}{frametitle}%
-		\insertframetitle%
+		% \fi%
+		\ \usebeamercolor[fg]{title}\insertframetitle%
 	\end{beamercolorbox}
-	\ifx\insertframesubtitle\empty\else%
+
+	\ifx\insertframesubtitle
+		\empty
+	\else%
 		\begin{beamercolorbox}{framesubtitle}%
 			\ifawesome@nonumbersinframetitle\ifbool{wideframe}{\hspace{-\awesome@sidebarwidth}}{}\fi\usebeamerfont{subtitle}\insertframesubtitle%
-		\end{beamercolorbox}\fi%
+		\end{beamercolorbox}
+	\fi%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -417,6 +431,7 @@
 		\settowidth\subtitlewidth\subtitlecontent%
 		\setlength\maxwidth{\ifdim\titlewidth>\subtitlewidth\titlewidth\else\subtitlewidth\fi}%
 		\thispagestyle{navigation@titlepage}%
+		\hspace{\awesome@sidebarwidth}
 		\begin{minipage}{\lhswidth}
 			\raggedright%
 			\titlecontent\\
@@ -496,7 +511,10 @@
 \newcounter{pagenumbertolinkto}
 \setbeamertemplate{footline}{%
 	\setfooter{\insertshortauthor}{%
-		\hyperlinkdocumentstart{\insertshorttitle}\hspace{.7em}\awesome@smalldot\hspace{.7em}\insertsection%
+		% Uncomment to show the title in the footer
+		% \hyperlinkdocumentstart{\insertshorttitle}\hspace{.7em}
+		% \awesome@smalldot\hspace{.7em}
+		\insertsection%
 		\ifx\insertsubsection\empty%
 			\hspace{.4em}%
 			\ifnum\framespersection>1%
@@ -529,7 +547,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \def\ps@navigation@toc{%
-	\setbeamertemplate{footline}{\setfooter{\insertshortauthor}{\hyperlinkdocumentstart{\insertshorttitle}}{Agenda}}%
+	\setbeamertemplate{footline}{\setfooter{\insertshortauthor}{
+			% Uncomment to show the title in the footer
+			% \hyperlinkdocumentstart{\insertshorttitle}
+		}{Agenda}}%
 	\@nameuse{ps@navigation}%
 }
 
@@ -559,27 +580,34 @@
 
 
 \AtBeginSection[]{\ifawesome@secslide
-		\begin{frame}[c,noframenumbering]\thispagestyle{navigation@sec}%
+		\begin{frame}[plain,noframenumbering]\thispagestyle{navigation@sec}%
 			\begin{wide}\centering%
 				\usebeamerfont{title}%
 				\usebeamercolor[fg]{section number projected}%
-				\scalebox{1.3}{ \raisebox{-1pt}{\insertsectionnumber}}.~%
-				\usebeamercolor[fg]{title}%
-				\insertsectionhead%
+				\begin{minipage}[c][\textheight][c]{\textwidth}
+					\scalebox{1.3}{
+						\hspace{\awesome@sidebarwidth}
+						\raisebox{-1pt}
+						{\insertsectionnumber}}.~%
+					\usebeamercolor[fg]{title}%
+					\insertsectionhead%
+				\end{minipage}
 			\end{wide}%
 		\end{frame}
 	\fi}
 
 \AtBeginSubsection[]{\ifawesome@subsecslide
-		\begin{frame}[c,noframenumbering]\thispagestyle{navigation@sec}%
+		\begin{frame}[plain,noframenumbering]\thispagestyle{navigation@sec}%
 			\begin{wide}\centering%
 				\usebeamerfont{title}%
 				\usebeamercolor[fg]{section number projected}%
-				\scalebox{1.3}{\raisebox{-1pt}{\insertsectionnumber}}.%
-				\usebeamercolor[fg]{subsection number projected}%
-				\textsubscript{\insertsubsectionnumber}~%
-				\usebeamercolor[fg]{title}%
-				\insertsubsectionhead%
+				\begin{minipage}[c][\textheight][c]{\textwidth}
+					\scalebox{1.3}{\raisebox{-1pt}{\insertsectionnumber}}.%
+					\usebeamercolor[fg]{subsection number projected}%
+					\textsubscript{\insertsubsectionnumber}~%
+					\usebeamercolor[fg]{title}%
+					\insertsubsectionhead%
+				\end{minipage}
 			\end{wide}%
 		\end{frame}
 	\fi}
