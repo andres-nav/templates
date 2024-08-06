@@ -11,6 +11,7 @@
 \DeclareVoidOption{spanish}{\awesome@english@false}
 
 \DeclareBoolOption{notoc}
+\DeclareBoolOption{noendpage}
 \DeclareBoolOption{secslide}
 \DeclareBoolOption{subsecslide}
 \DeclareBoolOption{nonumbersinframetitle}
@@ -36,6 +37,7 @@
 \RequirePackage{microtype}
 \RequirePackage{etoolbox}
 \RequirePackage{tcolorbox}
+\RequirePackage{ulem} % For underlining text
 \tcbuselibrary{skins}
 \RequirePackage[
 	tikz,
@@ -286,7 +288,7 @@
 \RequirePackage{caption}
 % Format captions
 \captionsetup{labelformat=empty,size=normalsize}
-\setbeamertemplate{caption}{\insertcaption}
+\setbeamertemplate{caption}[numbered]{\insertcaption}
 \setbeamertemplate{blocks}[rounded][shadow=false]
 
 % Format itemized lists
@@ -613,7 +615,8 @@
 	\fi}
 
 \AtEndDocument{
-	{\setbeamercolor{background canvas}{bg=accent}
+	\ifawesome@noendpage\else
+		{\setbeamercolor{background canvas}{bg=accent}
 			\begin{frame}[plain, noframenumbering]\thispagestyle{navigation@titlepage}%
 				\color{white}%
 				\begin{minipage}[c][\textheight][c]{\textwidth}
@@ -629,7 +632,9 @@
 						\normalsize\insertemail%
 					\end{flushleft}
 				\end{minipage}
-			\end{frame}}
+			\end{frame}
+		}
+	\fi
 }
 
 % ---- Create text alerts ----
