@@ -31,7 +31,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
 \RequirePackage{calc}
 \RequirePackage{microtype}
 \RequirePackage{etoolbox}
@@ -42,11 +41,26 @@
 	hyperref,
 	pdftitle={\noexpand\inserttitle},
 	pdfauthor={\noexpand\insertauthor},
-	pdfsubject={\noexpand\inserttitle}
+	pdfsubject={\noexpand\insertevent}
 ]{smile}
 
 % Make notes work on dual screen
 \RequirePackage{pgfpages}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SI units
+
+\RequirePackage{siunitx}
+
+\newcommand{\m}{\si{\metre}}
+\newcommand{\mcb}{\si{\metre\cubed}}
+
+\newcommand{\km}{\si{\kilo\metre}}
+\newcommand{\kmsq}{\si{\kilo\metre\squared}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % For every picture that defines or uses external nodes, you'll have to
 % apply the 'remember picture' style. To avoid some typing, we'll apply
@@ -259,7 +273,7 @@
 
 \setbeamerfont{block title}{
 	size=\normalfont,
-	shape=\strut
+	shape=\strut%
 }
 
 \setbeamerfont{blockdef}{
@@ -419,12 +433,12 @@
 \ensureinfocommand{event}
 \ensureinfocommand{location}
 \def\inserttitle{\ifdefined\@title\@title\fi}
-\def\insertshorttitle{\ifdefined\@shorttitle\@shorttitle\fi}
+\def\insertevent{\ifdefined\@event\@event\fi}
+% \def\insertshorttitle{\ifdefined\@shorttitle\@shorttitle\fi}
 \def\insertauthor{\ifdefined\@author\@author\fi}
 \def\insertshortauthor{\ifdefined\@shortauthor\@shortauthor\fi}
 \def\insertemail{\ifdefined\@email\href{mailto:\@email}{\@email}\fi}
 \def\insertuni{\ifdefined\@uni\@uni\fi}
-\def\insertevent{\ifdefined\@event\@event\fi}
 \def\insertlocation{\ifdefined\@location\@location\fi}
 
 \tikzfading[
@@ -527,10 +541,7 @@
 
 \newcounter{pagenumbertolinkto}
 \setbeamertemplate{footline}{%
-	\setfooter{\insertshortauthor \hspace{.4em} \awesome@emptydot \hspace{.4em} \insertevent}{%
-		% Uncomment to show the title in the footer
-		% \hyperlinkdocumentstart{\insertshorttitle}\hspace{.7em}
-		% \awesome@smalldot\hspace{.7em}
+	\setfooter{\insertshortauthor \hspace{.7em} \awesome@smalldot \hspace{.7em} \insertevent}{%
 		\insertsection%
 		\ifx\insertsubsection\empty%
 			\hspace{.4em}%
@@ -566,7 +577,7 @@
 \def\ps@navigation@toc{%
 	\setbeamertemplate{footline}{\setfooter{\insertshortauthor}{
 			% Uncomment to show the title in the footer
-			% \hyperlinkdocumentstart{\insertshorttitle}
+			\hyperlinkdocumentstart{\insertevent}
 		}{Agenda}}%
 	\@nameuse{ps@navigation}%
 }
@@ -574,7 +585,7 @@
 \def\ps@navigation@sec{%
 	\setbeamertemplate{footline}{%
 		\setfooter{\insertshortauthor}%
-		{\hyperlinkdocumentstart{\insertshorttitle}}%
+		{\hyperlinkdocumentstart{\insertevent}}%
 		{\ifawesome@english@ Section\else Kapitel\fi~\thesection\ifx\insertsubsection\empty\else.\thesubsection\fi}%
 	}%
 	\@nameuse{ps@navigation}%
@@ -678,3 +689,9 @@
 % Center figures
 \let\oldincludegraphics\includegraphics%
 \renewcommand{\includegraphics}[2][]{\centering\oldincludegraphics[keepaspectratio, #1]{#2}}
+
+% Highlight command
+\newcommand{\highlight}[1]{\textcolor{accent}{\textbf{#1}}}
+
+% One line vertical space
+\newcommand{\br}{\vspace{1em}}
