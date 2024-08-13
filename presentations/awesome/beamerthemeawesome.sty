@@ -95,7 +95,12 @@
 	\end{frame}
 	\ifawesome@notoc\else
 		\begin{frame}{Agenda}
-			\tableofcontents
+			\centering
+			\vfill
+			\begin{minipage}[t][0.5\textheight][c]{0.5\textwidth} % Full height minipage
+				\tableofcontents
+			\end{minipage}
+			\vfill
 		\end{frame}
 	\fi
 }
@@ -457,7 +462,8 @@
 \newlength\titlewidth
 \newlength\subtitlewidth
 \newlength\maxwidth
-\setbeamertemplate{title page}{\begin{wide}
+\setbeamertemplate{title page}{
+	\begin{wide}
 		\def\titlecontent{\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle}%
 		\def\subtitlecontent{\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle}%
 		\settowidth\titlewidth\titlecontent%
@@ -514,7 +520,8 @@
 				++(-10, \dimexpr\paperheight+1cm);
 			\end{tikzpicture}
 		\fi
-	\end{wide}}
+	\end{wide}
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
