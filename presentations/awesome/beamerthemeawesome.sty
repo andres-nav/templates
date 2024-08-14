@@ -95,12 +95,13 @@
 	\end{frame}
 	\ifawesome@notoc\else
 		\begin{frame}{Agenda}
-			\centering
-			\vfill
-			\begin{minipage}[t][0.5\textheight][c]{0.5\textwidth} % Full height minipage
-				\tableofcontents
-			\end{minipage}
-			\vfill
+			\begin{wide}
+				\centering%
+				\begin{minipage}[c][0.8\textheight][c]{0.8\textwidth}
+					\centering
+					\tableofcontents
+				\end{minipage}
+			\end{wide}
 		\end{frame}
 	\fi
 }
@@ -229,7 +230,6 @@
 
 \setbeamercolor{block body}{bg=lightgray}
 \setbeamercolor{block title}{bg=black, fg=white}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -363,12 +363,6 @@
 \setbeamertemplate{frametitle}{%
 	\vspace{1em}
 	\begin{beamercolorbox}{frametitle}%
-		% \ifawesome@nonumbersinframetitle
-		% 	\ifbool{wideframe}{
-		% 		\hspace{-\awesome@sidebarwidth}
-		% 	}{}
-		% \else
-		% \hspace{-\awesome@sidebarwidth}
 		\ifx\insertsection
 			\empty
 		\else%
@@ -618,39 +612,29 @@
 }
 
 
-\AtBeginSection[]{\ifawesome@secslide
-		{\setbeamercolor{background canvas}{bg=accent}
+\AtBeginSection[]{
+	\ifawesome@secslide
 		\begin{frame}[plain,noframenumbering]\thispagestyle{navigation@sec}%
-			\begin{wide}\centering%
+			\begin{wide}
+				\centering%
 				\usebeamerfont{title}%
-				\usebeamercolor[bg]{section number projected}%
-				\begin{minipage}[c][\textheight][c]{\textwidth}
+				\begin{minipage}[c][0.8\textheight][c]{0.8\textwidth}
 					\centering
-					\scalebox{1.3}{
-						% \hspace{\awesome@sidebarwidth}
-						\raisebox{-1pt}
-						{\insertsectionnumber}}.~%
-					\usebeamercolor[bg]{title}%
-					\insertsectionhead%
-					% \tableofcontents[currentsection]
+					\tableofcontents[currentsection]
 				\end{minipage}
 			\end{wide}%
-		\end{frame}}
+		\end{frame}
 	\fi}
 
 \AtBeginSubsection[]{
 	\ifawesome@subsecslide
 		\begin{frame}[plain,noframenumbering]\thispagestyle{navigation@sec}%
-			\begin{wide}\centering%
+			\begin{wide}
+				\centering%
 				\usebeamerfont{title}%
-				\usebeamercolor[fg]{section number projected}%
-				\begin{minipage}[c][\textheight][c]{\textwidth}
-					\scalebox{1.3}{\raisebox{-1pt}{\insertsectionnumber}}.%
-					\usebeamercolor[fg]{subsection number projected}%
-					\textsubscript{\insertsubsectionnumber}~%
-					\usebeamercolor[fg]{title}%
-					\insertsubsectionhead%
-					% \tableofcontents[currentsection, currentsubsection]
+				\begin{minipage}[c][0.7\textheight][c]{0.8\textwidth}
+					\centering
+					\tableofcontents[currentsection, currentsubsection]
 				\end{minipage}
 			\end{wide}%
 		\end{frame}
