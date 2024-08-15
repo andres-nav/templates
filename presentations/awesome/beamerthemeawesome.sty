@@ -422,7 +422,6 @@
 \ensureinfocommand{email}
 \ensureinfocommand{uni}
 \ensureinfocommand{event}
-\ensureinfocommand{location}
 \def\inserttitle{\ifdefined\@title\@title\fi}
 \def\insertevent{\ifdefined\@event\@event\fi}
 % \def\insertshorttitle{\ifdefined\@shorttitle\@shorttitle\fi}
@@ -430,7 +429,6 @@
 \def\insertshortauthor{\ifdefined\@shortauthor\@shortauthor\fi}
 \def\insertemail{\ifdefined\@email\href{mailto:\@email}{\@email}\fi}
 \def\insertuni{\ifdefined\@uni\@uni\fi}
-\def\insertlocation{\ifdefined\@location\@location\fi}
 
 \tikzfading[
 	name=title page picture fading,
@@ -642,7 +640,7 @@
 					\begin{flushleft}
 						\Large\textbf{\insertauthor}
 						\vskip0.5em
-						\scriptsize\insertlocation, ~\insertdate
+						\scriptsize\insertevent, ~\insertdate
 					\end{flushleft}
 				\end{minipage}
 			\end{frame}}
