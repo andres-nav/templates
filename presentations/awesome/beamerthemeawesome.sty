@@ -332,7 +332,7 @@
 	% Add the logo in the bottom left corner
 	\ifdefined\@logo
 		\begin{tikzpicture}[remember picture, overlay]
-			\node[anchor=north east, inner sep=\awesome@textmargin] at (current page.north east) {
+			\node[anchor=north east, inner sep=1em] at (current page.north east) {
 				\includegraphics[height=0.075\paperheight]{\@logo}
 			};
 		\end{tikzpicture}
