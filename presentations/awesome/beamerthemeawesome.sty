@@ -416,6 +416,7 @@
 }
 
 \ensureinfocommand{title}
+\ensureinfocommand{version}
 \ensureinfocommand{author}
 \ensureinfocommand{background}
 \ensureinfocommand{logo}
@@ -423,6 +424,7 @@
 \ensureinfocommand{uni}
 \ensureinfocommand{event}
 \def\inserttitle{\ifdefined\@title\@title\fi}
+\def\insertversion{\ifdefined\@version\@version\fi}
 \def\insertevent{\ifdefined\@event\@event\fi}
 % \def\insertshorttitle{\ifdefined\@shorttitle\@shorttitle\fi}
 \def\insertauthor{\ifdefined\@author\@author\fi}
@@ -640,7 +642,7 @@
 					\begin{flushleft}
 						\Large\textbf{\insertauthor}
 						\vskip0.5em
-						\scriptsize\insertevent, ~\insertdate
+						\scriptsize\insertevent, ~\insertdate \hfill \insertversion
 					\end{flushleft}
 				\end{minipage}
 			\end{frame}}
