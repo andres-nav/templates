@@ -1,0 +1,72 @@
+\NeedsTeXFormat{LaTeX2e}
+
+\newcommand{\classversion}{v1.0}
+\newcommand{\name}{andresnav_report}
+\ProvidesClass{\name}[\classversion]
+
+% **************************************************
+% Options and necessary commands
+% **************************************************
+\newcommand\ensureinfocommand[1]{%
+	\ifcsname#1\endcsname\else
+		\expandafter\newcommand\csname#1\endcsname[1]{%
+			\expandafter\newcommand\csname @#1\endcsname{##1}%
+		}%
+	\fi
+}
+
+\ensureinfocommand{title}
+\ensureinfocommand{date}
+\ensureinfocommand{version}
+\ensureinfocommand{author}
+\def\inserttitle{\ifdefined\@title\@title\fi}
+\def\insertdate{\ifdefined\@date\@date\fi}
+\def\insertversion{\ifdefined\@version, \@version\fi}
+\def\insertauthor{\ifdefined\@author\@author\fi}
+
+% **************************************************
+% Graphics and layout
+% **************************************************
+\RequirePackage{graphicx} % To include images
+
+\RequirePackage{geometry} % To set the page layout
+\geometry{a4paper, vmargin=2.5cm, hmargin=3cm}
+
+% **************************************************
+% Author affiliations
+% **************************************************
+\RequirePackage{authblk}
+\renewcommand\Affilfont{\small}
+
+% **************************************************
+% Paragraph handling
+% **************************************************
+\RequirePackage[parfill]{parskip}
+
+% **************************************************
+% Tables
+% **************************************************
+\usepackage[format=plain, labelfont={bf, it}, textfont=it]{caption}
+
+% **************************************************
+% Bibliography and links
+% **************************************************
+\usepackage[bookmarks=true, colorlinks=true, linkcolor=blue, citecolor=red]{hyperref}
+
+% **************************************************
+% Title Page
+% **************************************************
+\renewcommand{\maketitle}{
+	\begin{center}
+		{\LARGE \bfseries \inserttitle} \\[1em]
+		{\large \insertauthor} \\[1em]
+		{\normalfont \insertdate \insertversion} \\[1em]
+	\end{center}
+	\vspace{2em}
+}
+
+
+% **************************************************
+% Abstract and keywords
+% **************************************************
+\providecommand{\keywords}[1]{\textbf{{Keywords:}} #1}
