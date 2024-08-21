@@ -1,4 +1,4 @@
-\NeedsTeXFormat{LaTeX2e}
+\NeedsTeXFormat{LaTeX2e} % need to be compiled with LuaLaTeX
 
 \newcommand{\classversion}{v1.0}
 \newcommand{\name}{andresnav_report}
@@ -33,6 +33,11 @@
 \geometry{a4paper, vmargin=2.5cm, hmargin=3cm}
 
 % **************************************************
+% Fonts
+% **************************************************
+% Use the default Latin Modern font as it is the best :)
+
+% **************************************************
 % Author affiliations
 % **************************************************
 \RequirePackage{authblk}
@@ -46,12 +51,15 @@
 % **************************************************
 % Tables
 % **************************************************
-\usepackage[format=plain, labelfont={bf, it}, textfont=it]{caption}
+\RequirePackage[format=plain, labelfont={bf, it}, textfont=it]{caption}
 
 % **************************************************
-% Bibliography and links
+% Bibliography, bookmarks and links
 % **************************************************
-\usepackage[bookmarks=true, colorlinks=true, linkcolor=blue, citecolor=red]{hyperref}
+\RequirePackage[sorting=none]{biblatex} % sort references by appearance
+\RequirePackage[bookmarks=true, colorlinks=true, linkcolor=blue, citecolor=red]{hyperref}
+\RequirePackage{bookmark} % to reload the outline and bookmarks automatically
+
 
 % **************************************************
 % Title Page
@@ -62,11 +70,16 @@
 		{\large \insertauthor} \\[1em]
 		{\normalfont \insertdate \insertversion} \\[1em]
 	\end{center}
-	\vspace{2em}
+	\br%
 }
-
 
 % **************************************************
 % Abstract and keywords
 % **************************************************
-\providecommand{\keywords}[1]{\textbf{{Keywords:}} #1}
+\providecommand{\keywords}[1]{\br\textbf{{Keywords:}} #1}
+
+% **************************************************
+% Custom commands
+% **************************************************
+\newcommand{\br}{\vspace{1em}}
+\newcommand{\todo}[1]{\par\noindent\textcolor{red}{\textbf{TODO:}\ \raggedright#1}\par\noindent}
