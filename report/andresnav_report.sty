@@ -25,10 +25,8 @@
 \def\insertauthor{\ifdefined\@author\@author\fi}
 
 % **************************************************
-% Graphics and layout
+% Layout
 % **************************************************
-\RequirePackage{graphicx} % To include images
-
 \RequirePackage{geometry} % To set the page layout
 \geometry{a4paper, vmargin=2.5cm, hmargin=3cm}
 
@@ -36,6 +34,11 @@
 % Fonts
 % **************************************************
 % Use the default Latin Modern font as it is the best :)
+
+% **************************************************
+% Colors
+% **************************************************
+\RequirePackage{xcolor}
 
 % **************************************************
 % Author affiliations
@@ -48,17 +51,53 @@
 % **************************************************
 \RequirePackage[parfill]{parskip}
 
+\clubpenalty=10000 % prevent single lines at the beginning of a paragraph
+\widowpenalty=10000 % prevent single lines at the end of a paragraph
+
+% **************************************************
+% Figures
+% **************************************************
+\RequirePackage{graphicx} % Include images
+\RequirePackage{subcaption} % Be able to add subcaptions to subfigures
+
+% Make the h (here) option the default
+\makeatletter
+\renewenvironment{figure}
+{\@float{figure}[htpb]\centering}
+{\end@float}
+\makeatother
+
+% Store the original \includegraphics command to use it within the redefinition
+\let\origincludegraphics\includegraphics%
+
+% Redefine \includegraphics to set default width=\linewidth
+\renewcommand{\includegraphics}[2][]{%
+	\ifx\relax#1\relax
+	\origincludegraphics[width=0.95\linewidth]{#2}%
+	\else
+	\origincludegraphics[#1]{#2}%
+	\fi
+}
+
 % **************************************************
 % Tables
 % **************************************************
 \RequirePackage[format=plain, labelfont={bf, it}, textfont=it]{caption}
+\RequirePackage{booktabs} % to use \toprule, \midrule, and \bottomrule
 
 % **************************************************
-% Bibliography, bookmarks and links
+% Bibliography, references bookmarks and links
 % **************************************************
 \RequirePackage[sorting=none]{biblatex} % sort references by appearance
 \RequirePackage[bookmarks=true, colorlinks=true, linkcolor=blue, citecolor=red]{hyperref}
 \RequirePackage{bookmark} % to reload the outline and bookmarks automatically
+
+% Smart referencing
+\RequirePackage{cleveref}
+\crefname{figure}{Figure}{Figures}
+\crefname{table}{Table}{Tables}
+\crefformat{figure}{#2Figure~#1#3}
+\crefformat{table}{#2Table~#1#3}
 
 
 % **************************************************
@@ -76,10 +115,12 @@
 % **************************************************
 % Abstract and keywords
 % **************************************************
+\renewcommand{\abstractname}{\centering Abstract}
 \providecommand{\keywords}[1]{\br\textbf{{Keywords:}} #1}
 
 % **************************************************
 % Custom commands
 % **************************************************
 \newcommand{\br}{\vspace{1em}}
-\newcommand{\todo}[1]{\par\noindent\textcolor{red}{\textbf{TODO:}\ \raggedright#1}\par\noindent}
+\newcommand{\todo}[1]{\textcolor{red}{\ \textbf{TODO:}\ #1}}
+\newcommand{\rephr}[1]{\textcolor{green}{\textbf{REPHRASE:}\ #1}}
