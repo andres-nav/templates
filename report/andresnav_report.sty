@@ -33,7 +33,9 @@
 % **************************************************
 % Fonts
 % **************************************************
-% Use the default Latin Modern font as it is the best :)
+\RequirePackage{fontspec}
+\setmainfont{TeX Gyre Termes}
+% \usepackage{newtxtext,newtxmath}
 
 % **************************************************
 % Colors
@@ -82,7 +84,7 @@
 % **************************************************
 % Tables
 % **************************************************
-\RequirePackage[format=plain, labelfont=bf, textfont=normalfont]{caption}
+\RequirePackage[format=plain, labelfont={bf, it}, textfont=it]{caption}
 \RequirePackage{booktabs} % to use \toprule, \midrule, and \bottomrule
 
 % **************************************************
