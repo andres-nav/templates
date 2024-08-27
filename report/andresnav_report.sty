@@ -60,10 +60,10 @@
 \RequirePackage{graphicx} % Include images
 \RequirePackage{subcaption} % Be able to add subcaptions to subfigures
 
-% Make the h (here) option the default
+% Make figures centered by default
 \makeatletter
 \renewenvironment{figure}
-{\@float{figure}[htpb]\centering}
+{\@float{figure}\centering}
 {\end@float}
 \makeatother
 
@@ -82,7 +82,7 @@
 % **************************************************
 % Tables
 % **************************************************
-\RequirePackage[format=plain, labelfont={bf, it}, textfont=it]{caption}
+\RequirePackage[format=plain, labelfont=bf, textfont=normalfont]{caption}
 \RequirePackage{booktabs} % to use \toprule, \midrule, and \bottomrule
 
 % **************************************************
