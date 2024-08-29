@@ -121,9 +121,10 @@
 % **************************************************
 % Bibliography, references bookmarks and links
 % **************************************************
-\RequirePackage[sorting=none]{biblatex} % sort references by appearance
-\RequirePackage[bookmarks=true, colorlinks=true, linkcolor=blue, citecolor=red]{hyperref}
+\RequirePackage[style=numeric, sorting=none, backend=biber]{biblatex} % sort references by appearance
+\usepackage[colorlinks=false, pdfborder={0 0 0}]{hyperref}
 \RequirePackage{bookmark} % to reload the outline and bookmarks automatically
+\renewcommand{\bibfont}{\footnotesize}
 
 % Smart referencing
 \RequirePackage{cleveref}
