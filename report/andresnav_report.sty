@@ -111,6 +111,13 @@
 \RequirePackage[format=plain, labelfont={bf, it}, textfont=it]{caption}
 \RequirePackage{booktabs} % to use \toprule, \midrule, and \bottomrule
 
+% Make tables centered by default
+\makeatletter
+\renewenvironment{table}
+{\@float{table}\centering}
+{\end@float}
+\makeatother
+
 % **************************************************
 % Bibliography, references bookmarks and links
 % **************************************************
