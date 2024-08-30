@@ -22,6 +22,7 @@
 \def\inserttitle{\ifdefined\@title\@title\fi}
 \def\insertdate{\ifdefined\@date\@date\fi}
 \def\insertversion{\ifdefined\@version\@version\fi}
+\def\insertcommaversion{\ifdefined\@version, \@version\fi}
 \def\insertauthor{\ifdefined\@author\@author\fi}
 
 % **************************************************
@@ -70,15 +71,17 @@
 \widowpenalty=10000 % prevent single lines at the end of a paragraph
 
 % **************************************************
-% Footer and Top
+% Footer and Header
 % **************************************************
 \RequirePackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhf{} % Clear all header and footer fields
-\renewcommand{\headrulewidth}{0pt} % Remove the top line (header rule)
 
 \fancyfoot[L]{\insertversion}
 \fancyfoot[C]{\thepage}
+
+\fancyhead[L]{\nouppercase{\leftmark}} % \leftmark contains the section title
+% \renewcommand{\sectionmark}[1]{\markleft{#1}}
 
 % **************************************************
 % Figures
@@ -142,7 +145,7 @@
 	\begin{center}
 		{\LARGE \bfseries \inserttitle} \\[1em]
 		{\large \insertauthor} \\[1em]
-		{\normalfont \insertdate} \\[1em]
+		{\normalfont \insertdate\insertcommaversion} \\[1em]
 	\end{center}
 	\br%
 }
