@@ -15,7 +15,7 @@
 \DeclareBoolOption{subsecslide}
 \DeclareBoolOption{nonumbersinframetitle}
 
-\DeclareDefaultOption{\PassOptionsToPackage{\CurrentOption}{smile}}
+\DeclareDefaultOption{\PassOptionsToPackage{\CurrentOption}{utils}}
 
 \ProcessKeyvalOptions*
 
@@ -42,7 +42,7 @@
 	pdftitle={\noexpand\inserttitle},
 	pdfauthor={\noexpand\insertauthor},
 	pdfsubject={\noexpand\insertevent}
-]{smile}
+]{utils}
 
 % Make notes work on dual screen
 \RequirePackage{pgfpages}
@@ -357,7 +357,7 @@
 }
 
 \setbeamertemplate{separator}{%
-	\usebeamercolor{separator}\textcolor{fg}{\rule{.7\textwidth}{\smile@linewidth}}%
+	\usebeamercolor{separator}\textcolor{fg}{\rule{.7\textwidth}{\utils@linewidth}}%
 }
 
 \setbeamertemplate{frametitle}{%
@@ -381,10 +381,10 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newtcolorbox{beamerbox}[3][]{boxrule=\smile@linewidth,
+\newtcolorbox{beamerbox}[3][]{boxrule=\utils@linewidth,
 	IfBlankTF={#3}{toprule=2mm}{title=#3},colback=#2!5!white,colframe=#2!75!black,left=0em,
-	lefttitle=4mm, arc=\smile@rounding, enhanced, segmentation engine=path,
-	segmentation style={lcr, solid, shorten >=1mm,shorten <=1mm, line width=\smile@linewidth},#1}
+	lefttitle=4mm, arc=\utils@rounding, enhanced, segmentation engine=path,
+	segmentation style={lcr, solid, shorten >=1mm,shorten <=1mm, line width=\utils@linewidth},#1}
 
 \renewenvironment{definition}[1][\empty]{%
 	\begin{beamerbox}{gray}{#1}%
@@ -457,7 +457,7 @@
 			\raggedright%
 			\titlecontent\\
 			\subtitlecontent\\
-			\textcolor{accent}{\rule{\ifdim\maxwidth<\lhswidth\maxwidth\else\lhswidth\fi}{\smile@linewidth}}\\[2em]
+			\textcolor{accent}{\rule{\ifdim\maxwidth<\lhswidth\maxwidth\else\lhswidth\fi}{\utils@linewidth}}\\[2em]
 			\usebeamerfont{author}\usebeamercolor[fg]{author}%
 			\insertauthor\\
 			\usebeamerfont{details}\usebeamercolor[fg]{details}%

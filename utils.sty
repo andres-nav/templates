@@ -1,9 +1,9 @@
-\ProvidesPackage{smile}[Smart Macros for an Improved LaTeX Experience]
+\ProvidesPackage{utils}[Nice macros and commands for LaTeX]
 
 \RequirePackage{etoolbox}
 
 \RequirePackage{kvoptions}
-\SetupKeyvalOptions{family=smile,prefix=smile@}
+\SetupKeyvalOptions{family=utils,prefix=utils@}
 
 \DeclareBoolOption{color}
 \DeclareStringOption[blue]{coloraccent}
@@ -40,9 +40,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\@ifpackageloaded{xcolor}{}{\ifsmile@hyperref\RequirePackage[table, dvipsnames, hyperref]{xcolor}\else\RequirePackage[table, dvipsnames]{xcolor}\fi}
+\@ifpackageloaded{xcolor}{}{\ifutils@hyperref\RequirePackage[table, dvipsnames, hyperref]{xcolor}\else\RequirePackage[table, dvipsnames]{xcolor}\fi}
 
-\ifsmile@color
+\ifutils@color
 	\definecolor{red}{HTML}{a51d2d}
 	\definecolor{green}{HTML}{26a269}
 	\definecolor{blue}{HTML}{1a5fb4}
@@ -68,19 +68,19 @@
 	\newcommand\showcolor[1]{\fboxsep1pt\fbox{\colorbox{#1}{\phantom{XX}}}}
 \else\fi
 
-\colorlet{accent}{\smile@coloraccent}
+\colorlet{accent}{\utils@coloraccent}
 
 
-% \newlength\smile@linewidth\smile@linewidth1px
-\newlength\smile@linewidth\smile@linewidth1mm
-\newlength\smile@rounding\smile@rounding1mm
+% \newlength\utils@linewidth\utils@linewidth1px
+\newlength\utils@linewidth\utils@linewidth1mm
+\newlength\utils@rounding\utils@rounding1mm
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\ifsmile@minted
-	\RequirePackage[newfloat=true,cache=false,outputdir=\smile@mintedauxdir]{minted}
+\ifutils@minted
+	\RequirePackage[newfloat=true,cache=false,outputdir=\utils@mintedauxdir]{minted}
 	\setminted{
 		numbers=left,
 		autogobble=true,
@@ -104,79 +104,79 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\ifsmile@listings
+\ifutils@listings
 	\RequirePackage{listingsutf8}
 	\RequirePackage{lstautogobble}
 	\RequirePackage{accsupp}
 
-	\def\smile@listings@initcolors{
-		\colorlet{smile@lst@color@background}{yellow!40!red!10!gray!5}
-		\colorlet{smile@lst@color@rule}{gray}
-		\colorlet{smile@lst@color@lnnr}{gray}
-		\colorlet{smile@lst@color@string}{green}
-		\colorlet{smile@lst@color@kwa}{accent}
-		\colorlet{smile@lst@color@kwb}{accent}
-		\colorlet{smile@lst@color@kwc}{accent}
-		\colorlet{smile@lst@color@kwd}{accent}
-		\colorlet{smile@lst@color@comment}{gray}
-		\colorlet{smile@lst@color@number}{blue}
-	}\smile@listings@initcolors
+	\def\utils@listings@initcolors{
+		\colorlet{utils@lst@color@background}{yellow!40!red!10!gray!5}
+		\colorlet{utils@lst@color@rule}{gray}
+		\colorlet{utils@lst@color@lnnr}{gray}
+		\colorlet{utils@lst@color@string}{green}
+		\colorlet{utils@lst@color@kwa}{accent}
+		\colorlet{utils@lst@color@kwb}{accent}
+		\colorlet{utils@lst@color@kwc}{accent}
+		\colorlet{utils@lst@color@kwd}{accent}
+		\colorlet{utils@lst@color@comment}{gray}
+		\colorlet{utils@lst@color@number}{blue}
+	}\utils@listings@initcolors
 
 
-	\def\smile@lst@fsize@base{\dimexpr\f@size\p@\relax}
-	\def\smile@lst@fsize@lnnr{\dimexpr\smile@lst@fsize@base - 0.2\smile@lst@fsize@base\relax}
+	\def\utils@lst@fsize@base{\dimexpr\f@size\p@\relax}
+	\def\utils@lst@fsize@lnnr{\dimexpr\utils@lst@fsize@base - 0.2\utils@lst@fsize@base\relax}
 
-	\def\smile@lst@nocopy#1{\BeginAccSupp{ActualText={}}#1\EndAccSupp{}}
+	\def\utils@lst@nocopy#1{\BeginAccSupp{ActualText={}}#1\EndAccSupp{}}
 
-	\def\smile@lst@style@linenr{\fontsize{\smile@lst@fsize@lnnr}{\smile@lst@fsize@lnnr}\selectfont\color{smile@lst@color@lnnr}\sffamily}
-	\def\smile@lst@style@base{\fontsize{\smile@lst@fsize@base}{\smile@lst@fsize@base}\selectfont\ttfamily}
-	\def\smile@lst@style@string{\smile@lst@style@base\color{smile@lst@color@string}}
-	\def\smile@lst@style@kwa{\smile@lst@style@base\color{smile@lst@color@kwa}\bfseries}
-	\def\smile@lst@style@kwb{\smile@lst@style@base\color{smile@lst@color@kwb}}
-	\def\smile@lst@style@kwc{\smile@lst@style@base\color{smile@lst@color@kwc}}
-	\def\smile@lst@style@kwd{\smile@lst@style@base\color{smile@lst@color@kwd}}
-	\def\smile@lst@style@comment{\smile@lst@style@base\color{smile@lst@color@comment}\itshape}
-	\def\smile@lst@style@number#1{\ifnum\lst@mode=\lst@Pmode\relax{\smile@lst@style@base\color{smile@lst@color@number} #1}\else#1\fi}
+	\def\utils@lst@style@linenr{\fontsize{\utils@lst@fsize@lnnr}{\utils@lst@fsize@lnnr}\selectfont\color{utils@lst@color@lnnr}\sffamily}
+	\def\utils@lst@style@base{\fontsize{\utils@lst@fsize@base}{\utils@lst@fsize@base}\selectfont\ttfamily}
+	\def\utils@lst@style@string{\utils@lst@style@base\color{utils@lst@color@string}}
+	\def\utils@lst@style@kwa{\utils@lst@style@base\color{utils@lst@color@kwa}\bfseries}
+	\def\utils@lst@style@kwb{\utils@lst@style@base\color{utils@lst@color@kwb}}
+	\def\utils@lst@style@kwc{\utils@lst@style@base\color{utils@lst@color@kwc}}
+	\def\utils@lst@style@kwd{\utils@lst@style@base\color{utils@lst@color@kwd}}
+	\def\utils@lst@style@comment{\utils@lst@style@base\color{utils@lst@color@comment}\itshape}
+	\def\utils@lst@style@number#1{\ifnum\lst@mode=\lst@Pmode\relax{\utils@lst@style@base\color{utils@lst@color@number} #1}\else#1\fi}
 
 	% Holy shit, this took some trial and error. Expansion is like magic some times
 	\lst@Key{apptoliterate}{}{\xdef\lst@literate{\unexpanded\expandafter{\lst@literate}\unexpanded{#1}}}
 
-	\lstdefinestyle{smile@lst@base}{
-		backgroundcolor  = \color{smile@lst@color@background},
-		rulecolor        = \color{smile@lst@color@rule},
+	\lstdefinestyle{utils@lst@base}{
+		backgroundcolor  = \color{utils@lst@color@background},
+		rulecolor        = \color{utils@lst@color@rule},
 		frame            = single,
-		framerule        = \smile@linewidth,
+		framerule        = \utils@linewidth,
 		autogobble       = true,
-		stringstyle      = \smile@lst@style@string,
-		commentstyle     = \smile@lst@style@comment,
-		keywordstyle     = [1]{\smile@lst@style@kwa},
-		keywordstyle     = [2]{\smile@lst@style@kwb},
-		keywordstyle     = [3]{\smile@lst@style@kwc},
-		keywordstyle     = [4]{\smile@lst@style@kwd},
-		basicstyle       = \smile@lst@style@base,
+		stringstyle      = \utils@lst@style@string,
+		commentstyle     = \utils@lst@style@comment,
+		keywordstyle     = [1]{\utils@lst@style@kwa},
+		keywordstyle     = [2]{\utils@lst@style@kwb},
+		keywordstyle     = [3]{\utils@lst@style@kwc},
+		keywordstyle     = [4]{\utils@lst@style@kwd},
+		basicstyle       = \utils@lst@style@base,
 		numbers          = left,
-		numberstyle      = \smile@lst@style@linenr\smile@lst@nocopy,
+		numberstyle      = \utils@lst@style@linenr\utils@lst@nocopy,
 		breaklines       = true,
 		extendedchars    = true,
-		prebreak         = \rlap{\smile@lst@nocopy{$\hookleftarrow$}},
+		prebreak         = \rlap{\utils@lst@nocopy{$\hookleftarrow$}},
 		escapeinside     = {§}{§},
 		keepspaces       = false,
 		showstringspaces = false,
 		apptoliterate    =
-			{0}{{{\smile@lst@style@number{0}}}}1
-			{1}{{{\smile@lst@style@number{1}}}}1
-			{2}{{{\smile@lst@style@number{2}}}}1
-			{3}{{{\smile@lst@style@number{3}}}}1
-			{4}{{{\smile@lst@style@number{4}}}}1
-			{5}{{{\smile@lst@style@number{5}}}}1
-			{6}{{{\smile@lst@style@number{6}}}}1
-			{7}{{{\smile@lst@style@number{7}}}}1
-			{8}{{{\smile@lst@style@number{8}}}}1
-			{9}{{{\smile@lst@style@number{9}}}}1,
+			{0}{{{\utils@lst@style@number{0}}}}1
+			{1}{{{\utils@lst@style@number{1}}}}1
+			{2}{{{\utils@lst@style@number{2}}}}1
+			{3}{{{\utils@lst@style@number{3}}}}1
+			{4}{{{\utils@lst@style@number{4}}}}1
+			{5}{{{\utils@lst@style@number{5}}}}1
+			{6}{{{\utils@lst@style@number{6}}}}1
+			{7}{{{\utils@lst@style@number{7}}}}1
+			{8}{{{\utils@lst@style@number{8}}}}1
+			{9}{{{\utils@lst@style@number{9}}}}1,
 	}
 
-	\lstdefinestyle{smile@lst@plain}{
-		style           = smile@lst@base,
+	\lstdefinestyle{utils@lst@plain}{
+		style           = utils@lst@base,
 		numbers         = none,
 		frame           = none,
 		backgroundcolor = {},
@@ -185,7 +185,7 @@
 		numbersep       = \z@,
 	}
 
-	\lstset{style=smile@lst@base}
+	\lstset{style=utils@lst@base}
 \else\fi
 
 
@@ -193,13 +193,13 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\ifsmile@tikz
+\ifutils@tikz
 	\RequirePackage{tikz}
 	\usetikzlibrary{backgrounds, shapes.geometric, arrows, arrows.meta, shapes, automata, positioning, positioning, fit, calc, fadings, shadows}
 	\tikzset{
-		lw/.style={line width=\smile@linewidth},
+		lw/.style={line width=\utils@linewidth},
 		lcr/.style={line cap=round},
-		rnd/.style={rounded corners=\smile@rounding},
+		rnd/.style={rounded corners=\utils@rounding},
 		inline/.style={shape=rectangle,inner sep=\z@,text depth=\z@},
 		squarenode/.style={rectangle, fill=white, draw=black, lw},
 		roundednode/.style={squarenode, rnd},
@@ -249,14 +249,14 @@
 
 \@ifpackageloaded{hyperref}{\AtEndPreamble{
 	\hypersetup{
-		pdfauthor=\smile@pdfauthor,
-		pdftitle=\smile@pdftitle,
-		pdfsubject=\smile@pdfsubject
+		pdfauthor=\utils@pdfauthor,
+		pdftitle=\utils@pdftitle,
+		pdfsubject=\utils@pdfsubject
 	}
 }}
 
 \AtBeginDocument{
-	\ifsmile@widowpenalties
+	\ifutils@widowpenalties
 		% TODO: make number of lines customisable
 		\widowpenalties 4 10000 10000 10000 0
 		\clubpenalties 4 10000 10000 10000 0
@@ -274,7 +274,7 @@
 
 
 \RequirePackage[normalem]{ulem}
-\ifsmile@htmlunderline
+\ifutils@htmlunderline
 	\RequirePackage{contour}
 	\renewcommand\ULdepth{1.8pt}
 	\contourlength{0.8pt}
@@ -288,7 +288,7 @@
 
 \newcommand\isempty[1]{\relax\detokenize{#1}\relax}
 
-\newcommand\smile@ensurehelper[3]{%
+\newcommand\utils@ensurehelper[3]{%
 	\expandafter\def\csname @#1\endcsname{#3}%
 	\if\isempty{#2}%
 		\expandafter\def\csname @short#1\endcsname{#3}%
@@ -298,47 +298,47 @@
 }
 \newcommand\ensureinfocommand[1]{%
 	\ifcsname#1\endcsname%
-		\expandafter\renewcommand\csname#1\endcsname[2][]{\smile@ensurehelper{#1}{##1}{##2}}%
+		\expandafter\renewcommand\csname#1\endcsname[2][]{\utils@ensurehelper{#1}{##1}{##2}}%
 	\else%
-		\expandafter\newcommand\csname#1\endcsname[2][]{\smile@ensurehelper{#1}{##1}{##2}}%
+		\expandafter\newcommand\csname#1\endcsname[2][]{\utils@ensurehelper{#1}{##1}{##2}}%
 	\fi%
 }
 
 
-\ifsmile@paragraph
+\ifutils@paragraph
 	\let\oldparagraph\paragraph
 	\renewcommand\paragraph[1]{\emph{#1}\hspace{0.5em}\textcolor{accent}{\fullcirc}\hspace{0.5em}}
 \else\fi
 
 
-\ifsmile@lists
+\ifutils@lists
 	\RequirePackage[inline]{enumitem}
 	\setlist[enumerate]{itemsep=-0.5\parskip}
 	\setlist[itemize]{itemsep=-0.5\parskip}
-	\ifsmile@description
+	\ifutils@description
 		\newcommand\adddot[1]{\normalfont\emph#1\hspace{0.5em}\color{accent}\fullcirc}
 		\setlist[description]{style=sameline, font=\adddot, labelsep=1em}
 	\else
 		\setlist[description]{style=sameline, labelsep=1em}
 	\fi
 \else
-	\ifsmile@description
-		\PackageError{smile}{Setting description has no effect without also
+	\ifutils@description
+		\PackageError{utils}{Setting description has no effect without also
 		setting lists}
 	\else\fi
 \fi
 
 
-\ifsmile@footnote
+\ifutils@footnote
 	\newcommand\@myfootnotemark{\guilsinglleft\textcolor{accent}{\arabic{footnote}}\guilsinglright}
 	\renewcommand\thefootnote\@myfootnotemark
 \else\fi
 
 
-\ifsmile@hyperref
-	\ifsmile@fullref\RequirePackage[nospace]{varioref}\else\fi
+\ifutils@hyperref
+	\ifutils@fullref\RequirePackage[nospace]{varioref}\else\fi
 	\@ifpackageloaded{}{\RequirePackage[hidelinks]{hyperref}}
-	\ifsmile@fullref
+	\ifutils@fullref
 		\RequirePackage{cleveref}
 		% TODO: more customisation
 		\renewcommand\fullref[1]{\hyperref[{#1}]{\autoref*{#1}~--~\nameref*{#1}~\vpageref{#1}}}
