@@ -6,7 +6,7 @@
 \SetupKeyvalOptions{family=utils,prefix=utils@}
 
 \DeclareBoolOption{color}
-\DeclareStringOption[blue]{coloraccent}
+\DeclareStringOption[skyblue]{coloraccent}
 
 \DeclareBoolOption{minted}
 \DeclareStringOption[aux]{mintedauxdir}
@@ -19,9 +19,13 @@
 \DeclareStringOption[\@author]{pdfauthor}
 \DeclareStringOption[\@title]{pdfsubject}
 
-\DeclareBoolOption{widowpenalties}
+\DeclareBoolOption[true]{spacing}
+\DeclareBoolOption[true]{widowpenalties}
 
 \DeclareBoolOption{paragraph}
+
+\DeclareBoolOption{graphicx}
+\DeclareBoolOption{subcaption}
 
 \DeclareBoolOption{lists}
 \DeclareBoolOption{description}
@@ -35,40 +39,49 @@
 
 \ProcessKeyvalOptions*
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 \@ifpackageloaded{xcolor}{}{\ifutils@hyperref\RequirePackage[table, dvipsnames, hyperref]{xcolor}\else\RequirePackage[table, dvipsnames]{xcolor}\fi}
 
+\ifx\utils@coloraccent\@empty
+\else
+	\booltrue{utils@color}
+\fi
+
 \ifutils@color
-	\definecolor{red}{HTML}{a51d2d}
-	\definecolor{green}{HTML}{26a269}
-	\definecolor{blue}{HTML}{1a5fb4}
+	\definecolor{white}{HTML}{FFFFFF}
+	\definecolor{black}{HTML}{000000}
+	\definecolor{darkgray}{HTML}{333333}
+	\definecolor{semidarkgray}{HTML}{414141}
+	\definecolor{gray}{HTML}{5D5D5D}
+	\definecolor{lightgray}{HTML}{999999}
+	\definecolor{green}{HTML}{C2E15F}
+	\definecolor{orange}{HTML}{FF6138}
+	\definecolor{purple}{HTML}{D3A4F9}
+	\definecolor{red}{HTML}{FB4485}
+	\definecolor{blue}{HTML}{6CE0F1}
+	\definecolor{emerald}{HTML}{00A388}
+	\definecolor{skyblue}{HTML}{0395DE}
+	\definecolor{red}{HTML}{DC3522}
+	\definecolor{pink}{HTML}{EF4089}
+	\definecolor{nephritis}{HTML}{27AE60}
+	\definecolor{concrete}{HTML}{95A5A6}
+	\definecolor{darknight}{HTML}{131A28}
 	\definecolor{cyan}{HTML}{25a8ff}
 	\definecolor{magenta}{HTML}{de3198}
 	\definecolor{yellow}{HTML}{f5c211}
-	\definecolor{black}{HTML}{241f31}
-	\definecolor{gray}{HTML}{c0bfbc}
-	\definecolor{darkgray}{HTML}{77767b}
-	\definecolor{lightgray}{HTML}{deddda}
-	\definecolor{white}{HTML}{ffffff}
 	\definecolor{brown}{HTML}{986a44}
 	\definecolor{lime}{HTML}{9bcf00}
 	\definecolor{olive}{HTML}{aba100}
-	\definecolor{orange}{HTML}{ff7800}
-	% \definecolor{pink}{HTML}{0,0,1}
-	\definecolor{purple}{HTML}{c061cb}
-	% \definecolor{teal}{HTML}{0,0,1}
 	\definecolor{violet}{HTML}{813d9c}
 	\definecolor{maroon}{HTML}{63452c}
 	\definecolor{darkmaroon}{HTML}{562b41}
 
 	\newcommand\showcolor[1]{\fboxsep1pt\fbox{\colorbox{#1}{\phantom{XX}}}}
-\else\fi
 
-\colorlet{accent}{\utils@coloraccent}
+	\colorlet{accent}{\utils@coloraccent}
+\else\fi
 
 
 % \newlength\utils@linewidth\utils@linewidth1px
@@ -77,7 +90,6 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 \ifutils@minted
 	\RequirePackage[newfloat=true,cache=false,outputdir=\utils@mintedauxdir]{minted}
@@ -102,7 +114,6 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 \ifutils@listings
 	\RequirePackage{listingsutf8}
@@ -142,37 +153,37 @@
 	\lst@Key{apptoliterate}{}{\xdef\lst@literate{\unexpanded\expandafter{\lst@literate}\unexpanded{#1}}}
 
 	\lstdefinestyle{utils@lst@base}{
-		backgroundcolor  = \color{utils@lst@color@background},
-		rulecolor        = \color{utils@lst@color@rule},
-		frame            = single,
-		framerule        = \utils@linewidth,
-		autogobble       = true,
-		stringstyle      = \utils@lst@style@string,
-		commentstyle     = \utils@lst@style@comment,
-		keywordstyle     = [1]{\utils@lst@style@kwa},
-		keywordstyle     = [2]{\utils@lst@style@kwb},
-		keywordstyle     = [3]{\utils@lst@style@kwc},
-		keywordstyle     = [4]{\utils@lst@style@kwd},
-		basicstyle       = \utils@lst@style@base,
-		numbers          = left,
-		numberstyle      = \utils@lst@style@linenr\utils@lst@nocopy,
-		breaklines       = true,
-		extendedchars    = true,
-		prebreak         = \rlap{\utils@lst@nocopy{$\hookleftarrow$}},
-		escapeinside     = {§}{§},
-		keepspaces       = false,
-		showstringspaces = false,
-		apptoliterate    =
-			{0}{{{\utils@lst@style@number{0}}}}1
-			{1}{{{\utils@lst@style@number{1}}}}1
-			{2}{{{\utils@lst@style@number{2}}}}1
-			{3}{{{\utils@lst@style@number{3}}}}1
-			{4}{{{\utils@lst@style@number{4}}}}1
-			{5}{{{\utils@lst@style@number{5}}}}1
-			{6}{{{\utils@lst@style@number{6}}}}1
-			{7}{{{\utils@lst@style@number{7}}}}1
-			{8}{{{\utils@lst@style@number{8}}}}1
-			{9}{{{\utils@lst@style@number{9}}}}1,
+	backgroundcolor  = \color{utils@lst@color@background},
+	rulecolor        = \color{utils@lst@color@rule},
+	frame            = single,
+	framerule        = \utils@linewidth,
+	autogobble       = true,
+	stringstyle      = \utils@lst@style@string,
+	commentstyle     = \utils@lst@style@comment,
+	keywordstyle     = [1]{\utils@lst@style@kwa},
+	keywordstyle     = [2]{\utils@lst@style@kwb},
+	keywordstyle     = [3]{\utils@lst@style@kwc},
+	keywordstyle     = [4]{\utils@lst@style@kwd},
+	basicstyle       = \utils@lst@style@base,
+	numbers          = left,
+	numberstyle      = \utils@lst@style@linenr\utils@lst@nocopy,
+	breaklines       = true,
+	extendedchars    = true,
+	prebreak         = \rlap{\utils@lst@nocopy{$\hookleftarrow$}},
+	escapeinside     = {§}{§},
+	keepspaces       = false,
+	showstringspaces = false,
+	apptoliterate    =
+		{0}{{{\utils@lst@style@number{0}}}}1
+	{1}{{{\utils@lst@style@number{1}}}}1
+	{2}{{{\utils@lst@style@number{2}}}}1
+	{3}{{{\utils@lst@style@number{3}}}}1
+	{4}{{{\utils@lst@style@number{4}}}}1
+	{5}{{{\utils@lst@style@number{5}}}}1
+	{6}{{{\utils@lst@style@number{6}}}}1
+	{7}{{{\utils@lst@style@number{7}}}}1
+	{8}{{{\utils@lst@style@number{8}}}}1
+	{9}{{{\utils@lst@style@number{9}}}}1,
 	}
 
 	\lstdefinestyle{utils@lst@plain}{
@@ -188,31 +199,29 @@
 	\lstset{style=utils@lst@base}
 \else\fi
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 \ifutils@tikz
 	\RequirePackage{tikz}
 	\usetikzlibrary{backgrounds, shapes.geometric, arrows, arrows.meta, shapes, automata, positioning, positioning, fit, calc, fadings, shadows}
 	\tikzset{
-		lw/.style={line width=\utils@linewidth},
-		lcr/.style={line cap=round},
-		rnd/.style={rounded corners=\utils@rounding},
-		inline/.style={shape=rectangle,inner sep=\z@,text depth=\z@},
-		squarenode/.style={rectangle, fill=white, draw=black, lw},
-		roundednode/.style={squarenode, rnd},
-		roundnode/.style={squarenode, circle},
-		pill/.style={squarenode, rounded rectangle},
-		arrow/.style={lw,-{Latex[round]},lcr},
-		doublearrow/.style={arrow,<->},
-		textarrow/.style={arrow,darkgray,short=1mm,->,-{Kite[#1]}},
-		textarrow/.default=open,
-		short/.style n args={1}{shorten <=#1,shorten >=#1},
-		no shadows/.style={general shadow/.style=},
-		shadow/.style={drop shadow={shadow xshift=.2ex, shadow yshift=-.2ex}},
-		o/.style={remember picture,overlay}
+	lw/.style={line width=\utils@linewidth},
+	lcr/.style={line cap=round},
+	rnd/.style={rounded corners=\utils@rounding},
+	inline/.style={shape=rectangle,inner sep=\z@,text depth=\z@},
+	squarenode/.style={rectangle, fill=white, draw=black, lw},
+	roundednode/.style={squarenode, rnd},
+	roundnode/.style={squarenode, circle},
+	pill/.style={squarenode, rounded rectangle},
+	arrow/.style={lw,-{Latex[round]},lcr},
+	doublearrow/.style={arrow,<->},
+	textarrow/.style={arrow,darkgray,short=1mm,->,-{Kite[#1]}},
+	textarrow/.default=open,
+	short/.style n args={1}{shorten <=#1,shorten >=#1},
+	no shadows/.style={general shadow/.style=},
+	shadow/.style={drop shadow={shadow xshift=.2ex, shadow yshift=-.2ex}},
+	o/.style={remember picture,overlay}
 	}
 	% https://tex.stackexchange.com/a/321615/286979
 	\pgfdeclarelayer{foreground}
@@ -248,12 +257,19 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \@ifpackageloaded{hyperref}{\AtEndPreamble{
-	\hypersetup{
-		pdfauthor=\utils@pdfauthor,
-		pdftitle=\utils@pdftitle,
-		pdfsubject=\utils@pdfsubject
-	}
-}}
+		\hypersetup{
+			pdfauthor=\utils@pdfauthor,
+			pdftitle=\utils@pdftitle,
+			pdfsubject=\utils@pdfsubject
+		}
+	}}
+
+% **************************************************
+% Paragraph handling
+% **************************************************
+\ifutils@spacing
+	\RequirePackage[parfill]{parskip}
+\else\fi
 
 \AtBeginDocument{
 	\ifutils@widowpenalties
@@ -267,11 +283,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
 \newcommand\fullcirc{\tikz[baseline=-0.6ex]\draw[fill] (0,0) circle (0.35ex);}
 \let\oldtextsubscript\textsubscript
 \renewcommand\textsubscript[1]{\scalebox{0.7}{#1}}
-
 
 \RequirePackage[normalem]{ulem}
 \ifutils@htmlunderline
@@ -284,7 +298,6 @@
 		\llap{\contour{white}{#1}}%
 	}
 \else\fi
-
 
 \newcommand\isempty[1]{\relax\detokenize{#1}\relax}
 
@@ -302,38 +315,70 @@
 	\else%
 		\expandafter\newcommand\csname#1\endcsname[2][]{\utils@ensurehelper{#1}{##1}{##2}}%
 	\fi%
-}
 
+	% Define \insert<command> automatically
+	\expandafter\newcommand\csname insert#1\endcsname{%
+		\ifcsname #1\endcsname
+			\csname @#1\endcsname{} % Call the defined or renewed command
+		\else
+			% Optionally handle the case where the command is not defined
+			\textbf{Command #1 not defined}%
+		\fi
+	}%
+}
 
 \ifutils@paragraph
 	\let\oldparagraph\paragraph
 	\renewcommand\paragraph[1]{\emph{#1}\hspace{0.5em}\textcolor{accent}{\fullcirc}\hspace{0.5em}}
 \else\fi
 
+\ifutils@subcaption
+	\RequirePackage{subcaption}
+	\booltrue{utils@graphicx}
+\else\fi
+
+\ifutils@graphicx
+	\RequirePackage{graphicx}
+
+	% Make figures centered by default
+	\makeatletter
+	\renewenvironment{figure}
+	{\@float{figure}\centering}
+	{\end@float}
+	\makeatother
+
+
+	% Store the original \includegraphics command to use it within the redefinition
+	\let\origincludegraphics\includegraphics%
+
+	% Redefine \includegraphics to set default width=\linewidth
+	\renewcommand{\includegraphics}[2][]{%
+		\ifx\relax#1\relax
+		\origincludegraphics[width=0.95\linewidth]{#2}%
+		\else
+		\origincludegraphics[#1]{#2}%
+		\fi
+	}
+\else\fi
+
+\ifutils@description
+	\newcommand\adddot[1]{\normalfont\emph#1\hspace{0.5em}\color{accent}\fullcirc}
+	\setlist[description]{style=sameline, font=\adddot, labelsep=1em}
+	\booltrue{utils@lists}
+\else
+	\setlist[description]{style=sameline, labelsep=1em}
+\fi
 
 \ifutils@lists
 	\RequirePackage[inline]{enumitem}
 	\setlist[enumerate]{itemsep=-0.5\parskip}
 	\setlist[itemize]{itemsep=-0.5\parskip}
-	\ifutils@description
-		\newcommand\adddot[1]{\normalfont\emph#1\hspace{0.5em}\color{accent}\fullcirc}
-		\setlist[description]{style=sameline, font=\adddot, labelsep=1em}
-	\else
-		\setlist[description]{style=sameline, labelsep=1em}
-	\fi
-\else
-	\ifutils@description
-		\PackageError{utils}{Setting description has no effect without also
-		setting lists}
-	\else\fi
-\fi
-
+\else\fi
 
 \ifutils@footnote
 	\newcommand\@myfootnotemark{\guilsinglleft\textcolor{accent}{\arabic{footnote}}\guilsinglright}
 	\renewcommand\thefootnote\@myfootnotemark
 \else\fi
-
 
 \ifutils@hyperref
 	\ifutils@fullref\RequirePackage[nospace]{varioref}\else\fi
@@ -344,3 +389,17 @@
 		\renewcommand\fullref[1]{\hyperref[{#1}]{\autoref*{#1}~--~\nameref*{#1}~\vpageref{#1}}}
 	\else\fi
 \else\fi
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Nice Defaults
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Nice Commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\highlight}[1]{\textcolor{accent}{\textbf{#1}}}
+\newcommand{\todo}[1]{\textcolor{red}{\textbf{TODO: }#1}}
+\newcommand{\question}[1]{\textcolor{green}{\textbf{QSTN: }#1}}
+\newcommand{\br}{\vspace{1em}}
