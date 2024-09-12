@@ -365,9 +365,7 @@
 	\newcommand\adddot[1]{\normalfont\emph#1\hspace{0.5em}\color{accent}\fullcirc}
 	\setlist[description]{style=sameline, font=\adddot, labelsep=1em}
 	\booltrue{utils@lists}
-\else
-	\setlist[description]{style=sameline, labelsep=1em}
-\fi
+\else\fi
 
 \ifutils@lists
 	\RequirePackage[inline]{enumitem}
