@@ -9,6 +9,8 @@
 \RequirePackage{kvoptions}
 \SetupKeyvalOptions{family=cv,prefix=cv@}
 
+\DeclareBoolOption{letter} % if true, it will load the letter template, if false, it will load the cv template
+
 \DeclareDefaultOption{
 	\PassOptionsToPackage{\CurrentOption}{utils}
 }
@@ -27,7 +29,11 @@
 % Layout
 % **************************************************
 \RequirePackage{geometry} % To set the page layout
-\geometry{a4paper, top=1cm, bottom=1.5cm, hmargin=1.4cm, footskip=0.5cm}
+\ifcv@letter
+	\geometry{a4paper, top=1.5cm, bottom=2cm, hmargin=2.5cm, footskip=0.5cm}
+\else
+	\geometry{a4paper, top=1cm, bottom=1.5cm, hmargin=1.4cm, footskip=0.5cm}
+\fi
 
 % **************************************************
 % Fonts
@@ -41,6 +47,7 @@
 
 \newcommand*{\headerfont}{\roboto}
 \newcommand*{\headerfontlight}{\robotolight}
+\newcommand*{\headerpositionfont}{\sourcesanspro}
 \newcommand*{\footerfont}{\sourcesanspro}
 \newcommand*{\bodyfont}{\sourcesanspro}
 \newcommand*{\bodyfontlight}{\sourcesansprolight}
@@ -120,7 +127,7 @@
 % Configure styles for each CV elements
 % For fundamental structures
 \newcommand*{\headernamestyle}[1]{{\fontsize{32pt}{1em}\headerfont\bfseries\color{text} #1}}
-\newcommand*{\headerpositionstyle}[1]{{\fontsize{7.6pt}{1em}\bodyfont\scshape\color{accent} #1}}
+\newcommand*{\headerpositionstyle}[1]{{\fontsize{7.6pt}{1em}\headerpositionfont\scshape\color{accent} #1}}
 \newcommand*{\headeraddressstyle}[1]{{\fontsize{8pt}{1em}\headerfont\itshape\color{lighttext} #1}}
 \newcommand*{\headersocialstyle}[1]{{\fontsize{6.8pt}{1em}\headerfont\color{text} #1}}
 \newcommand*{\headersummarystyle}[1]{{\fontsize{9pt}{1em}\bodyfont\color{darktext} #1}}
@@ -445,6 +452,12 @@
 				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
 				\href{https://www.linkedin.com/in/\@linkedin}{\faLinkedin\acvHeaderIconSep\@linkedin}%
 			}%
+			\ifthenelse{\isundefined{\@googlescholarid}}%
+			{}%
+			{%
+				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
+				\href{https://scholar.google.com/citations?user=\@googlescholarid}{\faGraduationCap\acvHeaderIconSep\@googlescholarname}%
+			}%
 			\ifthenelse{\isundefined{\@github}}%
 			{}%
 			{%
@@ -529,12 +542,6 @@
 				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
 				\href{https://www.hackerrank.com/\@hackerrank}{\faHackerrank\acvHeaderIconSep\@hackerrank}%
 			}%
-			\ifthenelse{\isundefined{\@googlescholarid}}%
-			{}%
-			{%
-				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				\href{https://scholar.google.com/citations?user=\@googlescholarid}{\faGraduationCap\acvHeaderIconSep\@googlescholarname}%
-			}%
 			\ifthenelse{\isundefined{\@email}}%
 			{}%
 			{%
@@ -569,9 +576,9 @@
 % Usage: \makecvfooter{<left>}{<center>}{<right>}
 \newcommand*{\makecvfooter}[3]{%
 	\fancyfoot{}
-	\fancyfoot[L]{\footerstyle{#1\ifdefined\@version\acvHeaderSocialSep\insertversion\fi}}
-	\fancyfoot[C]{\footerstyle{#2}}
-	\fancyfoot[R]{\footerstyle{#3}}
+	\fancyfoot[L]{\footerstyle{\today\ifdefined\@version\acvHeaderSocialSep\insertversion\fi\ifempty{#1}{}{\acvHeaderSocialSep#1}}}
+	\fancyfoot[C]{\footerstyle{\@firstname~\@lastname\ifempty{#2}{}{\acvHeaderSocialSep#2}}}
+	\fancyfoot[R]{\footerstyle{\thepage\ifempty{#3}{}{\acvHeaderSocialSep#3}}}
 }
 
 % Define a section for CV
@@ -654,7 +661,7 @@
 % Define a list
 % Usage: \cvlist{<list>}
 \newcommand*{\cvlist}[1]{%
-  % \vspace{\acvSectionContentTopSkip}
+	% \vspace{\acvSectionContentTopSkip}
 	% \vspace{4.0mm}
 	\descriptionstyle{#1}
 }
@@ -739,16 +746,16 @@
 	\vspace{8.4mm}
 	\setlength\tabcolsep{0pt}
 	\setlength{\extrarowheight}{0pt}
-	% \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{\textwidth - 4.5cm} R{4.5cm}}
-	% 	\recipienttitlestyle{\@recipientname} & \letterdatestyle{\@letterdate}
-	% \end{tabular*}
-	% \begin{singlespace}
-	% 	\recipientaddressstyle{\@recipientaddress} \\\\
-	% \end{singlespace}
-	% \ifthenelse{\isundefined{\@lettertitle}}
-	% {}
-	% {\lettertitlestyle{\@lettertitle} \\}
-	% \lettertextstyle{\@letteropening}
+	\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{\textwidth - 4.5cm} R{4.5cm}}
+		\recipienttitlestyle{\@recipientname} & \letterdatestyle{\@letterdate}
+	\end{tabular*}
+	\begin{singlespace}
+		\recipientaddressstyle{\@recipientaddress} \\\\
+	\end{singlespace}
+	\ifthenelse{\isundefined{\@lettertitle}}
+	{}
+	{\lettertitlestyle{\@lettertitle} \\}
+	\lettertextstyle{\@letteropening}
 }
 
 % Define a closing of the cover letter

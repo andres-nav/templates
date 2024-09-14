@@ -5,7 +5,7 @@
 \RequirePackage{kvoptions}
 \SetupKeyvalOptions{family=utils,prefix=utils@}
 
-\DeclareBoolOption{color}
+\DeclareBoolOption[true]{color}
 \DeclareStringOption[skyblue]{coloraccent}
 
 \DeclareBoolOption{minted}
@@ -42,14 +42,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\@ifpackageloaded{xcolor}{}{\ifutils@hyperref\RequirePackage[table, dvipsnames, hyperref]{xcolor}\else\RequirePackage[table, dvipsnames]{xcolor}\fi}
-
-\ifx\utils@coloraccent\@empty
-\else
-	\booltrue{utils@color}
-\fi
-
 \ifutils@color
+	\@ifpackageloaded{xcolor}{}{\ifutils@hyperref\RequirePackage[table, dvipsnames, hyperref]{xcolor}\else\RequirePackage[table, dvipsnames]{xcolor}\fi}
+
 	\definecolor{white}{HTML}{FFFFFF}
 	\definecolor{black}{HTML}{000000}
 	\definecolor{darkgray}{HTML}{333333}
@@ -269,7 +264,10 @@
 % **************************************************
 \ifutils@spacing
 	\RequirePackage[parfill]{parskip}
-\else\fi
+\else
+	\setlength{\parindent}{1.5em} % Set the indentation for paragraphs
+	\setlength{\parskip}{0pt} % Remove extra space between paragraphs
+\fi
 
 \AtBeginDocument{
 	\ifutils@widowpenalties
