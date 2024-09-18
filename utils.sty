@@ -22,6 +22,8 @@
 \DeclareBoolOption[true]{spacing}
 \DeclareBoolOption[true]{widowpenalties}
 
+\DeclareBoolOption[true]{bibtex}
+
 \DeclareBoolOption{paragraph}
 
 \DeclareBoolOption{graphicx}
@@ -277,6 +279,15 @@
 	\else\fi
 }
 
+% **************************************************
+% Bibliography
+% **************************************************
+\ifutils@bibtex
+\RequirePackage[style=numeric, sorting=none, backend=biber]{biblatex} % sort references by appearance
+\usepackage[colorlinks=false, pdfborder={0 0 0}]{hyperref}
+\RequirePackage{bookmark} % to reload the outline and bookmarks automatically
+\renewcommand{\bibfont}{\footnotesize}
+\else\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
