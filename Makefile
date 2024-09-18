@@ -47,3 +47,9 @@ compress_figures:
 	@echo "Figure compression complete."
 
 publish: compile compress
+
+mob-next:
+	@echo "Running mob next..."
+	nix run nixpkgs\#mob -- next
+
+next: publish mob-next
