@@ -2,9 +2,12 @@
 
 # Set the name of your main .tex file (without the .tex extension)
 MAIN ?= main
-MAIN_TEX ?= $(MAIN).tex
-MAIN_PDF ?= $(MAIN).pdf
 OUTPUT_PDF ?= report.pdf
+MAIN_TEX = $(MAIN).tex
+MAIN_PDF = $(MAIN).pdf
+
+VERSION ?= v0.0.0
+VERSION_REGEX = ^v[0-9]+\.[0-9]+\.[0-9]+$
 
 # Directory
 CURRENT_DIR = $(shell pwd)
@@ -19,7 +22,10 @@ LATEX_ARGS = -pdflua -bibtex -outdir=$(BUILD_DIR) -jobname=$(MAIN) -interaction=
 GHOSTSCRIPT_CMD = nix run nixpkgs\#ghostscript \--
 GHOSTSCRIPT_COMPRESS_ARGS = -sDEVICE=pdfwrite -dCompatibilityLevel=1.5 -dNOPAUSE -dQUIET -dBATCH -dPrinted=true
 
-.PHONY: all compile clean compress compress_figures publish
+# Mob
+MOB_BRANCH_TITLE ?= $(shell basename $(shell dirname $(CURRENT_DIR)))
+
+.PHONY: all compile clean compress publish start next done
 all: compile
 
 compile:
@@ -36,20 +42,29 @@ compress:
 	$(GHOSTSCRIPT_CMD) $(GHOSTSCRIPT_COMPRESS_ARGS) -sOutputFile=$(GHOSTSCRIPT_PDF_PATH) $(BUILD_PDF_PATH)
 	@mv $(GHOSTSCRIPT_PDF_PATH) $(OUTPUT_PDF_PATH)
 
-compress_figures:
-	@echo "Compressing figures..."
-	@mkdir -p $(FIGURES_DIR)/compressed
-	@find $(FIGURES_DIR) -type f -name "*.pdf" -exec sh -c ' \
-		for file; do \
-			echo "Compressing $$file..."; \
-			$(GHOSTSCRIPT_CMD) $(GHOSTSCRIPT_COMPRESS_ARGS) -sOutputFile=$${file%.pdf} $$file; \
-		done' sh {} +
-	@echo "Figure compression complete."
-
 publish: compile compress
 
-mob-next:
-	@echo "Running mob next..."
+start:
+	@if [ -z "$(filter v%,$(firstword $(MAKECMDGOALS)))" ]; then \
+		echo "Error: Please provide a valid version (e.g., make start v1.2.3)"; \
+		exit 1; \
+	fi; \
+	VERSION=$(firstword $(MAKECMDGOALS)); \
+	if echo "$$VERSION" | grep -Eq "$(VERSION_REGEX)"; then \
+		MOB_BRANCH=$(MOB_BRANCH_TITLE)_$$VERSION; \
+		echo "Starting mob session with branch $$MOB_BRANCH ..."; \
+		nix run nixpkgs\#mob -- start --create -i -b $$MOB_BRANCH; \
+	else \
+		echo "Error: VERSION should be in the format vX.X.X"; \
+		exit 1; \
+	fi
+
+next: publish
 	nix run nixpkgs\#mob -- next
 
-next: publish mob-next
+done: publish
+	nix run nixpkgs\#mob -- done
+
+# Avoid interpreting the version as a target
+%:
+	@:
