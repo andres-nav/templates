@@ -22,7 +22,10 @@
 \DeclareBoolOption[true]{spacing}
 \DeclareBoolOption[true]{widowpenalties}
 
-\DeclareBoolOption[true]{bibtex}
+\DeclareBoolOption{bibtex}
+
+\DeclareBoolOption[true]{hyperref}
+\DeclareBoolOption{fullref}
 
 \DeclareBoolOption{paragraph}
 
@@ -36,8 +39,6 @@
 
 \DeclareBoolOption{footnote}
 
-\DeclareBoolOption{hyperref}
-\DeclareBoolOption{fullref}
 
 \ProcessKeyvalOptions*
 
@@ -45,7 +46,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \ifutils@color
-	\@ifpackageloaded{xcolor}{}{\ifutils@hyperref\RequirePackage[table, dvipsnames, hyperref]{xcolor}\else\RequirePackage[table, dvipsnames]{xcolor}\fi}
+	\@ifpackageloaded{xcolor}{}{\RequirePackage[table, dvipsnames]{xcolor}}
 
 	\definecolor{white}{HTML}{FFFFFF}
 	\definecolor{black}{HTML}{000000}
@@ -253,14 +254,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\@ifpackageloaded{hyperref}{\AtEndPreamble{
-		\hypersetup{
-			pdfauthor=\utils@pdfauthor,
-			pdftitle=\utils@pdftitle,
-			pdfsubject=\utils@pdfsubject
-		}
-	}}
-
 % **************************************************
 % Paragraph handling
 % **************************************************
@@ -283,10 +276,31 @@
 % Bibliography
 % **************************************************
 \ifutils@bibtex
-\RequirePackage[style=numeric, sorting=none, backend=biber]{biblatex} % sort references by appearance
-\usepackage[colorlinks=false, pdfborder={0 0 0}]{hyperref}
-\RequirePackage{bookmark} % to reload the outline and bookmarks automatically
-\renewcommand{\bibfont}{\footnotesize}
+	\RequirePackage[style=numeric, sorting=none, backend=biber]{biblatex} % sort references by appearance
+	\RequirePackage{bookmark} % to reload the outline and bookmarks automatically
+	\renewcommand{\bibfont}{\footnotesize}
+\else\fi
+
+% **************************************************
+% References and Hyperlinks
+% **************************************************
+\ifutils@hyperref
+	\@ifpackageloaded{hyperref}{}{\RequirePackage[]{hyperref}}
+
+	\hypersetup{
+		hidelinks,
+		pdfauthor=\utils@pdfauthor,
+		pdftitle=\utils@pdftitle,
+		pdfsubject=\utils@pdfsubject
+		% TODO add pdfkeywords and version to the title
+	}
+
+	\ifutils@fullref
+		\RequirePackage{amsmath}
+		\RequirePackage{cleveref}
+		% TODO: more customisation
+	\else\fi
+
 \else\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -385,16 +399,6 @@
 \ifutils@footnote
 	\newcommand\@myfootnotemark{\guilsinglleft\textcolor{accent}{\arabic{footnote}}\guilsinglright}
 	\renewcommand\thefootnote\@myfootnotemark
-\else\fi
-
-\ifutils@hyperref
-	\ifutils@fullref\RequirePackage[nospace]{varioref}\else\fi
-	\@ifpackageloaded{}{\RequirePackage[hidelinks]{hyperref}}
-	\ifutils@fullref
-		\RequirePackage{cleveref}
-		% TODO: more customisation
-		\renewcommand\fullref[1]{\hyperref[{#1}]{\autoref*{#1}~--~\nameref*{#1}~\vpageref{#1}}}
-	\else\fi
 \else\fi
 
 
