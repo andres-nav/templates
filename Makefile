@@ -25,25 +25,30 @@ GHOSTSCRIPT_COMPRESS_ARGS = -sDEVICE=pdfwrite -dCompatibilityLevel=1.5 -dNOPAUSE
 # Mob
 MOB_BRANCH_TITLE ?= $(shell basename $(shell dirname $(CURRENT_DIR)))
 
-.PHONY: all compile clean compress publish start next done
+.PHONY: all
 all: compile
 
+.PHONY: compile
 compile:
 	@echo "Compiling LaTeX document..."
 # Always return true, otherwise the warnings will make it error
 	SOURCE_DATE_EPOCH=$(shell date +%s) $(LATEX_CMD) $(LATEX_ARGS) $(MAIN_TEX) || true
 
+.PHONY: clean
 clean:
 	@echo "Cleaning up..."
 	rm -rf $(BUILD_DIR) $(OUTPUT_PDF_PATH)
 
+.PHONY: compress
 compress:
 	@echo "Compressing PDF..."
 	$(GHOSTSCRIPT_CMD) $(GHOSTSCRIPT_COMPRESS_ARGS) -sOutputFile=$(GHOSTSCRIPT_PDF_PATH) $(BUILD_PDF_PATH)
 	@mv $(GHOSTSCRIPT_PDF_PATH) $(OUTPUT_PDF_PATH)
 
+.PHONY: publish
 publish: compile compress
 
+.PHONY: start
 start:
 	@if [ -z "$(filter v%,$(firstword $(MAKECMDGOALS)))" ]; then \
 		echo "Error: Please provide a valid version (e.g., make start v1.2.3)"; \
@@ -53,17 +58,22 @@ start:
 	if echo "$$VERSION" | grep -Eq "$(VERSION_REGEX)"; then \
 		MOB_BRANCH=$(MOB_BRANCH_TITLE)_$$VERSION; \
 		echo "Starting mob session with branch $$MOB_BRANCH ..."; \
-		nix run nixpkgs\#mob -- start --create -i -b $$MOB_BRANCH; \
+		mob start --create -i -b $$MOB_BRANCH; \
 	else \
 		echo "Error: VERSION should be in the format vX.X.X"; \
 		exit 1; \
 	fi
 
+.PHONY: next
 next: publish
-	nix run nixpkgs\#mob -- next
+	mob next
 
+.PHONY: done
 done: publish
-	nix run nixpkgs\#mob -- done
+	mob done
+	git commit
+
+
 
 # Avoid interpreting the version as a target
 %:
