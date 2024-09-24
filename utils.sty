@@ -23,6 +23,7 @@
 \DeclareBoolOption{widowpenalties}
 
 \DeclareBoolOption{bibtex}
+\DeclareBoolOption[true]{bookmark}
 
 \DeclareBoolOption[true]{hyperref}
 \DeclareBoolOption{fullref}
@@ -38,7 +39,6 @@
 \DeclareBoolOption{htmlunderline}
 
 \DeclareBoolOption{footnote}
-
 
 \ProcessKeyvalOptions*
 
@@ -277,8 +277,14 @@
 % **************************************************
 \ifutils@bibtex
 	\RequirePackage[style=numeric, sorting=none, backend=biber]{biblatex} % sort references by appearance
-	\RequirePackage{bookmark} % to reload the outline and bookmarks automatically
 	\renewcommand{\bibfont}{\footnotesize}
+\else\fi
+
+% **************************************************
+% Bookmarks
+% **************************************************
+\ifutils@bookmark
+	\RequirePackage{bookmark} % to reload the outline and bookmarks automatically
 \else\fi
 
 % **************************************************

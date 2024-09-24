@@ -30,10 +30,17 @@
 % **************************************************
 \RequirePackage{geometry} % To set the page layout
 \ifcv@letter
-	\geometry{a4paper, top=1.5cm, bottom=2cm, hmargin=2.5cm, footskip=0.5cm}
+	\geometry{top=1.5cm, bottom=2cm, hmargin=2.5cm, footskip=0.5cm}
 \else
-	\geometry{a4paper, top=1cm, bottom=1.5cm, hmargin=1.4cm, footskip=0.5cm}
+	\geometry{left=1.4cm, right=1.4cm, top=1cm, bottom=1.5cm, footskip=0.5cm}
 \fi
+
+%% Header & Footer
+\RequirePackage{fancyhdr}
+\fancyhfoffset{0em} % Set offset to each header and footer
+\renewcommand{\headrulewidth}{0pt} % Remove head rule
+\fancyhf{} % Clear all header & footer fields
+\pagestyle{fancy} % Use fancy page style
 
 % **************************************************
 % Fonts
@@ -52,47 +59,23 @@
 \newcommand*{\bodyfont}{\sourcesanspro}
 \newcommand*{\bodyfontlight}{\sourcesansprolight}
 
-%-------------------------------------------------------------------------------
-%                3rd party packages
-%-------------------------------------------------------------------------------
+% **************************************************
+% Other Packages
+% **************************************************
 % Needed to make fixed length table
 \RequirePackage{array}
 % Needed to handle text alignment
 \RequirePackage{ragged2e}
-% Needed to make header & footer efficiently
-\RequirePackage{fancyhdr}
 % Needed to use \ifxetex-\else-\fi statement
 \RequirePackage{ifxetex}
 % Needed to use \if-\then-\else statement
 \RequirePackage{xifthen}
 % Needed to strip chars from telephone number
 \RequirePackage{xstring}
-% Needed to use a toolbox of programming tools
-\RequirePackage{etoolbox}
 % Needed to change line spacing in specific environment
 \RequirePackage{setspace}
 % Needed for the photo ID
 \RequirePackage[skins]{tcolorbox}
-% Needed for getting the current date
-\RequirePackage{datetime2}
-% Needed to deal hyperlink
-% Solves issues Warning: File `cv.out' has changed
-\RequirePackage{bookmark}
-
-
-%-------------------------------------------------------------------------------
-%                Configuration for layout
-%-------------------------------------------------------------------------------
-
-%% Header & Footer
-% Set offset to each header and footer
-\fancyhfoffset{0em}
-% Remove head rule
-\renewcommand{\headrulewidth}{0pt}
-% Clear all header & footer fields
-\fancyhf{}
-% Enable if you want to make header or footer using fancyhdr
-\pagestyle{fancy}
 
 %-------------------------------------------------------------------------------
 %                Configuration for colors
@@ -118,14 +101,13 @@
 %-------------------------------------------------------------------------------
 % Configure styles for each CV elements
 % For fundamental structures
-\newcommand*{\headernamestyle}[1]{{\fontsize{32pt}{1em}\headerfont\bfseries\color{text} #1}}
-\newcommand*{\headerpositionstyle}[1]{{\fontsize{7.6pt}{1em}\headerpositionfont\scshape\color{accent} #1}}
-\newcommand*{\headeraddressstyle}[1]{{\fontsize{8pt}{1em}\headerfont\itshape\color{lighttext} #1}}
-\newcommand*{\headersocialstyle}[1]{{\fontsize{6.8pt}{1em}\headerfont\color{text} #1}}
-\newcommand*{\headersummarystyle}[1]{{\fontsize{9pt}{1em}\bodyfont\color{darktext} #1}}
-\newcommand*{\footerstyle}[1]{{\fontsize{8pt}{1em}\footerfont\scshape\color{lighttext} #1}}
-\newcommand*{\sectionstyle}[1]{{\fontsize{16pt}{1em}\bodyfont\bfseries\color{text}\@sectioncolor #1}}
-\newcommand*{\subsectionstyle}[1]{{\fontsize{12pt}{1em}\bodyfont\scshape\textcolor{text}{#1}}}
+\newcommand*{\headernamestyle}[1]{{\fontsize{32pt}{1em}\headerfont\bfseries\color{text}#1}}
+\newcommand*{\headerpositionstyle}[1]{{\fontsize{7.6pt}{1em}\headerpositionfont\scshape\color{accent}#1}}
+\newcommand*{\headeraddressstyle}[1]{{\fontsize{8pt}{1em}\headerfont\itshape\color{lighttext}#1}}
+\newcommand*{\headersocialstyle}[1]{{\fontsize{6.8pt}{1em}\headerfont\color{text}#1}}
+\newcommand*{\headersummarystyle}[1]{{\fontsize{9pt}{1em}\bodyfont\color{darktext}#1}}
+\newcommand*{\footerstyle}[1]{{\fontsize{8pt}{1em}\footerfont\scshape\color{lighttext}#1}}
+\newcommand*{\sectionstyle}[1]{{\fontsize{16pt}{1em}\bodyfont\bfseries\color{text}\@sectioncolor#1}}
 \newcommand*{\paragraphstyle}{\fontsize{9pt}{1em}\bodyfont\upshape\color{text}}
 
 % For elements of entry
@@ -164,7 +146,7 @@
 \newcommand*{\letterenclosurestyle}[1]{{\fontsize{10pt}{1em}\bodyfontlight\slshape\color{lighttext} #1}}
 
 % For hyperlinks
-\newcommand*{\cvhref}[1]{\href{#1}{\entryurlstyle{More info~~\faExternalLink*}}}
+\newcommand*{\cvhref}[1]{\href{#1}{\entryurlstyle{More info~~\faExternalLinkSquare*}}}
 
 %-------------------------------------------------------------------------------
 %                Commands for personal information
@@ -307,6 +289,10 @@
 	}%
 }
 
+% Defines writer's location
+% Usage: \location{<location>}
+\newcommand*{\location}[1]{\def\@location{#1}}
+
 % Defines writer's extra information (optional)
 % Usage: \extrainfo{<extra information>}
 \newcommand*{\extrainfo}[1]{\def\@extrainfo{#1}}
@@ -355,18 +341,17 @@
 %% Define helper macros a user can change easily
 % Header
 \newcommand{\acvHeaderNameDelim}{\space}
-\newcommand{\acvHeaderAfterNameSkip}{.4mm}
-\newcommand{\acvHeaderAfterPositionSkip}{.4mm}
-\newcommand{\acvHeaderAfterAddressSkip}{-.5mm}
+\newcommand{\acvHeaderAfterNameSkip}{0.25em}
+\newcommand{\acvHeaderAfterPositionSkip}{0.25em}
+\newcommand{\acvHeaderAfterAddressSkip}{0em}
 \newcommand{\acvHeaderIconSep}{\space}
 \newcommand{\acvHeaderSocialSep}{\quad\cdotp\quad}
-\newcommand{\acvHeaderAfterSocialSkip}{4mm}
-\newcommand{\acvHeaderAfterSummarySkip}{0mm}
+\newcommand{\acvHeaderAfterSocialSkip}{0.5em}
+\newcommand{\acvHeaderAfterSummarySkip}{0em}
 
 % Others
-\newcommand{\acvSectionTopSkip}{2.5mm}
-\newcommand{\acvSectionContentTopSkip}{2mm}
-
+\newcommand{\acvSectionTopSkip}{0.5em}
+\newcommand{\acvSectionContentTopSkip}{0.25em}
 
 %-------------------------------------------------------------------------------
 %                Commands for utilities
@@ -377,11 +362,13 @@
 \newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 
 % Use to draw horizontal line with specific thickness
-\def\vhrulefill#1{\leavevmode\leaders\hrule\@height#1\hfill \kern\z@}
+\newcommand{\vhrulefill}[1]{%
+	\leavevmode
+	\leaders\hrule\@height#1\hfill\kern\z@
+}
 
 % Use to execute conditional statements by checking empty string
 \newcommand*{\ifempty}[3]{\ifthenelse{\isempty{#1}}{#2}{#3}}
-
 
 %-------------------------------------------------------------------------------
 %                Commands for elements of CV structure
@@ -547,6 +534,12 @@
 				\href{\@teluri}{\faMobile\acvHeaderIconSep\@mobile}%
 				\setbool{isstart}{false}%
 			}%
+			\ifthenelse{\isundefined{\@location}}%
+			{}%
+			{%
+				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
+				\faMapMarker\acvHeaderIconSep\@location%
+			}%
 			\ifthenelse{\isundefined{\@extrainfo}}%
 			{}%
 			{%
@@ -554,9 +547,7 @@
 				\@extrainfo%
 			}%
 		} \\[\acvHeaderAfterSocialSkip]%
-		\ifthenelse{\isundefined{\@summary}}%
-		{}%
-		{\headersummarystyle{\justify \@summary\\}}%
+		\ifthenelse{\isundefined{\@summary}}{}{\headersummarystyle{\@summary \\[\acvHeaderAfterSummarySkip]}}%
 		\vspace*{\fill}
 	\end{minipage}%
 	\begin{minipage}[c]{\headerphotowidth}%
@@ -573,117 +564,57 @@
 	\fancyfoot[R]{\footerstyle{\thepage\ifempty{#3}{}{\acvHeaderSocialSep#3}}}
 }
 
-% Define a section for CV
-% Usage: \cvsection{<section-title>}
-\newcommand{\cvsection}[1]{%
-	% \vspace{\acvSectionTopSkip}
-	\sectionstyle{#1}
-	\phantomsection
-	\color{sectiondivider}\vhrulefill{0.9pt}
-}
-
-% Define a subsection for CV
-% Usage: \cvsubsection{<subsection-title>}
-\newcommand{\cvsubsection}[1]{%
-	% \vspace{\acvSectionContentTopSkip}
-	% \vspace{-3mm}
-	\subsectionstyle{#1}
-	\phantomsection
+% Renew the section command to add a divider
+\renewcommand{\section}[1]{%
+	\vspace{\acvSectionTopSkip}
+	\makebox[\textwidth][l]{
+		\sectionstyle{#1}
+		\color{sectiondivider}\vhrulefill{1pt}
+	}
+	\par
 }
 
 % Define a paragraph for CV
 \newenvironment{cvparagraph}{%
-	% \vspace{\acvSectionContentTopSkip}
 	\paragraphstyle
 }{%
 	\par
-	% \vspace{2mm}
 }
 
-% Define an environment for cventry
-\newenvironment{cventries}{%
-	% \vspace{\acvSectionContentTopSkip}
-	\begin{center}
-		}{%
-	\end{center}
-}
 % Define an entry of cv information
 % Usage: \cventry{<position>}{<title>}{<info>}{<location>}{<date>}{<description>}
 \newcommand*{\cventry}[6]{%
-	% \vspace{\acvSectionContentTopSkip}
-	\setlength\tabcolsep{0pt}
-	\setlength{\extrarowheight}{0pt}
-	\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{0.67\textwidth}R{0.32\textwidth}}
+	\vspace{\acvSectionContentTopSkip}
+	\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{0.66\textwidth}R{0.31\textwidth}}
 		\entrytitlestyle{#1} & \entrydatestyle{#5} \\
 
 		\ifstrempty{#2#3#4}
 		{}
-		{\entrypositionstyle{#2 {\acvHeaderSocialSep} #3} & \entrylocationstyle{#4} \\}
+		{\entrypositionstyle{#2{\acvHeaderSocialSep}#3} & \entrylocationstyle{#4} \\}
 
-		\ifstrempty{#6}
-		{}
-		{\multicolumn{2}{L{\textwidth}}{\descriptionstyle{#6}} \\}
 	\end{tabular*}%
-}
-
-% Define an environment for cvsubentry
-\newenvironment{cvsubentries}{%
-	\begin{center}
-		}{%
-	\end{center}
-}
-% Define a subentry of cv information
-% Usage: \cvsubentry{<position>}{<title>}{<date>}{<description>}
-\newcommand*{\cvsubentry}[4]{%
-	\setlength\tabcolsep{0pt}
-	\setlength{\extrarowheight}{0pt}
-	\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{\textwidth - 4.5cm} R{4.5cm}}
-		\setlength\leftskip{0.2cm}
-		\subentrytitlestyle{#2} & \ifthenelse{\equal{#1}{}}
-		{\subentrydatestyle{#3}}{}
-		\ifthenelse{\equal{#1}{}}
-		{}
-		{\subentrypositionstyle{#1} & \subentrydatestyle{#3} }
-		\ifthenelse{\equal{#4}{}}
-		{}
-		{\multicolumn{2}{L{17.0cm}}{\subdescriptionstyle{#4}} }
-	\end{tabular*}
-}
-
-% Define a list
-% Usage: \cvlist{<list>}
-\newcommand*{\cvlist}[1]{%
-	% \vspace{\acvSectionContentTopSkip}
-	% \vspace{4.0mm}
-	\descriptionstyle{#1}
+	\ifstrempty{#6}
+	{}
+	{\descriptionstyle{#6}}
 }
 
 % Define an environment for cvhonor
 \newenvironment{cvhonors}{%
-	% \vspace{\acvSectionContentTopSkip}
-	% \vspace{-2mm}
-	\begin{center}
-		\setlength\tabcolsep{0pt}
-		\setlength{\extrarowheight}{0pt}
-		\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} C{1.5cm} L{\textwidth-3.5cm} R{2cm}}
-			}{%
-		\end{tabular*}
-	\end{center}
+	\vspace{\acvSectionContentTopSkip}
+	\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}
+			L{0.9\textwidth} R{0.1\textwidth}}
+		}{%
+	\end{tabular*}
 }
 % Define a line of cv information(honor, award or something else)
 % Usage: \cvhonor{<position>}{<title>}{<url>}{<date>}
 \newcommand*{\cvhonor}[4]{%
-	\ifthenelse{\equal{#3}{}}{%
-		\honordatestyle{#4} & \multicolumn{2}{L{\textwidth - 1.5cm}}{\honorpositionstyle{#1}\ifempty{#2}{}{,} \honortitlestyle{#2}} \\% No URL, two-column format
-	}{%
-		\honordatestyle{#4} & \honorpositionstyle{#1}\ifempty{#2}{}{,} \honortitlestyle{#2} & \cvhref{#3} \\ % URL present, three-column format
-	}%
+	\honorpositionstyle{#1}\ifempty{#2}{}{,} \honortitlestyle{#2}\ifempty{#4}{}{ \honordatestyle{(#4)}} & \ifempty{#3}{}{\cvhref{#3}} \\ % URL present, three-column format
 }
 
 % Define an environment for cvskill
 \newenvironment{cvskills}{%
-	% \vspace{\acvSectionContentTopSkip}
-	% \vspace{-2.0mm}
+	\vspace{\acvSectionContentTopSkip}
 	\begin{center}
 		\setlength\tabcolsep{1ex}
 		\setlength{\extrarowheight}{0pt}
@@ -701,14 +632,10 @@
 
 % Define an environment for cvitems(for cventry)
 \newenvironment{cvitems}{%
-	\vspace{-3.0mm}
-	\begin{justify}
-		\begin{itemize}[leftmargin=4ex, nosep, noitemsep, itemsep=0.4em]
-			\renewcommand{\labelitemi}{\bullet}
-			}{%
-		\end{itemize}
-	\end{justify}
-	\vspace{-3.0mm}
+	\begin{itemize}[leftmargin=1em, noitemsep, itemsep=0.4em]
+		\renewcommand{\labelitemi}{\bullet}
+		}{%
+	\end{itemize}
 }
 
 
@@ -725,9 +652,9 @@
 % Usage: \lettersection{<section-title>}
 \newcommand{\lettersection}[1]{%
 	\par\addvspace{2.5ex}
-	\phantomsection{}
+	\phantomsection
 	\lettersectionstyle{#1}
-	\color{sectiondivider}\vhrulefill{0.9pt}
+	\color{sectiondivider}\vhrulefill{1pt}
 	\par\nobreak\addvspace{0.4ex}
 	\lettertextstyle%
 }
