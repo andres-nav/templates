@@ -107,7 +107,7 @@
 \newcommand*{\headersocialstyle}[1]{{\fontsize{6.8pt}{1em}\headerfont\color{text}#1}}
 \newcommand*{\headersummarystyle}[1]{{\fontsize{9pt}{1em}\bodyfont\color{darktext}#1}}
 \newcommand*{\footerstyle}[1]{{\fontsize{8pt}{1em}\footerfont\scshape\color{lighttext}#1}}
-\newcommand*{\sectionstyle}[1]{{\fontsize{16pt}{1em}\bodyfont\bfseries\color{text}\@sectioncolor#1}}
+\newcommand*{\sectionstyle}[1]{{\fontsize{16pt}{1em}\bodyfont\bfseries\scshape\color{text}\@sectioncolor#1}}
 \newcommand*{\paragraphstyle}{\fontsize{9pt}{1em}\bodyfont\upshape\color{text}}
 
 % For elements of entry
@@ -116,7 +116,7 @@
 \newcommand*{\entrydatestyle}[1]{{\fontsize{9pt}{1em}\bodyfont\slshape\color{graytext} #1}}
 \newcommand*{\entrylocationstyle}[1]{{\fontsize{8pt}{1em}\bodyfontlight\slshape\color{graytext} #1}}
 \newcommand*{\descriptionstyle}[1]{{\fontsize{9pt}{1em}\bodyfont\upshape\color{text} #1}}
-\newcommand*{\entryurlstyle}[1]{{\fontsize{8pt}{1em}\bodyfont\color{accent} #1}}
+\newcommand*{\entryurlstyle}[1]{{\fontsize{8pt}{1em}\bodyfont\underline{#1}}}
 
 % For elements of subentry
 \newcommand*{\subentrytitlestyle}[1]{{\fontsize{8pt}{1em}\bodyfont\mdseries\color{graytext} #1}}
@@ -146,7 +146,7 @@
 \newcommand*{\letterenclosurestyle}[1]{{\fontsize{10pt}{1em}\bodyfontlight\slshape\color{lighttext} #1}}
 
 % For hyperlinks
-\newcommand*{\cvhref}[1]{\href{#1}{\entryurlstyle{More info~~\faExternalLinkSquare*}}}
+\newcommand*{\cvhref}[1]{\href{#1}{\entryurlstyle{More info}}}
 
 %-------------------------------------------------------------------------------
 %                Commands for personal information
@@ -567,8 +567,11 @@
 % Renew the section command to add a divider
 \renewcommand{\section}[1]{%
 	\vspace{\acvSectionTopSkip}
-	\makebox[\textwidth][l]{
+	\makebox[\textwidth][c]{
+		\color{sectiondivider}\vhrulefill{1pt}
+		\hspace{1em}
 		\sectionstyle{#1}
+		\hspace{1em}
 		\color{sectiondivider}\vhrulefill{1pt}
 	}
 	\par
@@ -585,12 +588,12 @@
 % Usage: \cventry{<position>}{<title>}{<info>}{<location>}{<date>}{<description>}
 \newcommand*{\cventry}[6]{%
 	\vspace{\acvSectionContentTopSkip}
-	\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{0.66\textwidth}R{0.31\textwidth}}
+	\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{0.66\textwidth} r}
 		\entrytitlestyle{#1} & \entrydatestyle{#5} \\
 
 		\ifstrempty{#2#3#4}
 		{}
-		{\entrypositionstyle{#2{\acvHeaderSocialSep}#3} & \entrylocationstyle{#4} \\}
+		{\entrypositionstyle{#2\ifempty{#3}{}{{\acvHeaderSocialSep}#3}} & \entrylocationstyle{#4} \\}
 
 	\end{tabular*}%
 	\ifstrempty{#6}
@@ -601,15 +604,14 @@
 % Define an environment for cvhonor
 \newenvironment{cvhonors}{%
 	\vspace{\acvSectionContentTopSkip}
-	\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}
-			L{0.9\textwidth} R{0.1\textwidth}}
+	\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{0.85\textwidth} r}
 		}{%
 	\end{tabular*}
 }
 % Define a line of cv information(honor, award or something else)
 % Usage: \cvhonor{<position>}{<title>}{<url>}{<date>}
 \newcommand*{\cvhonor}[4]{%
-	\honorpositionstyle{#1}\ifempty{#2}{}{,} \honortitlestyle{#2}\ifempty{#4}{}{ \honordatestyle{(#4)}} & \ifempty{#3}{}{\cvhref{#3}} \\ % URL present, three-column format
+	\honorpositionstyle{#1}\ifempty{#2}{}{,} \honortitlestyle{#2}\ifempty{#4}{}{ \honordatestyle{(#4)}} & \ifempty{#3}{}{\cvhref{#3}} \\
 }
 
 % Define an environment for cvskill

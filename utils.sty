@@ -294,10 +294,12 @@
 	\@ifpackageloaded{hyperref}{}{\RequirePackage[]{hyperref}}
 
 	\hypersetup{
-		hidelinks,
 		pdfauthor=\utils@pdfauthor,
 		pdftitle=\utils@pdftitle,
 		pdfsubject=\utils@pdfsubject
+		hidelinks,
+		colorlinks=true,
+		urlcolor=accent,
 		% TODO add pdfkeywords and version to the title
 	}
 
