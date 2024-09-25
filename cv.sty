@@ -4,12 +4,13 @@
 \ProvidesPackage{cv}[Template to create amazing CVs and motivation letters]
 
 % **************************************************
-%                Class options
+% Class options
 % **************************************************
 \RequirePackage{kvoptions}
 \SetupKeyvalOptions{family=cv,prefix=cv@}
 
 \DeclareBoolOption{letter} % if true, it will load the letter template, if false, it will load the cv template
+\DeclareBoolOption[true]{icons} % if true, it will load the letter template, if false, it will load the cv template
 
 \DeclareDefaultOption{
 	\PassOptionsToPackage{\CurrentOption}{utils}
@@ -45,19 +46,12 @@
 % **************************************************
 % Fonts
 % **************************************************
-\RequirePackage[quiet]{fontspec}
-\defaultfontfeatures{Ligatures=TeX} % Support LaTeX quoting style
-\RequirePackage{unicode-math} % Manage math fonts
-\RequirePackage{fontawesome5} % Use icons from font-awesome
-\RequirePackage{roboto}
-\RequirePackage[default,opentype]{sourcesanspro}
+\usepackage{helvet} % Use Helvetica for sans-serif
+\renewcommand{\sfdefault}{phv} % Set default sans-serif font to Helvetica
 
-\newcommand*{\headerfont}{\roboto}
-\newcommand*{\headerfontlight}{\robotolight}
-\newcommand*{\headerpositionfont}{\sourcesanspro}
-\newcommand*{\footerfont}{\sourcesanspro}
-\newcommand*{\bodyfont}{\sourcesanspro}
-\newcommand*{\bodyfontlight}{\sourcesansprolight}
+\ifcv@icons
+	\RequirePackage{fontawesome5} % Use icons from font-awesome
+\fi
 
 % **************************************************
 % Other Packages
@@ -76,16 +70,17 @@
 \RequirePackage{setspace}
 % Needed for the photo ID
 \RequirePackage[skins]{tcolorbox}
+\RequirePackage[english]{babel} % Add this if not already included
 
 %-------------------------------------------------------------------------------
 %                Configuration for colors
 %-------------------------------------------------------------------------------
 % Text colors
-\colorlet{darktext}{semidarkgray}
-\colorlet{text}{darkgray}
-\colorlet{graytext}{gray}
-\colorlet{lighttext}{lightgray}
-\colorlet{sectiondivider}{gray}
+\colorlet{darktext}{black}
+\colorlet{text}{black}
+\colorlet{graytext}{black}
+\colorlet{lighttext}{black}
+\colorlet{sectiondivider}{black}
 
 % Boolean value to switch section color highlighting
 \newbool{acvSectionColorHighlight}
@@ -101,43 +96,42 @@
 %-------------------------------------------------------------------------------
 % Configure styles for each CV elements
 % For fundamental structures
-\newcommand*{\headernamestyle}[1]{{\fontsize{32pt}{1em}\headerfont\bfseries\color{text}#1}}
-\newcommand*{\headerpositionstyle}[1]{{\fontsize{7.6pt}{1em}\headerpositionfont\scshape\color{accent}#1}}
-\newcommand*{\headeraddressstyle}[1]{{\fontsize{8pt}{1em}\headerfont\itshape\color{lighttext}#1}}
-\newcommand*{\headersocialstyle}[1]{{\fontsize{6.8pt}{1em}\headerfont\color{text}#1}}
-\newcommand*{\headersummarystyle}[1]{{\fontsize{9pt}{1.25em}\bodyfont\upshape\color{text}#1}}
-\newcommand*{\footerstyle}[1]{{\fontsize{8pt}{1em}\footerfont\scshape\color{lighttext}#1}}
-\newcommand*{\sectionstyle}[1]{{\fontsize{16pt}{1em}\bodyfont\bfseries\scshape\color{text}\@sectioncolor#1}}
-\newcommand*{\paragraphstyle}{\fontsize{9pt}{1em}\bodyfont\upshape\color{text}}
+\newcommand*{\headernamestyle}[1]{{\fontsize{16pt}{1em}\selectfont\bfseries\color{text}#1}}
+\newcommand*{\headerpositionstyle}[1]{{\fontsize{8pt}{1em}\selectfont\scshape\color{accent}#1}}
+\newcommand*{\headeraddressstyle}[1]{{\fontsize{8pt}{1em}\selectfont\itshape\color{lighttext}#1}}
+\newcommand*{\headersocialstyle}[1]{{\fontsize{8pt}{1em}\selectfont\color{text}#1}}
+\newcommand*{\footerstyle}[1]{{\fontsize{8pt}{1em}\selectfont\scshape\color{lighttext}#1}}
+\newcommand*{\sectionstyle}[1]{{\fontsize{12pt}{1em}\selectfont\scshape\color{text}\@sectioncolor#1}}
+\newcommand*{\paragraphstyle}{\fontsize{10pt}{1em}\selectfont\upshape\color{text}}
 
 % For elements of entry
-\newcommand*{\entrytitlestyle}[1]{{\fontsize{11pt}{1em}\bodyfont\bfseries\scshape\color{darktext} #1}}
-\newcommand*{\entrypositionstyle}[1]{{\fontsize{10pt}{1em}\bodyfont\bfseries\scshape\color{graytext} #1}}
-\newcommand*{\entrysummarystyle}[1]{{\fontsize{9pt}{1em}\bodyfont\scshape\color{graytext} #1}}
-\newcommand*{\entrydatestyle}[1]{{\fontsize{9pt}{1em}\bodyfont\slshape\color{graytext} #1}}
-\newcommand*{\entrylocationstyle}[1]{{\fontsize{8pt}{1em}\bodyfontlight\slshape\color{graytext} #1}}
-\newcommand*{\descriptionstyle}[1]{{\fontsize{9pt}{1em}\bodyfont\upshape\color{text} #1}}
-\newcommand*{\entryurlstyle}[1]{{\fontsize{8pt}{1em}\bodyfont\underline{#1}}}
+\newcommand*{\entrytitlestyle}[1]{{\fontsize{10pt}{1em}\selectfont\bfseries\color{darktext} #1}}
+\newcommand*{\entrycompanystyle}[1]{{\fontsize{10pt}{1em}\selectfont\scshape\color{graytext} #1}}
+\newcommand*{\entrysummarystyle}[1]{{\fontsize{8pt}{1em}\selectfont\scshape\color{graytext} #1}}
+\newcommand*{\entrydatestyle}[1]{{\fontsize{8pt}{1em}\selectfont\slshape\color{graytext} #1}}
+\newcommand*{\entrylocationstyle}[1]{{\fontsize{8pt}{1em}\selectfont\slshape\color{graytext} #1}}
+\newcommand*{\descriptionstyle}[1]{{\fontsize{10pt}{1em}\selectfont\upshape\color{text} #1}}
+\newcommand*{\entryurlstyle}[1]{{\fontsize{10pt}{1em}\selectfont\underline{#1}}}
 
 % For elements of honor
-\newcommand*{\honortitlestyle}[1]{{\fontsize{9pt}{1em}\bodyfont\color{graytext} #1}}
-\newcommand*{\honorpositionstyle}[1]{{\fontsize{9pt}{1em}\bodyfont\bfseries\color{darktext} #1}}
-\newcommand*{\honordatestyle}[1]{{\fontsize{9pt}{1em}\bodyfont\color{graytext} #1}}
-\newcommand*{\honorlocationstyle}[1]{{\fontsize{9pt}{1em}\bodyfontlight\slshape\color{accent} #1}}
+\newcommand*{\honortitlestyle}[1]{{\fontsize{10pt}{1em}\color{graytext} #1}}
+\newcommand*{\honorpositionstyle}[1]{{\fontsize{10pt}{1em}\bfseries\color{darktext} #1}}
+\newcommand*{\honordatestyle}[1]{{\fontsize{10pt}{1em}\color{graytext} #1}}
+\newcommand*{\honorlocationstyle}[1]{{\fontsize{10pt}{1em}\slshape\color{accent} #1}}
 
 % For elements of skill
-\newcommand*{\skilltypestyle}[1]{{\fontsize{10pt}{1em}\bodyfont\bfseries\color{darktext} #1}}
-\newcommand*{\skillsetstyle}[1]{{\fontsize{9pt}{1em}\bodyfontlight\color{text} #1}}
+\newcommand*{\skilltypestyle}[1]{{\fontsize{10pt}{1em}\bfseries\color{darktext} #1}}
+\newcommand*{\skillsetstyle}[1]{{\fontsize{10pt}{1em}\color{text} #1}}
 
 % For elements of the cover letter
-\newcommand*{\lettersectionstyle}[1]{{\fontsize{14pt}{1em}\bodyfont\bfseries\color{text}\@sectioncolor #1}}
-\newcommand*{\recipientaddressstyle}[1]{{\fontsize{9pt}{1em}\bodyfont\scshape\color{graytext} #1}}
-\newcommand*{\recipienttitlestyle}[1]{{\fontsize{11pt}{1em}\bodyfont\bfseries\color{darktext} #1}}
-\newcommand*{\lettertitlestyle}[1]{{\fontsize{10pt}{1em}\bodyfontlight\bfseries\color{darktext} \underline{#1}}}
-\newcommand*{\letterdatestyle}[1]{{\fontsize{9pt}{1em}\bodyfontlight\slshape\color{graytext} #1}}
-\newcommand*{\lettertextstyle}{\fontsize{10pt}{1.4em}\bodyfont\upshape\color{darktext}}
-\newcommand*{\letternamestyle}[1]{{\fontsize{10pt}{1em}\bodyfont\bfseries\color{darktext} #1}}
-\newcommand*{\letterenclosurestyle}[1]{{\fontsize{10pt}{1em}\bodyfontlight\slshape\color{lighttext} #1}}
+\newcommand*{\lettersectionstyle}[1]{{\fontsize{14pt}{1em}\bfseries\color{text}\@sectioncolor #1}}
+\newcommand*{\recipientaddressstyle}[1]{{\fontsize{9pt}{1em}\scshape\color{graytext} #1}}
+\newcommand*{\recipienttitlestyle}[1]{{\fontsize{11pt}{1em}\bfseries\color{darktext} #1}}
+\newcommand*{\lettertitlestyle}[1]{{\fontsize{10pt}{1em}\bfseries\color{darktext} \underline{#1}}}
+\newcommand*{\letterdatestyle}[1]{{\fontsize{9pt}{1em}\slshape\color{graytext} #1}}
+\newcommand*{\lettertextstyle}{\fontsize{10pt}{1.4em}\upshape\color{darktext}}
+\newcommand*{\letternamestyle}[1]{{\fontsize{10pt}{1em}\bfseries\color{darktext} #1}}
+\newcommand*{\letterenclosurestyle}[1]{{\fontsize{10pt}{1em}\slshape\color{lighttext} #1}}
 
 % For hyperlinks
 \newcommand*{\cvhref}[1]{\href{#1}{\entryurlstyle{More info}}}
@@ -344,7 +338,7 @@
 \newcommand{\acvHeaderAfterSummarySkip}{0em}
 
 % Others
-\newcommand{\acvSectionTopSkip}{0.5em}
+\newcommand{\acvSectionTopSkip}{0.25em}
 \newcommand{\acvSectionContentTopSkip}{0.25em}
 
 %-------------------------------------------------------------------------------
@@ -354,12 +348,6 @@
 \newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-
-% Use to draw horizontal line with specific thickness
-\newcommand{\vhrulefill}[1]{%
-	\leavevmode
-	\leaders\hrule\@height#1\hfill\kern\z@
-}
 
 % Use to execute conditional statements by checking empty string
 \newcommand*{\ifempty}[3]{\ifthenelse{\isempty{#1}}{#2}{#3}}
@@ -417,13 +405,13 @@
 			{}%
 			{%
 				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				\href{http://\@homepage}{\faHome\acvHeaderIconSep\@homepage}%
+				\href{https://\@homepage}{\ifcv@icons\faHome\acvHeaderIconSepe\fi\@homepage}%
 			}%
 			\ifthenelse{\isundefined{\@linkedin}}%
 			{}%
 			{%
 				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				\href{https://www.linkedin.com/in/\@linkedin}{\faLinkedin\acvHeaderIconSep\@linkedin}%
+				\href{https://www.linkedin.com/in/\@linkedin}{\ifcv@icons\faLinkedin\acvHeaderIconSepe\else linkedin.com/in/\fi \@linkedin}%
 			}%
 			\ifthenelse{\isundefined{\@googlescholarid}}%
 			{}%
@@ -435,7 +423,7 @@
 			{}%
 			{%
 				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				\href{https://github.com/\@github}{\faGithubSquare\acvHeaderIconSep\@github}%
+				\href{https://github.com/\@github}{\ifcv@icons\faGithubSquare\acvHeaderIconSepe\else github.com/\fi \@github}%
 			}%
 			\ifthenelse{\isundefined{\@gitlab}}%
 			{}%
@@ -459,7 +447,7 @@
 			{}%
 			{%
 				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				\href{https://orcid.org/\@orcid}{\faOrcid\acvHeaderIconSep\@orcid}%
+				\href{https://orcid.org/\@orcid}{\ifcv@icons\faOrcid\acvHeaderIconSepe\else orcid.org/\fi \@orcid}%
 			}%
 			\ifthenelse{\isundefined{\@twitter}}%
 			{}%
@@ -519,20 +507,20 @@
 			{}%
 			{%
 				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				\href{mailto:\@email}{\faEnvelope\acvHeaderIconSep\@email}%
+				\href{mailto:\@email}{\ifcv@icons\faEnvelope\acvHeaderIconSep\fi \@email}%
 			}%
 			\ifthenelse{\isundefined{\@mobile}}%
 			{}%
 			{%
 				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				\href{\@teluri}{\faMobile\acvHeaderIconSep\@mobile}%
+				\href{\@teluri}{\ifcv@icons\faMobile\acvHeaderIconSep\fi \@mobile}%
 				\setbool{isstart}{false}%
 			}%
 			\ifthenelse{\isundefined{\@location}}%
 			{}%
 			{%
 				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				\faMapMarker\acvHeaderIconSep\@location%
+				\ifcv@icons\faMapMarker\acvHeaderIconSep\fi \@location%
 			}%
 			\ifthenelse{\isundefined{\@extrainfo}}%
 			{}%
@@ -541,11 +529,7 @@
 				\@extrainfo%
 			}%
 		} \\[\acvHeaderAfterSocialSkip]%
-		\ifthenelse{\isundefined{\@summary}}{}{\headersummarystyle{
-			\begin{justify}
-			\@summary
-			\end{justify}
-			\\[\acvHeaderAfterSummarySkip]}}%
+		\ifthenelse{\isundefined{\@summary}}{}{\raggedright\@summary\\[\acvHeaderAfterSummarySkip]}%
 		\vspace*{\fill}
 	\end{minipage}%
 	\begin{minipage}[c]{\headerphotowidth}%
@@ -565,38 +549,24 @@
 % Renew the section command to add a divider
 \renewcommand{\section}[1]{%
 	\vspace{\acvSectionTopSkip}
-	\makebox[\textwidth][c]{
-		\color{sectiondivider}\vhrulefill{1pt}
-		\hspace{1em}
-		\sectionstyle{#1}
-		\hspace{1em}
-		\color{sectiondivider}\vhrulefill{1pt}
-	}
-	\par
+	\sectionstyle{#1} % Assuming sectionstyle formats the section title
+	\vspace{-\baselineskip} % Adjust as needed
+	\par\noindent\color{sectiondivider}\hrule height 0.5pt
 }
 
 % Define a paragraph for CV
-\newenvironment{cvparagraph}{%
-	\paragraphstyle
-}{%
-	\par
-}
-
 % Define an entry of cv information
 % Usage: \cventry{<position>}{<title>}{<info>}{<location>}{<date>}{<description>}
-\newcommand*{\cventry}[6]{%
+\newcommand*{\cventry}[5]{%
 	\vspace{\acvSectionContentTopSkip}
 	\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{0.66\textwidth} r}
 		\entrytitlestyle{#1} & \entrydatestyle{#5} \\
 
 		\ifstrempty{#2#3#4}
 		{}
-		{\entrypositionstyle{#2}\ifempty{#3}{}{\entrysummarystyle{, #3}} & \entrylocationstyle{#4} \\}
+		{\entrycompanystyle{#2}\ifempty{#3}{}{\entrysummarystyle{, #3}} & \entrylocationstyle{#4} \\}
 
 	\end{tabular*}%
-	\ifstrempty{#6}
-	{}
-	{\descriptionstyle{#6}}
 }
 
 % Define an environment for cvhonor
@@ -630,14 +600,10 @@
 	\skilltypestyle{#1} & \skillsetstyle{#2} \\
 }
 
-% Define an environment for cvitems(for cventry)
-\newenvironment{cvitems}{%
-	\begin{itemize}[leftmargin=1em, noitemsep, itemsep=0.4em]
-		\renewcommand{\labelitemi}{\bullet}
-		}{%
-	\end{itemize}
-}
-
+% **************************************************
+% Lists
+% **************************************************
+\setlist[itemize]{leftmargin=1em, noitemsep, itemsep=0.4em, label=\bullet}
 
 %-------------------------------------------------------------------------------
 %                Commands for elements of Cover Letter
@@ -646,17 +612,6 @@
 \newenvironment{cvletter}{%
 	\lettertextstyle
 }{%
-}
-
-% Define a section for the cover letter
-% Usage: \lettersection{<section-title>}
-\newcommand{\lettersection}[1]{%
-	\par\addvspace{2.5ex}
-	\phantomsection
-	\lettersectionstyle{#1}
-	\color{sectiondivider}\vhrulefill{1pt}
-	\par\nobreak\addvspace{0.4ex}
-	\lettertextstyle%
 }
 
 % Define a title of the cover letter
