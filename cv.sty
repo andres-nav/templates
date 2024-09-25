@@ -541,7 +541,11 @@
 				\@extrainfo%
 			}%
 		} \\[\acvHeaderAfterSocialSkip]%
-		\ifthenelse{\isundefined{\@summary}}{}{\headersummarystyle{\@summary \\[\acvHeaderAfterSummarySkip]}}%
+		\ifthenelse{\isundefined{\@summary}}{}{\headersummarystyle{
+			\begin{justify}
+			\@summary
+			\end{justify}
+			\\[\acvHeaderAfterSummarySkip]}}%
 		\vspace*{\fill}
 	\end{minipage}%
 	\begin{minipage}[c]{\headerphotowidth}%
