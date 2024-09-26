@@ -46,8 +46,8 @@
 % **************************************************
 % Fonts
 % **************************************************
-\usepackage{helvet} % Use Helvetica for sans-serif
-\renewcommand{\sfdefault}{phv} % Set default sans-serif font to Helvetica
+\RequirePackage{fontspec}
+\setmainfont{TeX Gyre Termes}
 
 \ifcv@icons
 	\RequirePackage{fontawesome5} % Use icons from font-awesome
@@ -105,12 +105,11 @@
 \newcommand*{\paragraphstyle}{\fontsize{10pt}{1em}\selectfont\upshape\color{text}}
 
 % For elements of entry
-\newcommand*{\entrytitlestyle}[1]{{\fontsize{10pt}{1em}\selectfont\bfseries\color{darktext} #1}}
-\newcommand*{\entrycompanystyle}[1]{{\fontsize{10pt}{1em}\selectfont\scshape\color{graytext} #1}}
-\newcommand*{\entrysummarystyle}[1]{{\fontsize{8pt}{1em}\selectfont\scshape\color{graytext} #1}}
-\newcommand*{\entrydatestyle}[1]{{\fontsize{8pt}{1em}\selectfont\slshape\color{graytext} #1}}
-\newcommand*{\entrylocationstyle}[1]{{\fontsize{8pt}{1em}\selectfont\slshape\color{graytext} #1}}
-\newcommand*{\descriptionstyle}[1]{{\fontsize{10pt}{1em}\selectfont\upshape\color{text} #1}}
+\newcommand*{\entrytitlestyle}[1]{{\fontsize{10pt}{1em}\selectfont\bfseries #1}}
+\newcommand*{\entrycompanystyle}[1]{{\fontsize{10pt}{1em}\selectfont #1}}
+\newcommand*{\entrysummarystyle}[1]{{\fontsize{10pt}{1em}\selectfont #1}}
+\newcommand*{\entrydatestyle}[1]{{\fontsize{10pt}{1em}\selectfont #1}}
+\newcommand*{\entrylocationstyle}[1]{{\fontsize{10pt}{1em}\selectfont #1}}
 \newcommand*{\entryurlstyle}[1]{{\fontsize{10pt}{1em}\selectfont\underline{#1}}}
 
 % For elements of honor
@@ -338,8 +337,8 @@
 \newcommand{\acvHeaderAfterSummarySkip}{0em}
 
 % Others
-\newcommand{\acvSectionTopSkip}{0.25em}
-\newcommand{\acvSectionContentTopSkip}{0.25em}
+\newcommand{\acvSectionTopSkip}{0em}
+\newcommand{\acvSectionContentTopSkip}{0em}
 
 %-------------------------------------------------------------------------------
 %                Commands for utilities
@@ -394,12 +393,11 @@
 		\headersocialstyle{%
 			\newbool{isstart}%
 			\setbool{isstart}{true}%
-			\ifthenelse{\isundefined{\@dateofbirth}}%
+			\ifthenelse{\isundefined{\@email}}%
 			{}%
 			{%
 				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				% \mbox prevents wrapping of elements%
-				\mbox{\faBirthdayCake\acvHeaderIconSep\@dateofbirth}%
+				\href{mailto:\@email}{\ifcv@icons\faEnvelope\acvHeaderIconSep\fi \@email}%
 			}%
 			\ifthenelse{\isundefined{\@homepage}}%
 			{}%
@@ -437,53 +435,17 @@
 				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
 				\href{https://bitbucket.com/\@bitbucket}{\faBitbucket\acvHeaderIconSep\@bitbucket}%
 			}%
-			\ifthenelse{\isundefined{\@stackoverflowid}}%
-			{}%
-			{%
-				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				\href{https://stackoverflow.com/users/\@stackoverflowid}{\faStackOverflow\acvHeaderIconSep\@stackoverflowname}%
-			}%
 			\ifthenelse{\isundefined{\@orcid}}%
 			{}%
 			{%
 				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
 				\href{https://orcid.org/\@orcid}{\ifcv@icons\faOrcid\acvHeaderIconSepe\else orcid.org/\fi \@orcid}%
 			}%
-			\ifthenelse{\isundefined{\@twitter}}%
-			{}%
-			{%
-				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				\href{https://twitter.com/\@twitter}{\faTwitter\acvHeaderIconSep\@twitter}%
-			}%
-			\ifthenelse{\isundefined{\@mastodonname}}%
-			{}%
-			{%
-				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				\href{https://\@mastodoninstance/@\@mastodonname}{\faMastodon\acvHeaderIconSep\@mastodonname}%
-			}%
-			\ifthenelse{\isundefined{\@skype}}%
-			{}%
-			{%
-				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				\faSkype\acvHeaderIconSep\@skype%
-			}%
-			\ifthenelse{\isundefined{\@reddit}}%
-			{}%
-			{%
-				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				\href{https://www.reddit.com/user/\@reddit}{\faReddit\acvHeaderIconSep\@reddit}%
-			}%
 			\ifthenelse{\isundefined{\@researchgate}}%
 			{}%
 			{%
 				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
 				\href{https://www.researchgate.net/profile/\@researchgate}{\faResearchgate\acvHeaderIconSep\@researchgate}%
-			}%
-			\ifthenelse{\isundefined{\@xing}}%
-			{}%
-			{%
-				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				\href{https://www.xing.com/profile/\@xing}{\faXingSquare\acvHeaderIconSep\@xing}
 			}%
 			\ifthenelse{\isundefined{\@medium}}%
 			{}%
@@ -502,12 +464,6 @@
 			{%
 				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
 				\href{https://www.hackerrank.com/\@hackerrank}{\faHackerrank\acvHeaderIconSep\@hackerrank}%
-			}%
-			\ifthenelse{\isundefined{\@email}}%
-			{}%
-			{%
-				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				\href{mailto:\@email}{\ifcv@icons\faEnvelope\acvHeaderIconSep\fi \@email}%
 			}%
 			\ifthenelse{\isundefined{\@mobile}}%
 			{}%
@@ -556,17 +512,23 @@
 
 % Define a paragraph for CV
 % Define an entry of cv information
-% Usage: \cventry{<position>}{<title>}{<info>}{<location>}{<date>}{<description>}
+% Usage: \cventry{<position>}{<title>}{<info>}{<location>}{<date>}
 \newcommand*{\cventry}[5]{%
 	\vspace{\acvSectionContentTopSkip}
-	\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{0.66\textwidth} r}
-		\entrytitlestyle{#1} & \entrydatestyle{#5} \\
-
-		\ifstrempty{#2#3#4}
-		{}
-		{\entrycompanystyle{#2}\ifempty{#3}{}{\entrysummarystyle{, #3}} & \entrylocationstyle{#4} \\}
-
-	\end{tabular*}%
+	{
+		\entrytitlestyle{#1}%
+		\hfill%
+		\entrydatestyle{#5} \\%
+	}
+	\ifstrempty{#2#3#4}
+	{}
+	{
+		\entrycompanystyle{#2}%
+		\ifempty{#3}{}{\entrysummarystyle{{\acvHeaderSocialSep}#3}}%
+		\hfill
+		\entrylocationstyle{#4} \\%
+	}
+	\vspace{-\baselineskip} % Adjust as needed
 }
 
 % Define an environment for cvhonor
@@ -603,7 +565,7 @@
 % **************************************************
 % Lists
 % **************************************************
-\setlist[itemize]{leftmargin=1em, noitemsep, itemsep=0.4em, label=\bullet}
+\setlist[itemize]{leftmargin=1em, noitemsep, itemsep=0em, label=\bullet}
 
 %-------------------------------------------------------------------------------
 %                Commands for elements of Cover Letter
