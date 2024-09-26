@@ -497,9 +497,10 @@
 % Usage: \makecvfooter{<left>}{<center>}{<right>}
 \newcommand*{\makecvfooter}[3]{%
 	\fancyfoot{}
-	\fancyfoot[L]{\footerstyle{\today\ifdefined\@version\acvHeaderSocialSep\insertversion\fi\ifempty{#1}{}{\acvHeaderSocialSep#1}}}
-	\fancyfoot[C]{\footerstyle{\@firstname~\@lastname\ifempty{#2}{}{\acvHeaderSocialSep#2}}}
+	\fancyfoot[L]{\footerstyle{\today\ifempty{#1}{}{\acvHeaderSocialSep#1}}}
+	\fancyfoot[C]{\footerstyle{\ifdefined\@version\insertversion\fi\ifempty{#2}{}{\acvHeaderSocialSep#2}}}
 	\fancyfoot[R]{\footerstyle{\thepage\ifempty{#3}{}{\acvHeaderSocialSep#3}}}
+	\fancyfoot[R]{\footerstyle{\ifthenelse{\value{page}>1}{\footerstyle{\thepage\ifempty{#3}{}{\acvHeaderSocialSep#3}}}{#3}}}
 }
 
 % Renew the section command to add a divider
