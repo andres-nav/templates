@@ -101,15 +101,15 @@
 \newcommand*{\headeraddressstyle}[1]{{\fontsize{8pt}{1em}\selectfont\itshape\color{lighttext}#1}}
 \newcommand*{\headersocialstyle}[1]{{\fontsize{8pt}{1em}\selectfont\color{text}#1}}
 \newcommand*{\footerstyle}[1]{{\fontsize{8pt}{1em}\selectfont\scshape\color{lighttext}#1}}
-\newcommand*{\sectionstyle}[1]{{\fontsize{12pt}{1em}\selectfont\scshape\color{text}\@sectioncolor#1}}
-\newcommand*{\paragraphstyle}{\fontsize{10pt}{1em}\selectfont\upshape\color{text}}
+\newcommand*{\sectionstyle}[1]{{\fontsize{13pt}{1em}\selectfont\scshape\color{text}\@sectioncolor#1}}
+\newcommand*{\paragraphstyle}{\fontsize{11pt}{1em}\selectfont\upshape\color{text}}
 
 % For elements of entry
-\newcommand*{\entrytitlestyle}[1]{{\fontsize{10pt}{1em}\selectfont\bfseries #1}}
-\newcommand*{\entrycompanystyle}[1]{{\fontsize{10pt}{1em}\selectfont #1}}
-\newcommand*{\entrysummarystyle}[1]{{\fontsize{10pt}{1em}\selectfont #1}}
-\newcommand*{\entrydatestyle}[1]{{\fontsize{10pt}{1em}\selectfont #1}}
-\newcommand*{\entrylocationstyle}[1]{{\fontsize{10pt}{1em}\selectfont #1}}
+\newcommand*{\entrytitlestyle}[1]{{\fontsize{11pt}{1em}\selectfont\bfseries #1}}
+\newcommand*{\entrycompanystyle}[1]{{\fontsize{11pt}{1em}\selectfont #1}}
+\newcommand*{\entrysummarystyle}[1]{{\fontsize{11pt}{1em}\selectfont #1}}
+\newcommand*{\entrydatestyle}[1]{{\fontsize{11pt}{1em}\selectfont #1}}
+\newcommand*{\entrylocationstyle}[1]{{\fontsize{11pt}{1em}\selectfont #1}}
 \newcommand*{\entryurlstyle}[1]{{\fontsize{10pt}{1em}\selectfont\underline{#1}}}
 
 % For elements of honor
@@ -529,6 +529,7 @@
 		\entrylocationstyle{#4} \\%
 	}
 	\vspace{-\baselineskip} % Adjust as needed
+	\vspace{-0.5em}
 }
 
 % Define an environment for cvhonor
@@ -565,7 +566,7 @@
 % **************************************************
 % Lists
 % **************************************************
-\setlist[itemize]{leftmargin=1em, noitemsep, itemsep=0em, label=\bullet}
+\setlist[itemize]{leftmargin=1em, noitemsep, itemsep=0em, label=\bullet, before=\raggedright}
 
 %-------------------------------------------------------------------------------
 %                Commands for elements of Cover Letter
