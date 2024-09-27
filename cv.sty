@@ -567,7 +567,9 @@
 % **************************************************
 % Lists
 % **************************************************
-\setlist[itemize]{leftmargin=1em, noitemsep, itemsep=0em, label=\bullet, before=\raggedright}
+\@ifpackageloaded{itemize}{
+	\setlist[itemize]{leftmargin=1em, noitemsep, itemsep=0em, label=\bullet, before=\raggedright}
+}{}
 
 %-------------------------------------------------------------------------------
 %                Commands for elements of Cover Letter
