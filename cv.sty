@@ -31,7 +31,7 @@
 % **************************************************
 \RequirePackage{geometry} % To set the page layout
 \ifcv@letter
-	\geometry{top=1.5cm, bottom=2cm, hmargin=2.5cm, footskip=0.5cm}
+	\geometry{top=1.5cm, bottom=2cm, left=2.5cm, right=2.5cm, footskip=0.5cm}
 \else
 	\geometry{left=1.4cm, right=1.4cm, top=1cm, bottom=1.5cm, footskip=0.5cm}
 \fi
@@ -82,15 +82,6 @@
 \colorlet{lighttext}{black}
 \colorlet{sectiondivider}{black}
 
-% Boolean value to switch section color highlighting
-\newbool{acvSectionColorHighlight}
-\setbool{acvSectionColorHighlight}{false}
-
-% Section color
-\def\@sectioncolor#1#2#3{%
-	\ifbool{acvSectionColorHighlight}{{\color{accent}#1#2#3}}{#1#2#3}%
-}
-
 %-------------------------------------------------------------------------------
 %                Configuration for styles
 %-------------------------------------------------------------------------------
@@ -101,7 +92,7 @@
 \newcommand*{\headeraddressstyle}[1]{{\fontsize{9pt}{1em}\selectfont\itshape\color{lighttext}#1}}
 \newcommand*{\headersocialstyle}[1]{{\fontsize{9pt}{1em}\selectfont\color{text}#1}}
 \newcommand*{\footerstyle}[1]{{\fontsize{9pt}{1em}\selectfont\scshape\color{lighttext}#1}}
-\newcommand*{\sectionstyle}[1]{{\fontsize{13pt}{1em}\selectfont\scshape\color{text}\@sectioncolor#1}}
+\newcommand*{\sectionstyle}[1]{{\fontsize{13pt}{1em}\selectfont\scshape\color{text}#1}}
 \newcommand*{\paragraphstyle}{\fontsize{11pt}{1em}\selectfont\upshape\color{text}}
 
 % For elements of entry
@@ -506,6 +497,7 @@
 % Renew the section command to add a divider
 \renewcommand{\section}[1]{%
 	\vspace{\acvSectionTopSkip}
+	\ifcv@letter\vspace{1em}\fi
 	\sectionstyle{#1} % Assuming sectionstyle formats the section title
 	\vspace{-\baselineskip} % Adjust as needed
 	\par\noindent\color{sectiondivider}\hrule height 1pt
