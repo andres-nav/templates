@@ -323,7 +323,7 @@
 \newcommand{\acvHeaderAfterPositionSkip}{0.25em}
 \newcommand{\acvHeaderAfterAddressSkip}{0em}
 \newcommand{\acvHeaderIconSep}{\space}
-\newcommand{\acvHeaderSocialSep}{\quad\cdotp\quad}
+\newcommand{\acvHeaderSocialSep}{\quad\textbar\quad}
 \newcommand{\acvHeaderAfterSocialSkip}{0.5em}
 \newcommand{\acvHeaderAfterSummarySkip}{0em}
 
@@ -559,18 +559,13 @@
 % **************************************************
 % Lists
 % **************************************************
-\@ifpackageloaded{itemize}{
+\@ifpackageloaded{enumitem}{
 	\setlist[itemize]{leftmargin=1em, noitemsep, itemsep=0em, label=\bullet, before=\raggedright}
 }{}
 
 %-------------------------------------------------------------------------------
 %                Commands for elements of Cover Letter
 %-------------------------------------------------------------------------------
-% Define an environment for cvletter
-\newenvironment{cvletter}{%
-	\lettertextstyle
-}{%
-}
 
 % Define a title of the cover letter
 % Usage: \makelettertitle
@@ -594,9 +589,4 @@
 	\lettertextstyle{\@letterclosing} \\\\
 	\letternamestyle{\@firstname\ \@lastname}
 	\ifthenelse{\isundefined{\@letterenclosure}}
-	{\\}
-	{%
-		\\\\\\
-		\letterenclosurestyle{\@letterenclname: \@letterenclosure} \\
-	}
 }
