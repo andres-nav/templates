@@ -118,7 +118,6 @@
 \newcommand*{\recipientaddressstyle}[1]{{\fontsize{9pt}{1em}\scshape\color{graytext} #1}}
 \newcommand*{\recipienttitlestyle}[1]{{\fontsize{11pt}{1em}\bfseries\color{darktext} #1}}
 \newcommand*{\lettertitlestyle}[1]{{\fontsize{10pt}{1em}\bfseries\color{darktext} \underline{#1}}}
-\newcommand*{\letterdatestyle}[1]{{\fontsize{9pt}{1em}\slshape\color{graytext} #1}}
 \newcommand*{\lettertextstyle}{\fontsize{10pt}{1.4em}\upshape\color{darktext}}
 \newcommand*{\letternamestyle}[1]{{\fontsize{10pt}{1em}\bfseries\color{darktext} #1}}
 \newcommand*{\letterenclosurestyle}[1]{{\fontsize{10pt}{1em}\slshape\color{lighttext} #1}}
@@ -290,10 +289,6 @@
 % Defines the title for letter (cover letter only, optional)
 % Usage: \lettertitle{<title>}
 \newcommand*{\lettertitle}[1]{\def\@lettertitle{#1}}
-
-% Defines the date for letter (cover letter only)
-% Usage: \letterdate{<date>}
-\newcommand*{\letterdate}[1]{\def\@letterdate{#1}}
 
 % Defines a message of opening for letter (cover letter only)
 % Usage: \letteropening{<message>}
@@ -585,7 +580,7 @@
 % Define a closing of the cover letter
 % Usage: \makeletterclosing
 \newcommand*{\makeletterclosing}{%
-	\vspace{3.4mm}
+	\vspace{\acvSectionContentTopSkip}
 	\lettertextstyle{\@letterclosing} \\\\
 	\letternamestyle{\@firstname\ \@lastname}
 	\ifthenelse{\isundefined{\@letterenclosure}}
