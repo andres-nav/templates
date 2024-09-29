@@ -492,7 +492,6 @@
 % Renew the section command to add a divider
 \renewcommand{\section}[1]{%
 	\vspace{\acvSectionTopSkip}
-	\ifcv@letter\vspace{1em}\fi
 	\sectionstyle{#1} % Assuming sectionstyle formats the section title
 	\vspace{-\baselineskip} % Adjust as needed
 	\par\noindent\color{sectiondivider}\hrule height 1pt
