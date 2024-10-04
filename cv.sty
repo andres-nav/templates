@@ -24,8 +24,6 @@
 % Info Commands
 % **************************************************
 
-\ensureinfocommand{version}
-
 % **************************************************
 % Layout
 % **************************************************
@@ -47,7 +45,7 @@
 % Fonts
 % **************************************************
 \RequirePackage{fontspec}
-\setmainfont{TeX Gyre Termes}
+\setmainfont{Roboto}
 
 \ifcv@icons
 	\RequirePackage{fontawesome5} % Use icons from font-awesome
@@ -87,19 +85,18 @@
 %-------------------------------------------------------------------------------
 % Configure styles for each CV elements
 % For fundamental structures
-\newcommand*{\headernamestyle}[1]{{\fontsize{20pt}{1em}\selectfont\scshape\color{text}#1}}
+\newcommand*{\headernamestyle}[1]{{\fontsize{24pt}{1em}\selectfont\scshape\color{text}#1}}
 \newcommand*{\headerpositionstyle}[1]{{\fontsize{9pt}{1em}\selectfont\scshape\color{accent}#1}}
 \newcommand*{\headeraddressstyle}[1]{{\fontsize{9pt}{1em}\selectfont\itshape\color{lighttext}#1}}
 \newcommand*{\headersocialstyle}[1]{{\fontsize{9pt}{1em}\selectfont\color{text}#1}}
 \newcommand*{\footerstyle}[1]{{\fontsize{9pt}{1em}\selectfont\scshape\color{lighttext}#1}}
 \newcommand*{\sectionstyle}[1]{{\fontsize{13pt}{1em}\selectfont\scshape\color{text}#1}}
-\newcommand*{\paragraphstyle}{\fontsize{11pt}{1em}\selectfont\upshape\color{text}}
 
 % For elements of entry
 \newcommand*{\entrytitlestyle}[1]{{\fontsize{11pt}{1em}\selectfont\bfseries #1}}
 \newcommand*{\entrycompanystyle}[1]{{\fontsize{11pt}{1em}\selectfont #1}}
 \newcommand*{\entrysummarystyle}[1]{{\fontsize{9pt}{1em}\selectfont #1}}
-\newcommand*{\entrydatestyle}[1]{{\fontsize{11pt}{1em}\selectfont #1}}
+\newcommand*{\entrydatestyle}[1]{{\fontsize{9pt}{1em}\selectfont #1}}
 \newcommand*{\entrylocationstyle}[1]{{\fontsize{9pt}{1em}\selectfont #1}}
 \newcommand*{\entryurlstyle}[1]{{\fontsize{9pt}{1em}\selectfont\underline{#1}}}
 
@@ -319,12 +316,12 @@
 \newcommand{\acvHeaderAfterAddressSkip}{0em}
 \newcommand{\acvHeaderIconSep}{\space}
 \newcommand{\acvHeaderSocialSep}{\quad\textbar\quad}
-\newcommand{\acvHeaderAfterSocialSkip}{0.5em}
+\newcommand{\acvHeaderAfterSocialSkip}{1em}
 \newcommand{\acvHeaderAfterSummarySkip}{0em}
 
 % Others
-\newcommand{\acvSectionTopSkip}{0em}
-\newcommand{\acvSectionContentTopSkip}{0em}
+\newcommand{\acvSectionTopSkip}{0.5em}
+\newcommand{\acvSectionContentTopSkip}{0.25em}
 
 %-------------------------------------------------------------------------------
 %                Commands for utilities
@@ -484,7 +481,7 @@
 \newcommand*{\makecvfooter}[3]{%
 	\fancyfoot{}
 	\fancyfoot[L]{\footerstyle{\today\ifempty{#1}{}{\acvHeaderSocialSep#1}}}
-	\fancyfoot[C]{\footerstyle{\ifdefined\@version\insertversion\fi\ifempty{#2}{}{\acvHeaderSocialSep#2}}}
+	\fancyfoot[C]{\footerstyle{\ifdefined\version\version\fi\ifempty{#2}{}{\acvHeaderSocialSep#2}}}
 	\fancyfoot[R]{\footerstyle{\thepage\ifempty{#3}{}{\acvHeaderSocialSep#3}}}
 	\fancyfoot[R]{\footerstyle{\ifthenelse{\value{page}>1}{\footerstyle{\thepage\ifempty{#3}{}{\acvHeaderSocialSep#3}}}{#3}}}
 }
@@ -516,7 +513,7 @@
 		\entrylocationstyle{#4} \\%
 	}
 	\vspace{-\baselineskip} % Adjust as needed
-	\vspace{-0.5em}
+	\vspace{-\acvSectionContentTopSkip}
 }
 
 % Define an environment for cvhonor
@@ -554,7 +551,7 @@
 % Lists
 % **************************************************
 \@ifpackageloaded{enumitem}{
-	\setlist[itemize]{leftmargin=1em, noitemsep, itemsep=0em, label=\bullet, before=\raggedright}
+	\setlist[itemize]{leftmargin=1em, noitemsep, itemsep=0.25em, label=\textbullet, before=\raggedright}
 }{}
 
 %-------------------------------------------------------------------------------

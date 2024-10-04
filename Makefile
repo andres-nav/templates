@@ -4,6 +4,7 @@
 MAIN ?= main
 OUTPUT_PDF ?= report.pdf
 MAIN_TEX = $(MAIN).tex
+TEMP_TEX = temp.tex
 MAIN_PDF = $(MAIN).pdf
 
 VERSION ?= v0.0.0
@@ -22,22 +23,16 @@ LATEX_ARGS = -pdflua -bibtex -outdir=$(BUILD_DIR) -jobname=$(MAIN) -interaction=
 GHOSTSCRIPT_CMD = nix run nixpkgs\#ghostscript \--
 GHOSTSCRIPT_COMPRESS_ARGS = -sDEVICE=pdfwrite -dCompatibilityLevel=1.5 -dNOPAUSE -dQUIET -dBATCH -dPrinted=true
 
-# Mob
-MOB_BRANCH_TITLE ?= $(shell basename $(shell dirname $(CURRENT_DIR)))
-
 .PHONY: all
 all: compile
 
 .PHONY: compile
 compile:
-	@echo "Compiling LaTeX document..."
+	@echo "Compiling LaTeX document version $(VERSION)..."
+	@echo "\def\version{$(VERSION)}" > $(BUILD_DIR)/$(TEMP_TEX)
+	@cat $(MAIN_TEX) >> $(BUILD_DIR)/$(TEMP_TEX)
 # Always return true, otherwise the warnings will make it error
-	SOURCE_DATE_EPOCH=$(shell date +%s) $(LATEX_CMD) $(LATEX_ARGS) $(MAIN_TEX) || true
-
-.PHONY: clean
-clean:
-	@echo "Cleaning up..."
-	rm -rf $(BUILD_DIR) $(OUTPUT_PDF_PATH)
+	SOURCE_DATE_EPOCH=$(shell date +%s) $(LATEX_CMD) $(LATEX_ARGS) $(BUILD_DIR)/$(TEMP_TEX) || true
 
 .PHONY: compress
 compress:
@@ -73,7 +68,10 @@ done: publish
 	mob done
 	git commit
 
-
+.PHONY: clean
+clean:
+	@echo "Cleaning up..."
+	rm -rf $(BUILD_DIR) $(OUTPUT_PDF_PATH)
 
 # Avoid interpreting the version as a target
 %:
