@@ -2,4 +2,4 @@
 /org/thesis_uc3m/.auctex-auto/
 /org/beamer_cern/.auctex-auto/
 /org/beamer/.auctex-auto/
-**/*.el
+*.el
