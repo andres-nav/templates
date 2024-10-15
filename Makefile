@@ -31,11 +31,23 @@ dev:
 	@echo "Add dev version with verison {$(VERSION)}..."
 	@echo "\def\version{$(VERSION)}" > $(BUILD_DIR)/$(TEMP_TEX)
 	make compile
+	make open
+
 
 prod:
 	@echo "Creating production version without version info..."
 	@echo "" > $(BUILD_DIR)/$(TEMP_TEX)
 	make compile
+
+open:
+	@echo "Opening PDF..."
+	@if command -v xdg-open >/dev/null 2>&1; then \
+		xdg-open "$(BUILD_PDF_PATH)"; \
+	elif command -v open >/dev/null 2>&1; then \
+		open "$(BUILD_PDF_PATH)"; \
+	else \
+		echo "No PDF viewer found."; \
+	fi
 
 .PHONY: compile
 compile:
