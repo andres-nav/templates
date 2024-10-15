@@ -44,6 +44,7 @@
 \fancypagestyle{fancy}{
     \fancyhf{}
 	\fancyhead[L]{\ifdefined\leftmark\leftmark\fi}
+    \setlength{\headheight}{15pt} % avoids warning that the head height is too small
 
 	\fancyfoot[C]{\thepage} % number of page on the center
 	\fancyfoot[R]{\ifdefined\version\version\fi} % version on the right
@@ -100,17 +101,17 @@
 
 % Define the style for section titles
 \titleformat{\section}[hang]
-  {\normalfont\fontsize{12}{15}\bfseries} % 12 pt font, bold, flush left
+  {\normalfont\fontsize{14}{15}\bfseries} % 12 pt font, bold, flush left
   {\thesection}{1em}{}
 
-\titlespacing*{\section}{0pt}{*1}{*1}
+\titlespacing*{\section}{0pt}{*4}{*1}
 
 % Define the style for subsection titles
 \titleformat{\subsection}[hang]
   {\normalfont\fontsize{12}{15}\bfseries} % 12 pt font, bold, flush left
   {\thesubsection}{1em}{}
 
-\titlespacing*{\subsection}{0pt}{*1}{*1}
+\titlespacing*{\subsection}{0pt}{*2}{*1}
 
 % **************************************************
 % Captions
