@@ -21,17 +21,17 @@ DEV_OUTPUT_COMPRESSED_PDF = $(DEV_OUTPUT_PDF).compressed
 
 LATEX_CMD = latexmk
 LATEX_ARGS = -pdflua -bibtex -outdir=$(BUILD_DIR) -jobname=$(MAIN) -interaction=nonstopmode --synctex=1 -file-line-error
-GHOSTSCRIPT_CMD = nix run nixpkgs\#ghostscript \--
+GHOSTSCRIPT_CMD = $(if $(shell command -v gs),gs,nix run nixpkgs\#ghostscript)
 GHOSTSCRIPT_COMPRESS_ARGS = -sDEVICE=pdfwrite -dCompatibilityLevel=1.5 -dNOPAUSE -dQUIET -dBATCH -dPrinted=true
 
 .PHONY: all
 all: dev
+	make open OPEN_PDF_PATH="$(BUILD_PDF_PATH)"
 
 dev:
 	@echo "Add dev version with verison {$(VERSION)}..."
-	@echo "\def\version{$(VERSION)}" > $(BUILD_DIR)/$(TEMP_TEX)
+	@echo "\def\\\\version{$(VERSION)}" > $(BUILD_DIR)/$(TEMP_TEX)
 	make compile
-	make open
 
 
 prod:
@@ -41,10 +41,12 @@ prod:
 
 open:
 	@echo "Opening PDF..."
-	@if command -v xdg-open >/dev/null 2>&1; then \
-		xdg-open "$(BUILD_PDF_PATH)"; \
+	@if [ -z "$(OPEN_PDF_PATH)" ]; then \
+		echo "No file specified to open."; \
+	elif command -v xdg-open >/dev/null 2>&1; then \
+		xdg-open "$(OPEN_PDF_PATH)"; \
 	elif command -v open >/dev/null 2>&1; then \
-		open "$(BUILD_PDF_PATH)"; \
+		open "$(OPEN_PDF_PATH)"; \
 	else \
 		echo "No PDF viewer found."; \
 	fi
@@ -55,7 +57,6 @@ compile:
 	@cat $(MAIN_TEX) >> $(BUILD_DIR)/$(TEMP_TEX)
 # Always return true, otherwise the warnings will make it error
 	SOURCE_DATE_EPOCH=$(shell date +%s) $(LATEX_CMD) $(LATEX_ARGS) $(BUILD_DIR)/$(TEMP_TEX) || true
-
 
 .PHONY: compress
 compress: compress-dev compress-prod
@@ -77,6 +78,7 @@ publish:
 	make compress-dev
 	make prod
 	make compress-prod
+	make open OPEN_PDF_PATH="$(DEV_OUTPUT_PDF_PATH)"
 
 .PHONY: clean
 clean:
