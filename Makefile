@@ -26,7 +26,7 @@ GHOSTSCRIPT_COMPRESS_ARGS = -sDEVICE=pdfwrite -dCompatibilityLevel=1.5 -dNOPAUSE
 
 .PHONY: all
 all: dev
-	make open OPEN_PDF_PATH="$(BUILD_PDF_PATH)"
+	# make open OPEN_PDF_PATH="$(BUILD_PDF_PATH)"
 
 dev:
 	@echo "Add dev version with verison {$(VERSION)}..."
