@@ -75,10 +75,6 @@
 \RequirePackage{subcaption} % Be able to add subcaptions to subfigures
 \RequirePackage[format=plain, labelfont={bf, it}, textfont=it]{caption}
 
-% **************************************************
-% Bibliography, references bookmarks and links
-% **************************************************
-
 % Smart referencing
 \RequirePackage{cleveref}
 \crefname{chapter}{Chapter}{Chapters}
@@ -142,6 +138,12 @@
 \RequirePackage{chngcntr}
 
 \counterwithout{footnote}{chapter}
+
+% **************************************************
+% Acronyms
+% **************************************************
+\RequirePackage[acronym, nonumberlist]{glossaries}
+\makeglossaries%
 
 % **************************************************
 % Title Page

@@ -20,7 +20,7 @@ OUTPUT_COMPRESSED_PDF = $(OUTPUT_PDF).compressed
 DEV_OUTPUT_COMPRESSED_PDF = $(DEV_OUTPUT_PDF).compressed
 
 LATEX_CMD = latexmk
-LATEX_ARGS = -pdflua -bibtex -outdir=$(BUILD_DIR) -jobname=$(MAIN) -interaction=nonstopmode --synctex=1 -file-line-error
+LATEX_ARGS = -pdflua -bibtex -use-make -outdir=$(BUILD_DIR) -jobname=$(MAIN) -interaction=nonstopmode --synctex=1 -file-line-error
 GHOSTSCRIPT_CMD = $(if $(shell command -v gs),gs,nix run nixpkgs\#ghostscript)
 GHOSTSCRIPT_COMPRESS_ARGS = -sDEVICE=pdfwrite -dCompatibilityLevel=1.5 -dNOPAUSE -dQUIET -dBATCH -dPrinted=true
 
@@ -84,6 +84,11 @@ publish:
 clean:
 	@echo "Cleaning up..."
 	rm -rf $(BUILD_DIR) $(OUTPUT_PDF_PATH)
+
+.PHONY: build-glossary
+build-glossary:
+	@echo "Building glossary..."
+	makeglossaries -d $(BUILD_DIR) $(MAIN)
 
 # Avoid interpreting the version as a target
 %:
