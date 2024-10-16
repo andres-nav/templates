@@ -92,20 +92,20 @@
 % \ifutils@minted
 % 	\RequirePackage[newfloat=true,cache=false,outputdir=\utils@mintedauxdir]{minted}
 % 	\setminted{
-% 		numbers=left,
-% 		autogobble=true,
-% 		breaklines=true,
-% 		breakbytoken=true,
-% 		breakbytokenanywhere=true,
-% 		breaksymbolleft=\tiny\ensuremath{\textcolor{gray}{\hookrightarrow}},
-% 		frame=lines,
-% 		samepage=true,
-% 		tabsize=2,
-% 		baselinestretch=1.2,
-% 		fontsize=\small,
-% 		numbersep=6pt,
-% 		highlightcolor=lightgray!50
-% 	}
+%  numbers=left,
+%  autogobble=true,
+%  breaklines=true,
+%  breakbytoken=true,
+%  breakbytokenanywhere=true,
+%  breaksymbolleft=\tiny\ensuremath{\textcolor{gray}{\hookrightarrow}},
+%  frame=lines,
+%  samepage=true,
+%  tabsize=2,
+%  baselinestretch=1.2,
+%  fontsize=\small,
+%  numbersep=6pt,
+%  highlightcolor=lightgray!50
+% }
 % 	\preto\listing{\appto\endminted\unskip}
 % \else\fi
 
@@ -114,43 +114,43 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \ifutils@listings
-	\RequirePackage{listingsutf8}
-	\RequirePackage{lstautogobble}
-	\RequirePackage{accsupp}
+  \RequirePackage{listingsutf8}
+  \RequirePackage{lstautogobble}
+  \RequirePackage{accsupp}
 
-	\def\utils@listings@initcolors{
-		\colorlet{utils@lst@color@background}{yellow!40!red!10!gray!5}
-		\colorlet{utils@lst@color@rule}{gray}
-		\colorlet{utils@lst@color@lnnr}{gray}
-		\colorlet{utils@lst@color@string}{green}
-		\colorlet{utils@lst@color@kwa}{accent}
-		\colorlet{utils@lst@color@kwb}{accent}
-		\colorlet{utils@lst@color@kwc}{accent}
-		\colorlet{utils@lst@color@kwd}{accent}
-		\colorlet{utils@lst@color@comment}{gray}
-		\colorlet{utils@lst@color@number}{blue}
-	}\utils@listings@initcolors
+  \def\utils@listings@initcolors{
+	\colorlet{utils@lst@color@background}{yellow!40!red!10!gray!5}
+	\colorlet{utils@lst@color@rule}{gray}
+	\colorlet{utils@lst@color@lnnr}{gray}
+	\colorlet{utils@lst@color@string}{green}
+	\colorlet{utils@lst@color@kwa}{accent}
+	\colorlet{utils@lst@color@kwb}{accent}
+	\colorlet{utils@lst@color@kwc}{accent}
+	\colorlet{utils@lst@color@kwd}{accent}
+	\colorlet{utils@lst@color@comment}{gray}
+	\colorlet{utils@lst@color@number}{blue}
+  }\utils@listings@initcolors
 
 
-	\def\utils@lst@fsize@base{\dimexpr\f@size\p@\relax}
-	\def\utils@lst@fsize@lnnr{\dimexpr\utils@lst@fsize@base - 0.2\utils@lst@fsize@base\relax}
+  \def\utils@lst@fsize@base{\dimexpr\f@size\p@\relax}
+  \def\utils@lst@fsize@lnnr{\dimexpr\utils@lst@fsize@base - 0.2\utils@lst@fsize@base\relax}
 
-	\def\utils@lst@nocopy#1{\BeginAccSupp{ActualText={}}#1\EndAccSupp{}}
+  \def\utils@lst@nocopy#1{\BeginAccSupp{ActualText={}}#1\EndAccSupp{}}
 
-	\def\utils@lst@style@linenr{\fontsize{\utils@lst@fsize@lnnr}{\utils@lst@fsize@lnnr}\selectfont\color{utils@lst@color@lnnr}\sffamily}
-	\def\utils@lst@style@base{\fontsize{\utils@lst@fsize@base}{\utils@lst@fsize@base}\selectfont\ttfamily}
-	\def\utils@lst@style@string{\utils@lst@style@base\color{utils@lst@color@string}}
-	\def\utils@lst@style@kwa{\utils@lst@style@base\color{utils@lst@color@kwa}\bfseries}
-	\def\utils@lst@style@kwb{\utils@lst@style@base\color{utils@lst@color@kwb}}
-	\def\utils@lst@style@kwc{\utils@lst@style@base\color{utils@lst@color@kwc}}
-	\def\utils@lst@style@kwd{\utils@lst@style@base\color{utils@lst@color@kwd}}
-	\def\utils@lst@style@comment{\utils@lst@style@base\color{utils@lst@color@comment}\itshape}
-	\def\utils@lst@style@number#1{\ifnum\lst@mode=\lst@Pmode\relax{\utils@lst@style@base\color{utils@lst@color@number} #1}\else#1\fi}
+  \def\utils@lst@style@linenr{\fontsize{\utils@lst@fsize@lnnr}{\utils@lst@fsize@lnnr}\selectfont\color{utils@lst@color@lnnr}\sffamily}
+  \def\utils@lst@style@base{\fontsize{\utils@lst@fsize@base}{\utils@lst@fsize@base}\selectfont\ttfamily}
+  \def\utils@lst@style@string{\utils@lst@style@base\color{utils@lst@color@string}}
+  \def\utils@lst@style@kwa{\utils@lst@style@base\color{utils@lst@color@kwa}\bfseries}
+  \def\utils@lst@style@kwb{\utils@lst@style@base\color{utils@lst@color@kwb}}
+  \def\utils@lst@style@kwc{\utils@lst@style@base\color{utils@lst@color@kwc}}
+  \def\utils@lst@style@kwd{\utils@lst@style@base\color{utils@lst@color@kwd}}
+  \def\utils@lst@style@comment{\utils@lst@style@base\color{utils@lst@color@comment}\itshape}
+  \def\utils@lst@style@number#1{\ifnum\lst@mode=\lst@Pmode\relax{\utils@lst@style@base\color{utils@lst@color@number} #1}\else#1\fi}
 
-	% Holy shit, this took some trial and error. Expansion is like magic some times
-	\lst@Key{apptoliterate}{}{\xdef\lst@literate{\unexpanded\expandafter{\lst@literate}\unexpanded{#1}}}
+  % Holy shit, this took some trial and error. Expansion is like magic some times
+  \lst@Key{apptoliterate}{}{\xdef\lst@literate{\unexpanded\expandafter{\lst@literate}\unexpanded{#1}}}
 
-	\lstdefinestyle{utils@lst@base}{
+  \lstdefinestyle{utils@lst@base}{
 	backgroundcolor  = \color{utils@lst@color@background},
 	rulecolor        = \color{utils@lst@color@rule},
 	frame            = single,
@@ -172,7 +172,7 @@
 	keepspaces       = false,
 	showstringspaces = false,
 	apptoliterate    =
-		{0}{{{\utils@lst@style@number{0}}}}1
+	{0}{{{\utils@lst@style@number{0}}}}1
 	{1}{{{\utils@lst@style@number{1}}}}1
 	{2}{{{\utils@lst@style@number{2}}}}1
 	{3}{{{\utils@lst@style@number{3}}}}1
@@ -182,28 +182,28 @@
 	{7}{{{\utils@lst@style@number{7}}}}1
 	{8}{{{\utils@lst@style@number{8}}}}1
 	{9}{{{\utils@lst@style@number{9}}}}1,
-	}
+  }
 
-	\lstdefinestyle{utils@lst@plain}{
-		style           = utils@lst@base,
-		numbers         = none,
-		frame           = none,
-		backgroundcolor = {},
-		xleftmargin     = \z@,
-		xrightmargin    = \z@,
-		numbersep       = \z@,
-	}
+  \lstdefinestyle{utils@lst@plain}{
+	style           = utils@lst@base,
+	numbers         = none,
+	frame           = none,
+	backgroundcolor = {},
+	xleftmargin     = \z@,
+	xrightmargin    = \z@,
+	numbersep       = \z@,
+  }
 
-	\lstset{style=utils@lst@base}
+  \lstset{style=utils@lst@base}
 \fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \ifutils@tikz
-	\RequirePackage{tikz}
-	\usetikzlibrary{backgrounds, shapes.geometric, arrows, arrows.meta, shapes, automata, positioning, positioning, fit, calc, fadings, shadows}
-	\tikzset{
+  \RequirePackage{tikz}
+  \usetikzlibrary{backgrounds, shapes.geometric, arrows, arrows.meta, shapes, automata, positioning, positioning, fit, calc, fadings, shadows}
+  \tikzset{
 	lw/.style={line width=\utils@linewidth},
 	lcr/.style={line cap=round},
 	rnd/.style={rounded corners=\utils@rounding},
@@ -220,34 +220,34 @@
 	no shadows/.style={general shadow/.style=},
 	shadow/.style={drop shadow={shadow xshift=.2ex, shadow yshift=-.2ex}},
 	o/.style={remember picture,overlay}
-	}
-	% https://tex.stackexchange.com/a/321615/286979
-	\pgfdeclarelayer{foreground}
-	\pgfsetlayers{background,main,foreground}
+  }
+  % https://tex.stackexchange.com/a/321615/286979
+  \pgfdeclarelayer{foreground}
+  \pgfsetlayers{background,main,foreground}
 
-	\tikzset{%
-		on foreground layer/.style={%
-				execute at begin scope={%
-						\pgfonlayer{foreground}%
-						\let\tikz@options=\pgfutil@empty%
-						\tikzset{every on foreground layer/.try,#1}%
-						\tikz@options%
-					},
-				execute at end scope={\endpgfonlayer}
-			},
-		on layer/.code={%
-				\pgfonlayer{#1}\begingroup
-				\aftergroup\endpgfonlayer
-				\aftergroup\endgroup
-			},
-		node on layer/.code={%
-				\gdef\node@@on@layer{%
-					\setbox\tikz@tempbox=\hbox\bgroup\pgfonlayer{#1}\unhbox\tikz@tempbox\endpgfonlayer\egroup}
-				\aftergroup\node@on@layer
-			},
-	}
+  \tikzset{%
+	on foreground layer/.style={%
+	  execute at begin scope={%
+		\pgfonlayer{foreground}%
+		\let\tikz@options=\pgfutil@empty%
+		\tikzset{every on foreground layer/.try,#1}%
+		\tikz@options%
+	  },
+	  execute at end scope={\endpgfonlayer}
+	},
+	on layer/.code={%
+	  \pgfonlayer{#1}\begingroup
+	  \aftergroup\endpgfonlayer
+	  \aftergroup\endgroup
+	},
+	node on layer/.code={%
+	  \gdef\node@@on@layer{%
+		\setbox\tikz@tempbox=\hbox\bgroup\pgfonlayer{#1}\unhbox\tikz@tempbox\endpgfonlayer\egroup}
+	  \aftergroup\node@on@layer
+	},
+  }
 
-	\def\node@on@layer{\aftergroup\node@@on@layer}
+  \def\node@on@layer{\aftergroup\node@@on@layer}
 \fi
 
 
@@ -258,45 +258,45 @@
 % Paragraph handling
 % **************************************************
 \ifutils@spacing
-	\RequirePackage[parfill]{parskip}
+  \RequirePackage[parfill]{parskip}
 \else
-	\setlength{\parindent}{1.5em} % Set the indentation for paragraphs
-	\setlength{\parskip}{0pt} % Remove extra space between paragraphs
+  \setlength{\parindent}{1.5em} % Set the indentation for paragraphs
+  \setlength{\parskip}{0pt} % Remove extra space between paragraphs
 \fi
 
 \AtBeginDocument{
-	\ifutils@widowpenalties
-		% TODO: make number of lines customisable
-		\widowpenalties 4 10000 10000 10000 0
-		\clubpenalties 4 10000 10000 10000 0
-	\fi
+  \ifutils@widowpenalties
+	% TODO: make number of lines customisable
+	\widowpenalties 4 10000 10000 10000 0
+	\clubpenalties 4 10000 10000 10000 0
+  \fi
 }
 
 % **************************************************
 % Bibliography
 % **************************************************
 \ifutils@bibtex
-	\RequirePackage[style=numeric, sorting=none, backend=biber]{biblatex} % sort references by appearance
+  \RequirePackage[style=numeric, sorting=none, backend=biber]{biblatex} % sort references by appearance
 \fi
 
 % **************************************************
 % Bookmarks
 % **************************************************
 \ifutils@bookmark
-	\RequirePackage{bookmark} % to reload the outline and bookmarks automatically
+  \RequirePackage{bookmark} % to reload the outline and bookmarks automatically
 \fi
 
 % **************************************************
 % References and Hyperlinks
 % **************************************************
 \ifutils@fullref
-	\booltrue{utils@hyperref}
-	\RequirePackage{amsmath}
-	\RequirePackage{cleveref}
+  \booltrue{utils@hyperref}
+  \RequirePackage{amsmath}
+  \RequirePackage{cleveref}
 \fi
 
 \ifutils@hyperref
-	\@ifpackageloaded{hyperref}{}{\RequirePackage[]{hyperref}}
+  \@ifpackageloaded{hyperref}{}{\RequirePackage[]{hyperref}}
 \fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -313,76 +313,73 @@
 % 	\contourlength{0.8pt}
 % 	\let\olduline\uline
 % 	\renewcommand\uline[1]{%
-% 		\olduline{\phantom{#1}}%
-% 		\llap{\contour{white}{#1}}%
-% 	}
+%  \olduline{\phantom{#1}}%
+%  \llap{\contour{white}{#1}}%
+% }
 % \else\fi
 
 \newcommand\isempty[1]{\relax\detokenize{#1}\relax}
 
 \newcommand\utils@ensurehelper[3]{%
-	\expandafter\def\csname @#1\endcsname{#3}%
-	\if\isempty{#2}%
-		\expandafter\def\csname @short#1\endcsname{#3}%
-	\else%
-		\expandafter\def\csname @short#1\endcsname{#2}%
-	\fi%
+  \expandafter\def\csname @#1\endcsname{#3}%
+  \if\isempty{#2}%
+	\expandafter\def\csname @short#1\endcsname{#3}%
+  \else%
+	\expandafter\def\csname @short#1\endcsname{#2}%
+  \fi%
 }
 \newcommand\ensureinfocommand[1]{%
-	\ifcsname#1\endcsname%
-		\expandafter\renewcommand\csname#1\endcsname[2][]{\utils@ensurehelper{#1}{##1}{##2}}%
-	\else%
-		\expandafter\newcommand\csname#1\endcsname[2][]{\utils@ensurehelper{#1}{##1}{##2}}%
-	\fi%
+  \ifcsname #1\endcsname
+	\expandafter\renewcommand\csname #1\endcsname[2][]{\utils@ensurehelper{#1}{##1}{##2}}%
+  \else
+	\expandafter\newcommand\csname #1\endcsname[2][]{\utils@ensurehelper{#1}{##1}{##2}}%
+  \fi
 
-	% Define \insert<command> automatically
-	\expandafter\newcommand\csname insert#1\endcsname{%
-		\ifcsname #1\endcsname
-			\csname @#1\endcsname{} % Call the defined or renewed command
-		\else
-			% Optionally handle the case where the command is not defined
-			\textbf{Command #1 not defined}%
-		\fi
-	}%
+  % Define \insert<command> automatically
+  \expandafter\newcommand\csname insert#1\endcsname{%
+	\ifcsname #1\endcsname
+	  \csname @#1\endcsname{} % Call the defined or renewed command
+	\else
+	  % Optionally handle the case where the command is not defined
+	  \textbf{Command #1 not defined}%
+	\fi
+  }%
 }
+
 \ifutils@paragraph
-	\let\oldparagraph\paragraph
-	\renewcommand\paragraph[1]{\emph{#1}\hspace{0.5em}\textcolor{accent}{\fullcirc}\hspace{0.5em}}
+  \let\oldparagraph\paragraph%
+  \renewcommand\paragraph[1]{\emph{#1}\hspace{0.5em}\textcolor{accent}{\fullcirc}\hspace{0.5em}}
+\fi
+
+\ifutils@tables
+  \RequirePackage{booktabs} % to use \toprule, \midrule, and \bottomrule
+  % Make tables centered by default
+  %
+  \renewenvironment{table}
+  {\@float{table}\centering}
+  {\end@float}
 \fi
 
 \ifutils@graphicx
-    \RequirePackage{graphicx}
+  \RequirePackage{graphicx}
 
-    % Make figures centered by default
-    \makeatletter
-    \renewenvironment{figure}
-    {\@float{figure}\centering}
-    {\end@float}
-    \makeatother
+  % Make figures centered by default
+  \renewenvironment{figure}
+  {\@float{figure}\centering}
+  {\end@float}
 
-    % Store the original \includegraphics command to use it within the redefinition
-    \let\origincludegraphics\includegraphics%
+% Store the original \includegraphics command to use it within the redefinition
+\let\origincludegraphics\includegraphics%
 
-    % Redefine \includegraphics to set default width=\linewidth
-    \renewcommand{\includegraphics}[2][]{%
-        \ifx\relax#1\relax
-            \origincludegraphics[width=0.95\linewidth]{#2}%
-        \else
-            \origincludegraphics[#1]{#2}%
-        \fi
-    }
+% Redefine \includegraphics to set default width=\linewidth
+\renewcommand{\includegraphics}[2][]{%
+  \ifx\relax#1\relax
+	\origincludegraphics[width=0.95\linewidth]{#2}%
+  \else
+	\origincludegraphics[#1]{#2}%
+  \fi
+}
 \fi % End of \ifutils@graphicx
-
-% \ifutils@tables
-%     \RequirePackage{booktabs} % to use \toprule, \midrule, and \bottomrule
-
-%     % Make tables centered by default
-% 	\makeatletter
-% 	\renewenvironment{table}
-% 	{\@float{table}\centering}
-% 	{\end@float}
-%   \makeatother
-% \fi % End of \ifutils@tables
 
 % \ifutils@description
 % 	\newcommand\adddot[1]{\normalfont\emph#1\hspace{0.5em}\color{accent}\fullcirc}
