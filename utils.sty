@@ -289,15 +289,16 @@
 % **************************************************
 % References and Hyperlinks
 % **************************************************
+\ifutils@hyperref
+  \RequirePackage{hyperref}
+\fi
+
 \ifutils@fullref
   \booltrue{utils@hyperref}
   \RequirePackage{amsmath}
   \RequirePackage{cleveref}
 \fi
 
-\ifutils@hyperref
-  \@ifpackageloaded{hyperref}{}{\RequirePackage[]{hyperref}}
-\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
