@@ -90,6 +90,11 @@ build-glossary:
 	@echo "Building glossary..."
 	makeglossaries -d $(BUILD_DIR) $(MAIN)
 
+.PHONY: build-bibliography
+build-bibliography:
+	@echo "Building bibliography..."
+	biber --output-directory $(BUILD_DIR) $(BUILD_DIR)/$(MAIN)
+
 # Avoid interpreting the version as a target
 %:
 	@:
