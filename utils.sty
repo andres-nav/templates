@@ -354,19 +354,21 @@
 
 \ifutils@tables
   \RequirePackage{booktabs} % to use \toprule, \midrule, and \bottomrule
+  \RequirePackage{float}
+
   % Make tables centered by default
-  %
-  \renewenvironment{table}
-  {\@float{table}\centering}
+  \renewenvironment{table}[1][htbp] % Default float options
+  {\@float{table}[#1]\centering}
   {\end@float}
 \fi
 
 \ifutils@graphicx
   \RequirePackage{graphicx}
+  \RequirePackage{float}
 
   % Make figures centered by default
-  \renewenvironment{figure}
-  {\@float{figure}\centering}
+  \renewenvironment{figure}[1][htbp] % Default float options
+  {\@float{figure}[#1]\centering}
   {\end@float}
 
 % Store the original \includegraphics command to use it within the redefinition
