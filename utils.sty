@@ -372,14 +372,14 @@
   {\end@float}
 
 % Store the original \includegraphics command to use it within the redefinition
-\let\origincludegraphics\includegraphics%
+\let\origincludegraphics\includegraphics
 
-% Redefine \includegraphics to set default width=\linewidth
+% Redefine \includegraphics to set default width=0.95\linewidth
 \renewcommand{\includegraphics}[2][]{%
   \ifx\relax#1\relax
-	\origincludegraphics[width=0.95\linewidth]{#2}%
+    \origincludegraphics[width=0.95\linewidth]{#2}%
   \else
-	\origincludegraphics[#1]{#2}%
+    \origincludegraphics[#1]{#2}%
   \fi
 }
 \fi % End of \ifutils@graphicx
