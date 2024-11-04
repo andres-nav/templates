@@ -391,11 +391,11 @@
 % \else\fi
 
 % Customise lists to have less space between items
-% \ifutils@lists
-% 	\RequirePackage[inline]{enumitem}
-% 	\setlist[enumerate]{itemsep=-0.5\parskip}
-% 	\setlist[itemize]{itemsep=-0.5\parskip}
-% \fi
+\ifutils@lists
+	\RequirePackage[inline]{enumitem}
+	\setlist[enumerate]{itemsep=-0.5\parskip}
+	\setlist[itemize]{itemsep=-0.5\parskip}
+\fi
 
 % \ifutils@footnote
 %   \newcommand\@myfootnotemark{\guilsinglleft\textcolor{accent}{\arabic{footnote}}\guilsinglright}
