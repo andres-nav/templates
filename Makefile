@@ -16,13 +16,9 @@ BUILD_DIR = $(shell mkdir -p $(CURRENT_DIR)/build && cd $(CURRENT_DIR)/build && 
 BUILD_PDF_PATH = $(BUILD_DIR)/$(MAIN_PDF)
 OUTPUT_PDF_PATH = $(CURRENT_DIR)/$(OUTPUT_PDF)
 DEV_OUTPUT_PDF_PATH = $(CURRENT_DIR)/$(DEV_OUTPUT_PDF)
-OUTPUT_COMPRESSED_PDF = $(OUTPUT_PDF).compressed
-DEV_OUTPUT_COMPRESSED_PDF = $(DEV_OUTPUT_PDF).compressed
 
 LATEX_CMD = latexmk
 LATEX_ARGS = -pdflua -bibtex -use-make -outdir=$(BUILD_DIR) -jobname=$(MAIN) -interaction=nonstopmode --synctex=1 -file-line-error
-GHOSTSCRIPT_CMD = $(if $(shell command -v gs),gs,nix run nixpkgs\#ghostscript)
-GHOSTSCRIPT_COMPRESS_ARGS = -sDEVICE=pdfwrite -dCompatibilityLevel=1.5 -dNOPAUSE -dQUIET -dBATCH -dPrinted=true
 
 .PHONY: all
 all: dev
@@ -58,13 +54,9 @@ compile:
 # Always return true, otherwise the warnings will make it error
 	SOURCE_DATE_EPOCH=$(shell date +%s) $(LATEX_CMD) $(LATEX_ARGS) $(BUILD_DIR)/$(TEMP_TEX) || true
 
-.PHONY: compress
-compress: compress-dev compress-prod
-
 compress-dev:
 	@echo "Compressing dev PDF..."
 	$(GHOSTSCRIPT_CMD) $(GHOSTSCRIPT_COMPRESS_ARGS) -sOutputFile=$(DEV_OUTPUT_COMPRESSED_PDF) $(BUILD_PDF_PATH)
-	@mv $(DEV_OUTPUT_COMPRESSED_PDF) $(DEV_OUTPUT_PDF_PATH)
 
 compress-prod:
 	@echo "Compressing prod PDF..."
@@ -75,10 +67,10 @@ compress-prod:
 publish:
 	@echo "Published both development and production versions."
 	make dev
-	make compress-dev
+	@mv $(BUILD_PDF_PATH) $(DEV_OUTPUT_PDF_PATH)
 	make prod
-	make compress-prod
-	make open OPEN_PDF_PATH="$(DEV_OUTPUT_PDF_PATH)"
+	@mv $(BUILD_PDF_PATH) $(OUTPUT_PDF_PATH)
+	make open OPEN_PDF_PATH="$(OUTPUT_PDF_PATH)"
 
 .PHONY: clean
 clean:
