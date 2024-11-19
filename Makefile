@@ -22,7 +22,7 @@ LATEX_ARGS = -pdflua -bibtex -use-make -outdir=$(BUILD_DIR) -jobname=$(MAIN) -in
 
 .PHONY: all
 all: dev
-	# make open OPEN_PDF_PATH="$(BUILD_PDF_PATH)"
+	make open OPEN_PDF_PATH="$(BUILD_PDF_PATH)"
 
 dev:
 	@echo "Add dev version with verison {$(VERSION)}..."

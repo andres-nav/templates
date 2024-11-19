@@ -101,10 +101,10 @@
 \newcommand*{\entryurlstyle}[1]{{\fontsize{9pt}{1em}\selectfont\underline{#1}}}
 
 % For elements of honor
-\newcommand*{\honortitlestyle}[1]{{\fontsize{10pt}{1em}\color{graytext} #1}}
-\newcommand*{\honorpositionstyle}[1]{{\fontsize{10pt}{1em}\bfseries\color{darktext} #1}}
-\newcommand*{\honordatestyle}[1]{{\fontsize{10pt}{1em}\color{graytext} #1}}
-\newcommand*{\honorlocationstyle}[1]{{\fontsize{10pt}{1em}\slshape\color{accent} #1}}
+\newcommand*{\honortitlestyle}[1]{{\fontsize{12pt}{1em}\bfseries\color{darktext} #1}}
+\newcommand*{\honorpositionstyle}[1]{{\fontsize{9pt}{1em}\color{graytext} #1}}
+\newcommand*{\honordatestyle}[1]{{\fontsize{9pt}{1em}\color{graytext} #1}}
+\newcommand*{\honorlocationstyle}[1]{{\fontsize{9pt}{1em}\slshape\color{accent} #1}}
 
 % For elements of skill
 \newcommand*{\skilltypestyle}[1]{{\fontsize{10pt}{1em}\bfseries\color{darktext} #1}}
@@ -386,25 +386,25 @@
 			{}%
 			{%
 				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				\href{https://\@homepage}{\ifcv@icons\faHome\acvHeaderIconSepe\fi\@homepage}%
+				\href{https://\@homepage}{\ifcv@icons\faHome\acvHeaderIconSep\fi \@homepage}%
 			}%
 			\ifthenelse{\isundefined{\@linkedin}}%
 			{}%
 			{%
 				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				\href{https://www.linkedin.com/in/\@linkedin}{\ifcv@icons\faLinkedin\acvHeaderIconSepe\else linkedin.com/in/\fi \@linkedin}%
+				\href{https://www.linkedin.com/in/\@linkedin}{\ifcv@icons\faLinkedin\acvHeaderIconSep\else linkedin.com/in/\fi \@linkedin}%
 			}%
 			\ifthenelse{\isundefined{\@googlescholarid}}%
 			{}%
 			{%
 				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				\href{https://scholar.google.com/citations?user=\@googlescholarid}{\faGraduationCap\acvHeaderIconSep\@googlescholarname}%
+				\href{https://scholar.google.com/citations?user=\@googlescholarid}{\ifcv@icons\faGraduationCap\acvHeaderIconSep\fi \@googlescholarname}%
 			}%
 			\ifthenelse{\isundefined{\@github}}%
 			{}%
 			{%
 				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				\href{https://github.com/\@github}{\ifcv@icons\faGithubSquare\acvHeaderIconSepe\else github.com/\fi \@github}%
+				\href{https://github.com/\@github}{\ifcv@icons\faGithubSquare\acvHeaderIconSep\else github.com/\fi \@github}%
 			}%
 			\ifthenelse{\isundefined{\@gitlab}}%
 			{}%
@@ -422,7 +422,7 @@
 			{}%
 			{%
 				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				\href{https://orcid.org/\@orcid}{\ifcv@icons\faOrcid\acvHeaderIconSepe\else orcid.org/\fi \@orcid}%
+				\href{https://orcid.org/\@orcid}{\ifcv@icons\faOrcid\acvHeaderIconSep\else orcid.org/\fi \@orcid}%
 			}%
 			\ifthenelse{\isundefined{\@researchgate}}%
 			{}%
@@ -516,17 +516,11 @@
 	% \vspace{-\acvSectionContentTopSkip}
 }
 
-% Define an environment for cvhonor
-\newenvironment{cvhonors}{%
-	\vspace{\acvSectionContentTopSkip}
-	\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{0.85\textwidth} r}
-		}{%
-	\end{tabular*}
-}
-% Define a line of cv information(honor, award or something else)
 % Usage: \cvhonor{<position>}{<title>}{<url>}{<date>}
 \newcommand*{\cvhonor}[4]{%
-	\honorpositionstyle{#1}\ifempty{#2}{}{,} \honortitlestyle{#2}\ifempty{#4}{}{ \honordatestyle{(#4)}} & \ifempty{#3}{}{\cvhref{#3}} \\
+	\vspace{\acvSectionContentTopSkip}
+	\honortitlestyle{#1}\ifempty{#2}{}{,} \honorpositionstyle{#2}\ifempty{#4}{}{ \honordatestyle{(#4)}} & \ifempty{#3}{}{\cvhref{#3}} \\
+	\vspace{-\baselineskip} % Adjust as needed
 }
 
 % Define an environment for cvskill
