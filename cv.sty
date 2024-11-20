@@ -41,11 +41,20 @@
 \fancyhf{} % Clear all header & footer fields
 \pagestyle{fancy} % Use fancy page style
 
+\ifcv@letter
+	\setlength{\footskip}{1cm} % Adjust the distance from text to the footer
+\fi
+
 % **************************************************
 % Fonts
 % **************************************************
 \RequirePackage{fontspec}
-\setmainfont{Roboto}
+\ifcv@letter
+	\setmainfont{Times New Roman}
+\else
+	\setmainfont{Roboto}
+\fi
+
 
 \ifcv@icons
 	\RequirePackage{fontawesome5} % Use icons from font-awesome
@@ -111,7 +120,6 @@
 \newcommand*{\skillsetstyle}[1]{{\fontsize{10pt}{1em}\color{text} #1}}
 
 % For elements of the cover letter
-\newcommand*{\lettersectionstyle}[1]{{\fontsize{14pt}{1em}\bfseries\color{text}\@sectioncolor #1}}
 \newcommand*{\recipientaddressstyle}[1]{{\fontsize{9pt}{1em}\scshape\color{graytext} #1}}
 \newcommand*{\recipienttitlestyle}[1]{{\fontsize{11pt}{1em}\bfseries\color{darktext} #1}}
 \newcommand*{\lettertitlestyle}[1]{{\fontsize{10pt}{1em}\bfseries\color{darktext} \underline{#1}}}
@@ -482,8 +490,11 @@
 	\fancyfoot{}
 	\fancyfoot[L]{\footerstyle{\today\ifempty{#1}{}{\acvHeaderSocialSep#1}}}
 	\fancyfoot[C]{\footerstyle{\ifdefined\version\version\fi\ifempty{#2}{}{\acvHeaderSocialSep#2}}}
-	\fancyfoot[R]{\footerstyle{\thepage\ifempty{#3}{}{\acvHeaderSocialSep#3}}}
-	\fancyfoot[R]{\footerstyle{\ifthenelse{\value{page}>1}{\footerstyle{\thepage\ifempty{#3}{}{\acvHeaderSocialSep#3}}}{#3}}}
+	\ifcv@letter
+		\fancyfoot[R]{\footerstyle{\footerstyle{\thepage\ifempty{#3}{}{\acvHeaderSocialSep#3}}}}
+	\else
+		\fancyfoot[R]{\footerstyle{\ifthenelse{\value{page}>1}{\footerstyle{\thepage\ifempty{#3}{}{\acvHeaderSocialSep#3}}}{#3}}}
+	\fi
 }
 
 % Renew the section command to add a divider
@@ -559,7 +570,7 @@
 	\setlength{\extrarowheight}{0pt}
 	\recipienttitlestyle{\@recipientname}
 	\begin{singlespace}
-		\recipientaddressstyle{\@recipientaddress} \\\\
+		\recipientaddressstyle{\@recipientaddress}
 	\end{singlespace}
 	\ifthenelse{\isundefined{\@lettertitle}}
 	{}
@@ -573,5 +584,4 @@
 	\vspace{\acvSectionContentTopSkip}
 	\lettertextstyle{\@letterclosing} \\\\
 	\letternamestyle{\@firstname\ \@lastname}
-	\ifthenelse{\isundefined{\@letterenclosure}}
 }
