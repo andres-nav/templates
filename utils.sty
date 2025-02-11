@@ -40,6 +40,22 @@
 \ProcessKeyvalOptions*
 
 % **************************************************
+% References and Hyperlinks
+% **************************************************
+\ifutils@fullref
+  \booltrue{utils@hyperref}
+\fi
+
+\ifutils@hyperref
+  \RequirePackage[colorlinks=false, pdfborder={0 0 0}]{hyperref}
+\fi
+
+\ifutils@fullref
+  \RequirePackage{amsmath}
+  \RequirePackage{cleveref}
+\fi
+
+% **************************************************
 % Colors
 % **************************************************
 
@@ -284,19 +300,6 @@
 % **************************************************
 \ifutils@bookmark
   \RequirePackage{bookmark} % to reload the outline and bookmarks automatically
-\fi
-
-% **************************************************
-% References and Hyperlinks
-% **************************************************
-\ifutils@hyperref
-  \RequirePackage{hyperref}
-\fi
-
-\ifutils@fullref
-  \booltrue{utils@hyperref}
-  \RequirePackage{amsmath}
-  \RequirePackage{cleveref}
 \fi
 
 
