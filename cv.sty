@@ -1,16 +1,13 @@
 % This theme has been heavily inspired on the Awesome-CV
 % https://github.com/posquit0/Awesome-CV/tree/master
 
-\ProvidesPackage{cv}[Template to create amazing CVs and motivation letters]
+\ProvidesPackage{cv}[2025/11/26 v1.0 Template to create amazing CVs]
 
 % **************************************************
 % Class options
 % **************************************************
 \RequirePackage{kvoptions}
 \SetupKeyvalOptions{family=cv,prefix=cv@}
-
-\DeclareBoolOption{letter} % if true, it will load the letter template, if false, it will load the cv template
-\DeclareBoolOption[true]{icons} % if true, it will load the letter template, if false, it will load the cv template
 
 \DeclareDefaultOption{
 	\PassOptionsToPackage{\CurrentOption}{utils}
@@ -19,20 +16,13 @@
 \ProcessKeyvalOptions*
 
 \RequirePackage[hyperref, lists]{utils}
-
-% **************************************************
-% Info Commands
-% **************************************************
+\RequirePackage{etoolbox} % For list management
 
 % **************************************************
 % Layout
 % **************************************************
 \RequirePackage{geometry} % To set the page layout
-\ifcv@letter
-	\geometry{top=1.5cm, bottom=2cm, left=2.5cm, right=2.5cm, footskip=0.5cm}
-\else
-	\geometry{left=1.4cm, right=1.4cm, top=0.75cm, bottom=1.25cm, footskip=0.5cm}
-\fi
+\geometry{left=1.2cm, right=1.2cm, top=0.8cm, bottom=1.15cm, footskip=0cm}
 
 %% Header & Footer
 \RequirePackage{fancyhdr}
@@ -41,24 +31,11 @@
 \fancyhf{} % Clear all header & footer fields
 \pagestyle{fancy} % Use fancy page style
 
-\ifcv@letter
-	\setlength{\footskip}{1cm} % Adjust the distance from text to the footer
-\fi
-
 % **************************************************
 % Fonts
 % **************************************************
 \RequirePackage{fontspec}
-\ifcv@letter
-	\setmainfont{Times New Roman}
-\else
-	\setmainfont{Roboto}
-\fi
-
-
-\ifcv@icons
-	\RequirePackage{fontawesome5} % Use icons from font-awesome
-\fi
+\setmainfont{Helvetica}
 
 % **************************************************
 % Other Packages
@@ -73,11 +50,21 @@
 \RequirePackage{xifthen}
 % Needed to strip chars from telephone number
 \RequirePackage{xstring}
-% Needed to change line spacing in specific environment
-\RequirePackage{setspace}
 % Needed for the photo ID
 \RequirePackage[skins]{tcolorbox}
-\RequirePackage[english]{babel} % Add this if not already included
+\RequirePackage[english]{babel}
+% Needed for bibliography support
+\RequirePackage[
+	backend=biber,
+	style=numeric,
+	sorting=ydnt,       
+	defernumbers=true,  
+	maxbibnames=99,    
+	giveninits=true,   
+	doi=true,
+	url=true,
+	isbn=false
+]{biblatex}
 
 %-------------------------------------------------------------------------------
 %                Configuration for colors
@@ -98,37 +85,37 @@
 \newcommand*{\headerpositionstyle}[1]{{\fontsize{9pt}{1em}\selectfont\scshape\color{accent}#1}}
 \newcommand*{\headeraddressstyle}[1]{{\fontsize{9pt}{1em}\selectfont\itshape\color{lighttext}#1}}
 \newcommand*{\headersocialstyle}[1]{{\fontsize{9pt}{1em}\selectfont\color{text}#1}}
+\newcommand*{\headersummarystyle}[1]{{\fontsize{9pt}{1.2em}\selectfont\color{text}#1}}
 \newcommand*{\footerstyle}[1]{{\fontsize{9pt}{1em}\selectfont\scshape\color{lighttext}#1}}
-\newcommand*{\sectionstyle}[1]{{\fontsize{14pt}{1em}\selectfont\scshape\color{text}#1}}
+\newcommand*{\sectionstyle}[1]{{\fontsize{12pt}{1em}\selectfont\scshape\color{text}#1}}
 
 % For elements of entry
-\newcommand*{\entrytitlestyle}[1]{{\fontsize{12pt}{1em}\selectfont\bfseries #1}}
-\newcommand*{\entrycompanystyle}[1]{{\fontsize{12pt}{1em}\selectfont #1}}
+\newcommand*{\entrytitlestyle}[1]{{\fontsize{11pt}{1em}\selectfont\bfseries #1}}
+\newcommand*{\entrycompanystyle}[1]{{\fontsize{9pt}{1em}\selectfont #1}}
 \newcommand*{\entrysummarystyle}[1]{{\fontsize{9pt}{1em}\selectfont #1}}
 \newcommand*{\entrydatestyle}[1]{{\fontsize{9pt}{1em}\selectfont #1}}
 \newcommand*{\entrylocationstyle}[1]{{\fontsize{9pt}{1em}\selectfont #1}}
 \newcommand*{\entryurlstyle}[1]{{\fontsize{9pt}{1em}\selectfont\underline{#1}}}
 
 % For elements of honor
-\newcommand*{\honortitlestyle}[1]{{\fontsize{12pt}{1em}\bfseries\color{darktext} #1}}
+\newcommand*{\honortitlestyle}[1]{{\fontsize{11pt}{1em}\bfseries\color{darktext} #1}}
 \newcommand*{\honorpositionstyle}[1]{{\fontsize{9pt}{1em}\color{graytext} #1}}
 \newcommand*{\honordatestyle}[1]{{\fontsize{9pt}{1em}\color{graytext} #1}}
 \newcommand*{\honorlocationstyle}[1]{{\fontsize{9pt}{1em}\slshape\color{accent} #1}}
 
 % For elements of skill
-\newcommand*{\skilltypestyle}[1]{{\fontsize{10pt}{1em}\bfseries\color{darktext} #1}}
-\newcommand*{\skillsetstyle}[1]{{\fontsize{10pt}{1em}\color{text} #1}}
-
-% For elements of the cover letter
-\newcommand*{\recipientaddressstyle}[1]{{\fontsize{9pt}{1em}\scshape\color{graytext} #1}}
-\newcommand*{\recipienttitlestyle}[1]{{\fontsize{11pt}{1em}\bfseries\color{darktext} #1}}
-\newcommand*{\lettertitlestyle}[1]{{\fontsize{10pt}{1em}\bfseries\color{darktext} \underline{#1}}}
-\newcommand*{\lettertextstyle}{\fontsize{10pt}{1.4em}\upshape\color{darktext}}
-\newcommand*{\letternamestyle}[1]{{\fontsize{10pt}{1em}\bfseries\color{darktext} #1}}
-\newcommand*{\letterenclosurestyle}[1]{{\fontsize{10pt}{1em}\slshape\color{lighttext} #1}}
+\newcommand*{\skilltypestyle}[1]{{\fontsize{9pt}{1em}\bfseries\color{darktext} #1}}
+\newcommand*{\skillsetstyle}[1]{{\fontsize{9pt}{1em}\color{text} #1}}
 
 % For hyperlinks
 \newcommand*{\cvhref}[1]{\href{#1}{\entryurlstyle{More info}}}
+
+% For bibliography entries
+\newcommand*{\bibliographytitlestyle}[1]{{\fontsize{9pt}{10.8pt}\selectfont #1}}
+\newcommand*{\bibliographyauthorstyle}[1]{{\fontsize{9pt}{10.8pt}\selectfont #1}}
+\newcommand*{\bibliographyvenuestyle}[1]{{\fontsize{9pt}{10.8pt}\selectfont\itshape #1}}
+\newcommand*{\bibliographydatestyle}[1]{{\fontsize{9pt}{10.8pt}\selectfont #1}}
+\newcommand*{\bibliographyurlstyle}[1]{{\fontsize{9pt}{10.8pt}\selectfont\underline{#1}}}
 
 %-------------------------------------------------------------------------------
 %                Commands for personal information
@@ -166,170 +153,42 @@
 \newcommand*{\address}[1]{\def\@address{#1}}
 
 % Define writer's position
-% Usage: \position{<position>}
-\newcommand*{\position}[1]{\def\@position{#1}}
-
-% Defines writer's mobile (optional)
-% Usage: \mobile{<mobile number>}
-\newcommand*{\mobile}[1]
-{
-	\def\@mobile{#1}
-	\def\@teluri{tel:\@mobile}
-	% Strip unwanted characters
-	\StrDel{\@teluri}{ }[\@teluri]%
-	\StrDel{\@teluri}{-}[\@teluri]%
-	\StrDel{\@teluri}{(}[\@teluri]%
-	\StrDel{\@teluri}{)}[\@teluri]%
+% Usage: \position{item1, item2, item3, ...}
+% Example: \position{Cloud Computing, DevOps, System Architecture}
+\newcommand*{\position}[1]{%
+	\def\@position{#1}%
 }
 
-% Defines writer's email (optional)
-% Usage: \email{<email address>}
-\newcommand*{\email}[1]{\def\@email{#1}}
-
-% Defines writer's date of birth (optional)
-% Usage: \dateofbirth{<date>}
-\newcommand*{\dateofbirth}[1]{\def\@dateofbirth{#1}}
-
-% Defines writer's homepage (optional)
-% Usage: \homepage{<url>}
-\newcommand*{\homepage}[1]{\def\@homepage{#1}}
-
-% Defines writer's github (optional)
-% Usage: \github{<github-nick>}
-\newcommand*{\github}[1]{\def\@github{#1}}
-
-% Defines writer's gitlab (optional)
-% Usage: \gitlab{<gitlab-nick>}
-\newcommand*{\gitlab}[1]{\def\@gitlab{#1}}
-
-% Defines writer's bitbucket (optional)
-% Usage: \bitbucket{<bitbucket-nick>}
-\newcommand*{\bitbucket}[1]{\def\@bitbucket{#1}}
-
-% Defines writer's stackoverflow profile (optional)
-% Usage: \stackoverflow{<so userid>}{<so username>}
-%   e.g.https://stackoverflow.com/users/123456/sam-smith
-%       would be \stackoverflow{123456}{sam-smith}
-\newcommand*{\stackoverflow}[2]{\def\@stackoverflowid{#1}\def\@stackoverflowname{#2}}
-
-% Defines writer's linked-in (optional)
-% Usage: \linkedin{<linked-in-nick>}
-\newcommand*{\linkedin}[1]{\def\@linkedin{#1}}
-
-% Defines writer's orcid (optional)
-% Usage: \orcid{<orcid-num>}
-\newcommand*{\orcid}[1]{\def\@orcid{#1}}
-
-% Defines writer's twitter (optional)
-% Usage: \twitter{<twitter handle>}
-\newcommand*{\twitter}[1]{\def\@twitter{#1}}
-
-% Defines writer's Mastodon (optional)
-% Usage: \mastodon{<instance>}{<mastodon-nick>}
-\newcommand*{\mastodon}[2]{\def\@mastodoninstance{#1}\def\@mastodonname{#2}}
-
-% Defines writer's resarchgate (optional)
-% Usage: \researchgate{<researchgate-account>}
-\newcommand*{\researchgate}[1]{\def\@researchgate{#1}}
-
-% Defines writer's skype (optional)
-% Usage: \skype{<skype account>}
-\newcommand*{\skype}[1]{\def\@skype{#1}}
-
-% Defines writer's reddit (optional)
-% Usage: \reddit{<reddit account>}
-\newcommand*{\reddit}[1]{\def\@reddit{#1}}
-
-% Defines writer's xing (optional)
-% Usage: \xing{<xing name>}
-\newcommand*{\xing}[1]{\def\@xing{#1}}
-
-% Defines writer's medium profile (optional)
-% Usage: \medium{<medium account>}
-\newcommand*{\medium}[1]{\def\@medium{#1}}
-
-% Defines writer's kaggle (optional)
-% Usage: \kaggle{<kaggle handle>}
-\newcommand*{\kaggle}[1]{\def\@kaggle{#1}}
-
-% Defines writer's Hackerrank (optional)
-% Usage: \hackerrank{<Hackerrank profile name>}
-\newcommand*{\hackerrank}[1]{\def\@hackerrank{#1}}
-
-% Defines writer's google scholar profile (optional)
-% Usage: \googlescholar{<googlescholar userid>}{<googlescholar username>}
-% e.g.https://scholar.google.co.uk/citations?user=wpZDx1cAAAAJ
-% would be \googlescholar{wpZDx1cAAAAJ}{Name-to-display-next-icon}
-% If 'googlescholar-name' is not provided than it defaults to
-% '\firstname \lastname'
-\newcommand*{\googlescholar}[2]{%
-	\def\@googlescholarid{#1}%
-	\ifthenelse{\equal{#2}{}}{%
-		\def\@googlescholarname{\@firstname~\@lastname}%
-	}{%
-		\def\@googlescholarname{#2}%
-	}%
+% Defines social information as a list
+% Usage: \social{item1, item2, item3, ...}
+% Example: \social{contact@example.com, github.com/username, linkedin.com/in/username}
+\newcommand*{\social}[1]{%
+	\def\@sociallinks{#1}%
 }
-
-% Defines writer's location
-% Usage: \location{<location>}
-\newcommand*{\location}[1]{\def\@location{#1}}
-
-% Defines writer's extra information (optional)
-% Usage: \extrainfo{<extra information>}
-\newcommand*{\extrainfo}[1]{\def\@extrainfo{#1}}
 
 % Defines writer's summary (optional)
 % Usage: \summary{<summary>}
 \newcommand*{\summary}[1]{\def\@summary{#1}}
-
-% Defines recipient's information (cover letter only)
-% Usage: \recipient{<recipient name>}{<recipient address>}
-% Usage: \recipientname{<recipient name>}
-% Usage: \recipientaddress{<recipient address>}
-\newcommand*{\recipient}[2]{\def\@recipientname{#1}\def\@recipientaddress{#2}}
-\newcommand*{\recipientname}[1]{\def\@recipientname{#1}}
-\newcommand*{\recipientaddress}[1]{\def\@recipientaddress{#1}}
-
-% Defines the title for letter (cover letter only, optional)
-% Usage: \lettertitle{<title>}
-\newcommand*{\lettertitle}[1]{\def\@lettertitle{#1}}
-
-% Defines a message of opening for letter (cover letter only)
-% Usage: \letteropening{<message>}
-\newcommand*{\letteropening}[1]{\def\@letteropening{#1}}
-
-% Defines a message of closing for letter (cover letter only)
-% Usage: \letterclosing{<message>}
-\newcommand*{\letterclosing}[1]{\def\@letterclosing{#1}}
-
-% Defines an enclosure for letter (cover letter only, optional)
-% Usage: \letterenclosure[<enclosure name>]{<enclosure>}
-\newcommand*{\letterenclname}[1][Enclosure]{\def\@letterenclname{#1}}
-\newcommand*{\letterenclosure}[2][]{%
-	% if an optional argument is provided, use it to redefine \enclname
-	\ifthenelse{\equal{#1}{}}{}{\def\@letterenclname{#1}}
-	\def\@letterenclosure{#2}
-}
-
 
 %-------------------------------------------------------------------------------
 %                Commands for extra
 %-------------------------------------------------------------------------------
 %% Define helper macros a user can change easily
 % Header
-\newcommand{\acvHeaderNameDelim}{\space}
-\newcommand{\acvHeaderAfterNameSkip}{0.25em}
-\newcommand{\acvHeaderAfterPositionSkip}{0.25em}
-\newcommand{\acvHeaderAfterAddressSkip}{0em}
-\newcommand{\acvHeaderIconSep}{\space}
-\newcommand{\acvHeaderSocialSep}{\quad\textbar\quad}
-\newcommand{\acvHeaderAfterSocialSkip}{1em}
-\newcommand{\acvHeaderAfterSummarySkip}{0em}
+\newcommand{\headernamedelim}{\space}
+\newcommand{\afternameskip}{0.2em}
+\newcommand{\afterpositionskip}{0.2em}
+\newcommand{\afteraddressskip}{0em}
+\newcommand{\socialseparator}{\quad\textbar\quad}
+\newcommand{\aftersocialskip}{0.75em}
+\newcommand{\aftersummaryskip}{0em}
+
+% Internal list for social links
+\def\@sociallinks{}
 
 % Others
-\newcommand{\acvSectionTopSkip}{0.5em}
-\newcommand{\acvSectionContentTopSkip}{0.25em}
+\newcommand{\sectiontopskip}{0.35em}
+\newcommand{\sectioncontenttopskip}{0.2em}
 
 %-------------------------------------------------------------------------------
 %                Commands for utilities
@@ -377,106 +236,29 @@
 	\begin{minipage}[c]{\headertextwidth}
 		\vspace*{\fill}
 		\ifthenelse{\equal{#1}{L}}{\raggedright}{\ifthenelse{\equal{#1}{R}}{\raggedleft}{\centering}}
-		\headernamestyle{\@firstname\acvHeaderNameDelim\@lastname}%
-		\\[\acvHeaderAfterNameSkip]%
-		\ifthenelse{\isundefined{\@position}}{}{\headerpositionstyle{\@position\\[\acvHeaderAfterPositionSkip]}}%
-		\ifthenelse{\isundefined{\@address}}{}{\headeraddressstyle{\@address\\[\acvHeaderAfterAddressSkip]}}%
-		\headersocialstyle{%
-			\newbool{isstart}%
-			\setbool{isstart}{true}%
-			\ifthenelse{\isundefined{\@email}}%
-			{}%
-			{%
-				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				\href{mailto:\@email}{\ifcv@icons\faEnvelope\acvHeaderIconSep\fi \@email}%
-			}%
-			\ifthenelse{\isundefined{\@homepage}}%
-			{}%
-			{%
-				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				\href{https://\@homepage}{\ifcv@icons\faHome\acvHeaderIconSep\fi \@homepage}%
-			}%
-			\ifthenelse{\isundefined{\@linkedin}}%
-			{}%
-			{%
-				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				\href{https://www.linkedin.com/in/\@linkedin}{\ifcv@icons\faLinkedin\acvHeaderIconSep\else linkedin.com/in/\fi \@linkedin}%
-			}%
-			\ifthenelse{\isundefined{\@googlescholarid}}%
-			{}%
-			{%
-				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				\href{https://scholar.google.com/citations?user=\@googlescholarid}{\ifcv@icons\faGraduationCap\acvHeaderIconSep\fi \@googlescholarname}%
-			}%
-			\ifthenelse{\isundefined{\@github}}%
-			{}%
-			{%
-				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				\href{https://github.com/\@github}{\ifcv@icons\faGithubSquare\acvHeaderIconSep\else github.com/\fi \@github}%
-			}%
-			\ifthenelse{\isundefined{\@gitlab}}%
-			{}%
-			{%
-				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				\href{https://gitlab.com/\@gitlab}{\faGitlab\acvHeaderIconSep\@gitlab}%
-			}%
-			\ifthenelse{\isundefined{\@bitbucket}}%
-			{}%
-			{%
-				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				\href{https://bitbucket.com/\@bitbucket}{\faBitbucket\acvHeaderIconSep\@bitbucket}%
-			}%
-			\ifthenelse{\isundefined{\@orcid}}%
-			{}%
-			{%
-				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				\href{https://orcid.org/\@orcid}{\ifcv@icons\faOrcid\acvHeaderIconSep\else orcid.org/\fi \@orcid}%
-			}%
-			\ifthenelse{\isundefined{\@researchgate}}%
-			{}%
-			{%
-				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				\href{https://www.researchgate.net/profile/\@researchgate}{\faResearchgate\acvHeaderIconSep\@researchgate}%
-			}%
-			\ifthenelse{\isundefined{\@medium}}%
-			{}%
-			{%
-				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				\href{https://medium.com/@\@medium}{\faMedium\acvHeaderIconSep\@medium}%
-			}%
-			\ifthenelse{\isundefined{\@kaggle}}%
-			{}%
-			{%
-				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				\href{https://kaggle.com/\@kaggle}{\faKaggle\acvHeaderIconSep\@kaggle}%
-			}%
-			\ifthenelse{\isundefined{\@hackerrank}}%
-			{}%
-			{%
-				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				\href{https://www.hackerrank.com/\@hackerrank}{\faHackerrank\acvHeaderIconSep\@hackerrank}%
-			}%
-			\ifthenelse{\isundefined{\@mobile}}%
-			{}%
-			{%
-				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				\href{\@teluri}{\ifcv@icons\faMobile\acvHeaderIconSep\fi \@mobile}%
-				\setbool{isstart}{false}%
-			}%
-			\ifthenelse{\isundefined{\@location}}%
-			{}%
-			{%
-				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				\ifcv@icons\faMapMarker\acvHeaderIconSep\fi \@location%
-			}%
-			\ifthenelse{\isundefined{\@extrainfo}}%
-			{}%
-			{%
-				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				\@extrainfo%
-			}%
-		} \\[\acvHeaderAfterSocialSkip]%
-		\ifthenelse{\isundefined{\@summary}}{}{\raggedright\@summary\\[\acvHeaderAfterSummarySkip]}%
+		\headernamestyle{\@firstname\headernamedelim\@lastname}%
+		\\[\afternameskip]%
+		\ifthenelse{\isundefined{\@position}}{}{%
+			\headerpositionstyle{%
+				\def\@sep{}%
+				\@for\@item:=\@position\do{%
+					\@sep\@item%
+					\def\@sep{\socialseparator}%
+				}%
+			}\\[\afterpositionskip]%
+		}%
+		\ifthenelse{\isundefined{\@address}}{}{\headeraddressstyle{\@address\\[\afteraddressskip]}}%
+		\ifx\@sociallinks\@empty%
+		\else%
+			\headersocialstyle{%
+				\def\@sep{}%
+				\@for\@link:=\@sociallinks\do{%
+					\@sep\@link%
+					\def\@sep{\socialseparator}%
+				}%
+			} \\[\aftersocialskip]%
+		\fi%
+		\ifthenelse{\isundefined{\@summary}}{}{\raggedright\headersummarystyle{\@summary}\\[\aftersummaryskip]}%
 		\vspace*{\fill}
 	\end{minipage}%
 	\begin{minipage}[c]{\headerphotowidth}%
@@ -488,62 +270,83 @@
 % Usage: \makecvfooter{<left>}{<center>}{<right>}
 \newcommand*{\makecvfooter}[3]{%
 	\fancyfoot{}
-	\fancyfoot[L]{\footerstyle{\today\ifempty{#1}{}{\acvHeaderSocialSep#1}}}
-	\fancyfoot[C]{\footerstyle{\ifdefined\version\version\fi\ifempty{#2}{}{\acvHeaderSocialSep#2}}}
-	\ifcv@letter
-		\fancyfoot[R]{\footerstyle{\footerstyle{\thepage\ifempty{#3}{}{\acvHeaderSocialSep#3}}}}
-	\else
-		\fancyfoot[R]{\footerstyle{\ifthenelse{\value{page}>1}{\footerstyle{\thepage\ifempty{#3}{}{\acvHeaderSocialSep#3}}}{#3}}}
-	\fi
+	\fancyfoot[L]{\footerstyle{\today\ifempty{#1}{}{\socialseparator#1}}}
+	\fancyfoot[C]{\footerstyle{\ifdefined\version\version\fi\ifempty{#2}{}{\socialseparator#2}}}
+	\fancyfoot[R]{\footerstyle{\thepage\ifempty{#3}{}{\socialseparator#3}}}
 }
 
 % Renew the section command to add a divider
 \renewcommand{\section}[1]{%
-	\vspace{\acvSectionTopSkip}
-	\sectionstyle{#1} % Assuming sectionstyle formats the section title
-	\vspace{-\baselineskip} % Adjust as needed
+	\vspace{\sectiontopskip}
+	\sectionstyle{#1}
+	\vspace{-\baselineskip}
 	\par\noindent\color{sectiondivider}\hrule height 1pt
 }
 
-% Define a paragraph for CV
 % Define an entry of cv information
 % Usage: \cventry{<position>}{<title>}{<info>}{<location>}{<date>}
 \newcommand*{\cventry}[5]{%
-	\vspace{\acvSectionContentTopSkip}
-	{
+	\vspace{\sectioncontenttopskip}%
+	{%
 		\entrytitlestyle{#1}%
 		\hfill%
 		\entrydatestyle{#5} \\%
-	}
-	\ifstrempty{#2#3#4}
-	{}
-	{
+	}%
+	\ifstrempty{#2#3#4}%
+	{}%
+	{%
 		\entrycompanystyle{#2}%
-		\ifempty{#3}{}{\entrysummarystyle{{\acvHeaderSocialSep}#3}}%
-		\hfill
+		\ifempty{#3}{}{\entrysummarystyle{{\socialseparator}#3}}%
+		\hfill%
 		\entrylocationstyle{#4} \\%
+	}%
+	\vspace{-\baselineskip}%
+}
+
+% Define an environment for cv entry with itemize
+% Usage: 
+% \begin{cvitemizeentry}{<position>}{<title>}{<info>}{<location>}{<date>}
+%     \item First bullet point
+%     \item Second bullet point
+% \end{cvitemizeentry}
+\newenvironment{cvitemizeentry}[5]{%
+	\vspace{\sectioncontenttopskip}%
+	\entrytitlestyle{#1}%
+	\hfill%
+	\entrydatestyle{#2}
+	\newline
+	\ifstrempty{#3#4#5}%
+	{}%
+	{%
+		\entrycompanystyle{#3}%
+		\ifempty{#4}{}{\entrysummarystyle{{\socialseparator}#4}}%
+		\hfill%
+		\entrylocationstyle{#5} 
+		\newline
+		\vspace{-\baselineskip}%
 	}
-	\vspace{-\baselineskip} % Adjust as needed
-	% \vspace{-\acvSectionContentTopSkip}
+	\begin{itemize}%
+}{%
+	\end{itemize}%
 }
 
 % Usage: \cvhonor{<position>}{<title>}{<url>}{<date>}
 \newcommand*{\cvhonor}[4]{%
-	\vspace{\acvSectionContentTopSkip}
-	\honortitlestyle{#1}\ifempty{#2}{}{,} \honorpositionstyle{#2}\ifempty{#4}{}{ \honordatestyle{(#4)}} & \ifempty{#3}{}{\cvhref{#3}} \\
-	\vspace{-\baselineskip} % Adjust as needed
+	\vspace{\sectioncontenttopskip}%
+	\honortitlestyle{#1}\ifempty{#2}{}{,} \honorpositionstyle{#2}\ifempty{#4}{}{ \honordatestyle{(#4)}} & \ifempty{#3}{}{\cvhref{#3}} \\%
+	\vspace{-\baselineskip}%
 }
 
 % Define an environment for cvskill
 \newenvironment{cvskills}{%
-	\vspace{\acvSectionContentTopSkip}
-	\begin{center}
-		\setlength\tabcolsep{1ex}
-		\setlength{\extrarowheight}{0pt}
-		\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} r L{\textwidth * \real{0.9}}}
-			}{%
-		\end{tabular*}
-	\end{center}
+	\vspace{\sectioncontenttopskip}%
+	\begin{center}%
+		\setlength\tabcolsep{1ex}%
+		\setlength{\extrarowheight}{0pt}%
+		\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} r L{\textwidth * \real{0.9}}}%
+}{%
+		\end{tabular*}%
+	\end{center}%
 }
 
 % Define a line of cv information(skill)
@@ -556,32 +359,70 @@
 % Lists
 % **************************************************
 \@ifpackageloaded{enumitem}{
-	\setlist[itemize]{leftmargin=1em, noitemsep, itemsep=0.25em, label=\textbullet, before=\raggedright}
+	\setlist[itemize]{leftmargin=1em, noitemsep, itemsep=0.2em, label=\textbullet, before=\raggedright}
 }{}
 
-%-------------------------------------------------------------------------------
-%                Commands for elements of Cover Letter
-%-------------------------------------------------------------------------------
-
-% Define a title of the cover letter
-% Usage: \makelettertitle
-\newcommand*{\makelettertitle}{%
-	\setlength\tabcolsep{0pt}
-	\setlength{\extrarowheight}{0pt}
-	\recipienttitlestyle{\@recipientname}
-	\begin{singlespace}
-		\recipientaddressstyle{\@recipientaddress}
-	\end{singlespace}
-	\ifthenelse{\isundefined{\@lettertitle}}
-	{}
-	{\lettertitlestyle{\@lettertitle} \\}
-	\lettertextstyle{\@letteropening}
+% **************************************************
+% Bibliography Configuration
+% **************************************************
+% Customize biblatex formatting to match CV style
+\AtBeginDocument{
+	\@ifpackageloaded{biblatex}{
+		% Remove "In:" before journal/booktitle
+		\renewbibmacro{in:}{}
+		
+		% Enable URL line breaking at various points
+		\setcounter{biburlnumpenalty}{100}% Allow breaking after numbers
+		\setcounter{biburlucpenalty}{100}% Allow breaking after uppercase letters
+		\setcounter{biburllcpenalty}{100}% Allow breaking after lowercase letters
+		
+		% Format bibliography entries with numeric labels [1], [2], etc.
+		\defbibenvironment{bibliography}
+		{\list
+			{\printtext[labelnumberwidth]{%
+				\printfield{labelprefix}%
+				\printfield{labelnumber}}}
+			{%
+				\setlength{\labelwidth}{\labelnumberwidth}%
+				\setlength{\leftmargin}{\labelwidth}%
+				\setlength{\labelsep}{0.5em}%
+				\addtolength{\leftmargin}{\labelsep}%
+				\setlength{\itemindent}{0pt}%
+				\setlength{\itemsep}{\sectioncontenttopskip}%
+				\setlength{\parsep}{0pt}%
+			}%
+		}
+		{\endlist}
+		{\item\raggedright}
+		
+		% Customize field formats
+		\DeclareFieldFormat[article,inproceedings,incollection,book,thesis]{title}{\bibliographytitlestyle{#1}}
+		\DeclareFieldFormat[article]{journaltitle}{\bibliographyvenuestyle{#1}}
+		\DeclareFieldFormat[inproceedings,incollection]{booktitle}{\bibliographyvenuestyle{#1}}
+		\DeclareFieldFormat{url}{\bibliographyurlstyle{\url{#1}}}
+		\DeclareFieldFormat{doi}{\bibliographyurlstyle{DOI: \href{https://doi.org/#1}{#1}}}
+		
+		% Remove quotes from titles
+		\DeclareFieldFormat*{title}{#1}
+		
+		% Customize name format
+		\renewcommand*{\mkbibnamegiven}[1]{\bibliographyauthorstyle{#1}}
+		\renewcommand*{\mkbibnamefamily}[1]{\bibliographyauthorstyle{#1}}
+		\renewcommand*{\mkbibnameprefix}[1]{\bibliographyauthorstyle{#1}}
+		\renewcommand*{\mkbibnamesuffix}[1]{\bibliographyauthorstyle{#1}}
+		
+		% Format date
+		\renewcommand*{\mkbibdatelong}[3]{\bibliographydatestyle{\iffieldundef{#1}{}{\thefield{#1}}}}
+	}{}
 }
 
-% Define a closing of the cover letter
-% Usage: \makeletterclosing
-\newcommand*{\makeletterclosing}{%
-	\vspace{\acvSectionContentTopSkip}
-	\lettertextstyle{\@letterclosing} \\\\
-	\letternamestyle{\@firstname\ \@lastname}
+% Define command to add bibliography on a new page
+% Usage: \makecvbibliography{<section-title>}
+% Example: \makecvbibliography{References}
+% Note: You must add \addbibresource{yourfile.bib} in the preamble before \begin{document}
+\newcommand*{\makecvbibliography}[1]{%
+	\clearpage
+	\section{#1}
+	\vspace{\sectioncontenttopskip}%
+	\printbibliography[heading=none]
 }
