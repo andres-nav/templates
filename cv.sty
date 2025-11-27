@@ -95,7 +95,9 @@
 \newcommand*{\entrysummarystyle}[1]{{\fontsize{9pt}{1em}\selectfont #1}}
 \newcommand*{\entrydatestyle}[1]{{\fontsize{9pt}{1em}\selectfont #1}}
 \newcommand*{\entrylocationstyle}[1]{{\fontsize{9pt}{1em}\selectfont #1}}
-\newcommand*{\entryurlstyle}[1]{{\fontsize{9pt}{1em}\selectfont\underline{#1}}}
+
+% For subsections
+\newcommand*{\subsectionstyle}[1]{{\fontsize{11pt}{1em}\selectfont\bfseries #1}}
 
 % For elements of honor
 \newcommand*{\honortitlestyle}[1]{{\fontsize{11pt}{1em}\bfseries\color{darktext} #1}}
@@ -283,7 +285,12 @@
 	\par\noindent\color{sectiondivider}\hrule height 1pt
 }
 
-% Define an entry of cv information
+% Renew the subsection command to match entry title styling
+\renewcommand{\subsection}[1]{%
+	\vspace{\sectioncontenttopskip}
+	\subsectionstyle{#1}
+}
+
 % Usage: \cventry{<position>}{<title>}{<info>}{<location>}{<date>}
 \newcommand*{\cventry}[5]{%
 	\vspace{\sectioncontenttopskip}%
@@ -360,6 +367,7 @@
 % **************************************************
 \@ifpackageloaded{enumitem}{
 	\setlist[itemize]{leftmargin=1em, noitemsep, itemsep=0.2em, label=\textbullet, before=\raggedright}
+	\setlist[enumerate]{leftmargin=1em, noitemsep, itemsep=0.2em, before=\raggedright}
 }{}
 
 % **************************************************
