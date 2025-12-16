@@ -58,7 +58,6 @@
 	backend=biber,
 	style=numeric,
 	sorting=ydnt,       
-	defernumbers=true,  
 	maxbibnames=99,    
 	giveninits=true,   
 	doi=true,
@@ -167,6 +166,12 @@
 \newcommand*{\social}[1]{%
 	\def\@sociallinks{#1}%
 }
+
+% Defines a social item with custom display text and hyperlink
+% Usage: \socialitem{<display text>}{<url>}
+% Example: \socialitem{Email}{mailto:contact@example.com}
+% Example: \socialitem{GitHub}{https://github.com/username}
+\newcommand*{\socialitem}[2]{\href{#2}{#1}}
 
 % Defines writer's summary (optional)
 % Usage: \summary{<summary>}
@@ -312,7 +317,7 @@
 
 % Define an environment for cv entry with itemize
 % Usage: 
-% \begin{cvitemizeentry}{<position>}{<title>}{<info>}{<location>}{<date>}
+% \begin{cvitemizeentry}{<position>}{<date>}{<title>}{<info>}{<location>}
 %     \item First bullet point
 %     \item Second bullet point
 % \end{cvitemizeentry}
